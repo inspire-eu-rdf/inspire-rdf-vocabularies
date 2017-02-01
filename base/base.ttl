@@ -18,7 +18,7 @@
 #
 # During the derivation, the following mappings, alignments, and omissions have been applied:
 # - Mappings:
-#   - Code lists and the enumeration 'VerticalPositionValue' are mapped to skos:Concept.
+#   - Code list and enumeration values are mapped to skos:Concept.
 #   - Type 'Identifier' is mapped to rdfs:Resource.
 #   - Type 'SpatialDataSet' is mapped to dcat:Dataset.
 #   - Type 'PT_FreeText' is mapped to rdf:langString.

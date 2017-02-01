@@ -11,10 +11,10 @@
 #
 # During the derivation, the following mappings, alignments, and omissions have been applied:
 # - Mappings:
-#   - All code lists are mapped to skos:Concept.
+#   - Code list values are mapped to skos:Concept.
 #
 # - Alignments (through subsumption):
-#   - All spatial object types are aligned with gsp:Feature.
+#   - Spatial object types are aligned with gsp:Feature.
 #
 # - Omissions: none
 #

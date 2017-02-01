@@ -16,7 +16,7 @@
 #
 # During the derivation, the following mappings, alignments, and omissions have been applied:
 # - Mappings:
-#   - Code lists are mapped to skos:Concept.
+#   - Code list values are mapped to skos:Concept.
 #   - The properties 'beginLifespanVersion' and 'endLifespanVersion' are mapped to the global properties defined by the base ontology.
 #   - Geometry types are mapped to classes from the Simple Feature ontology.
 #
