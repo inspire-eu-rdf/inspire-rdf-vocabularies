@@ -1,0 +1,207 @@
+# This is a draft RDF vocabulary for representing spatial data sets in INSPIRE as RDF. This vocabulary has been created using the "Guidelines for the RDF encoding of spatial data" (http://inspire-eu-rdf.github.io/inspire-rdf-guidelines).
+#
+# The use of RDF is optional and does not supersede or replace the requirements regarding encoding specified in Clause 9 of the INSPIRE Data Specifications. This optional encoding is intended to support the e-government and open data community in Europe, which is increasingly looking at RDF to represent data.
+#
+# This is a draft version. It has limitations and is expected to contain errors. Please report any issues or concerns in GitHub (https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/issues).
+#
+# ------------------------------
+#
+#
+# This ontology contains classes and properties that have been derived from the INSPIRE "Geographical Names" application schema.
+#
+# During the derivation, the following mappings, alignments, and omissions have been applied:
+# - Mappings:
+#   - Code lists are mapped to skos:Concept.
+#   - The properties 'beginLifespanVersion' and 'endLifespanVersion' are mapped to the global properties defined by the base ontology.
+#   - Geometry types are mapped to classes from the Simple Feature ontology.
+#
+# - Alignments (through subsumption):
+#   - Spatial object types are aligned with gsp:Feature.
+#   - Type 'GeographicalName' is aligned with skos:Concept.
+#   - Property 'NamedPlace.geometry' is aligned to property locn:geometry and gsp:hasDefaultGeometry.
+#   - Property 'NamedPlace.name' is aligned to property locn:geographicName.
+#
+# - Omissions:
+#   - Property 'inspireId' is omitted. See the guidelines for further details.
+#
+# ------------------------------
+#
+#
+@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix sfowl: <http://www.opengis.net/ont/sf#> .
+@prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix gn:    <http://inspire.ec.europa.eu/ont/gn#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix locn:  <https://www.w3.org/ns/locn#> .
+@prefix base:  <http://inspire.ec.europa.eu/ont/base#> .
+
+gn:NamedPlace.type  a    owl:ObjectProperty ;
+        rdfs:comment     "SOURCE Adapted from [UNGEGN Manual 2007].\r\n\r\nNOTE 1 This attribute should be consistent with the attribute 'relatedSpatialObject'. More precisely, if the attribute 'relatedSpatialObject' is filled in, the attribute 'type' should be filled in, and its value(s) should be consistent with the spatial data theme(s) of the related object(s).\r\n\r\nNOTE 2 Even if this attribute may introduce some redundancy with the attribute 'relatedSpatialObject', it has to be filled in order to allow to use geographical names on their own without accessing to any other INSPIRE data set, which may be necessary in most cases."@en ;
+        rdfs:domain      gn:NamedPlace ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/NamedPlaceType> ;
+        skos:definition  "Characterisation of the kind of entity designated by geographical name(s)."@en .
+
+gn:SpellingOfName.text
+        a                owl:DatatypeProperty ;
+        rdfs:domain      gn:SpellingOfName ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Way the name is written."@en .
+
+gn:GeographicalName.nameStatus
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE The Geographical Names application schema does not explicitly make a preference between different names (e.g. official endonyms) of a specific real world entity. The necessary information for making the preference (e.g. the linguistic status of the administrative or geographic area in question), for a certain use case, must be obtained from other data or information sources. For example, the status of the language of the name may be known through queries on the geometries of named places against the geometry of administrative units recorded in a certain source with the language statuses information."@en ;
+        rdfs:domain      gn:GeographicalName ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/NameStatusValue> ;
+        skos:definition  "Qualitative information enabling to discern which credit should be given to the name with respect to its standardisation and/or its topicality."@en .
+
+gn:GeographicalName.grammaticalNumber
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE the attribute has cardinality [0..1] and is voidable, which means that:\r\n<ul>\r\n\t<li>in case the concept of grammatical number has no sense for a given name (i.e. the attribute is not applicable), the attribute should not be provided.</li>\r\n\t<li>in case the concept of grammatical number has some sense for the name but is unknown, the attribute should be provided but <i>void</i>.</li>\r\n</ul>"@en ;
+        rdfs:domain      gn:GeographicalName ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/GrammaticalNumberValue> ;
+        skos:definition  "Grammatical category of nouns that expresses count distinctions."@en .
+
+gn:SpellingOfName  a     owl:Class ;
+        rdfs:comment     "SOURCE Adapted from [UNGEGN Manual 2006].\r\n\r\nNOTE Proper spelling means the writing of a name with the correct capitalisation and the correct letters and diacritics present in an accepted standard order."@en ;
+        skos:definition  "Proper way of writing a name."@en .
+
+gn:GeographicalName  a   owl:Class ;
+        rdfs:subClassOf  skos:Concept ;
+        skos:definition  "Proper noun applied to a real world entity."@en .
+
+gn:GeographicalName.language
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE 1More precisely, this definition refers to the language used by the community that uses the name.\r\n\r\nNOTE 2 The code \"mul\" for \"multilingual\" should not be used in general. However it can be used in rare cases like official names composed of two names in different languages. For example, \"Vitoria-Gasteiz\" is such a multilingual official name in Spain.\r\n\r\nNOTE 3 Even if this attribute is \"voidable\" for pragmatic reasons, it is of first importance in several use cases in the multi-language context of Europe."@en ;
+        rdfs:domain      gn:GeographicalName ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Language of the name, given as a three letters code, in accordance with either ISO 639-3 or ISO 639-5."@en .
+
+gn:GeographicalName.grammaticalGender
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE the attribute has cardinality [0..1] and is voidable, which means that:\r\n<ul>\r\n\t<li>in case the concept of grammatical gender has no sense for a given name (i.e. the attribute is not applicable), the attribute should not be provided.</li>\r\n\t<li>in case the concept of grammatical gender has some sense for the name but is unknown, the attribute should be provided but <i>void</i>.  </li>\r\n</ul>"@en ;
+        rdfs:domain      gn:GeographicalName ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/GrammaticalGenderValue> ;
+        skos:definition  "Class of nouns reflected in the behaviour of associated words."@en .
+
+gn:PronunciationOfName
+        a                      owl:Class ;
+        rdfs:comment           "SOURCE Adapted from [UNGEGN Manual 2006]."@en ;
+        iso19150-2:constraint  "pronunciationSoundLink or pronunciationIPA not empty: At least one of the two attributes pronunciationSoundLink and pronunciationIPA shall not be void." ;
+        skos:definition        "Proper, correct or standard (standard within the linguistic community concerned) pronunciation of a name."@en .
+
+gn:NamedPlace.leastDetailedViewingResolution
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE 1This information may be used to determine if the names of the named place should be displayed at a given scale of display, only in the context of basic viewing services intending to show the content of the data set containing names. Even if this information is a valuable one for mapping in general, it is only approximate; cartographic services intending to produce high quality maps should certainly rely on other criteria and techniques for selecting names for the map.\r\n\r\nNOTE 2 Even if this attribute is \"voidable\" for practical reasons linked to its availability in data sources, this information may be of first importance for viewing services. There are great chances that viewing services will inefficiently manage named places having this attribute void.\r\n\r\nEXAMPLES The following examples use the equivalentScale attribute of MD_Resolution to express the attribute value.\r\n- Names of important cities in Europe may be displayed at all viewing scales greater than 1/5,000,000. In this case, the value of the attribute is 5,000,000\r\n- Names of small hamlets may only be displayed from all viewing scale greater than 1/25,000. In this case, the value of the attribute is 25,000\r\n- Names of countries may be displayed at any small scale. In this case, this attribute is not filled.\r\n\r\nNOTE 3 If the data set contain multiple representations of the same real world entity represented at different levels of detail, the scale ranges defined by the attributes leastDetailedViewingResolution and mostDetailedViewingResolution should not overlap, in order to avoid displaying the same names several times.\r\n\r\nNOTE 4 The geometry of the named place should have a level of detail (i.e. resolution, granularity, precision, etc.) roughly compatible with its associated viewing scales."@en ;
+        rdfs:domain      gn:NamedPlace ;
+        rdfs:range       rdf:langString ;
+        skos:definition  "Resolution, expressed as the inverse of an indicative scale or a ground distance, above which the named place and its associated name(s) should no longer be displayed in a basic viewing service."@en .
+
+gn:GeographicalName.sourceOfName
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "EXAMPLES Gazetteer, geographical names data set."@en ;
+        rdfs:domain      gn:GeographicalName ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Original data source from which the geographical name is taken from and integrated in the data set providing/publishing it. For some named spatial objects it might refer again to the publishing data set if no other information is available."@en .
+
+gn:GeographicalName.nativeness
+        a                owl:ObjectProperty ;
+        rdfs:domain      gn:GeographicalName ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/NativenessValue> ;
+        skos:definition  "Information enabling to acknowledge if the name is the one that is/was used in the area where the spatial object is situated at the instant when the name is/was in use."@en .
+
+gn:PronunciationOfName.pronunciationSoundLink
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "SOURCE Adapted from [UNGEGN Manual 2006]."@en ;
+        rdfs:domain      gn:PronunciationOfName ;
+        rdfs:range       xsd:anyURI ;
+        skos:definition  "Proper, correct or standard (standard within the linguistic community concerned) pronunciation of a name, expressed by a link to any sound file."@en .
+
+gn:SpellingOfName.transliterationScheme
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "SOURCE Adapted from [UNGEGN Glossary 2007].\r\n\r\nNOTE 1 This attribute should be filled for any transliterated spellings. If the transliteration scheme used is recorded in codelists maintained by ISO or UN, those codes should be preferred."@en ;
+        rdfs:domain      gn:SpellingOfName ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Method used for the names conversion between different scripts."@en .
+
+gn:NamedPlace.relatedSpatialObject
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE If no identifier is provided with features of other INSPIRE themes, those features can of course not be referred by the NamedPlace."@en ;
+        rdfs:domain      gn:NamedPlace ;
+        rdfs:range       rdfs:Class ;
+        skos:definition  "Identifier of a spatial object representing the same entity but appearing in other themes of INSPIRE, if any."@en .
+
+gn:NamedPlace.geometry
+        a                   owl:ObjectProperty ;
+        rdfs:comment        "NOTE 1 The most common geometry types for a named place are a reference point (modelled as GM_Point), a more precise geometry of the footprint (typically modelled as GM_Curve or GM_Surface), or a bounding box (to be modelled as a GM_Surface).\r\n\r\nNOTE 2 If the geometry depicts the spatial footprint of the named place, a reference point and a bounding box could be derived from it. However, this specification does not require the explicit provision of any specific type of geometry such as bounding boxes or reference points.\r\n\r\nNOTE 3 To avoid any misunderstanding, note that null geometry is not allowed by this specification.\r\n\r\nNOTE 4 3D geometries are not really required for Geographical Names, but the model allows for it, so a data provider may publish it."@en ;
+        rdfs:domain         gn:NamedPlace ;
+        rdfs:range          sfowl:Geometry ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasDefaultGeometry ;
+        skos:definition     "Geometry associated to the named place. This data specification does not restrict the geometry types."@en .
+
+<http://inspire.ec.europa.eu/ont/gn>
+        a                owl:Ontology ;
+        owl:imports      <http://www.opengis.net/ont/sf> , <https://www.w3.org/ns/locn.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <http://www.opengis.net/ont/geosparql> , <http://www.w3.org/2004/02/skos/core> , <http://def.isotc211.org/iso19150-2/2012/base> ;
+        owl:versionIRI   "http://inspire.ec.europa.eu/ont/gn/4.0" ;
+        owl:versionInfo  "4.0" .
+
+gn:NamedPlace.name  a       owl:ObjectProperty ;
+        rdfs:domain         gn:NamedPlace ;
+        rdfs:range          gn:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "Name of the named place."@en .
+
+gn:NamedPlace.mostDetailedViewingResolution
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE See Description of leastDetailedViewingResolution\r\n\r\nEXAMPLES The following examples use the equivalentScale attribute of MD_Resolution to express the attribute value.\r\n- Names of wide areas like mountain ranges may not be displayed at all in viewing scales greater than 1/100,000. In this case, the value of the attribute is 100,000\r\n- Names of small hamlets may be displayed at any large scale. In this case, this attribute is not filled."@en ;
+        rdfs:domain      gn:NamedPlace ;
+        rdfs:range       rdf:langString ;
+        skos:definition  "Resolution, expressed as the inverse of an indicative scale or a ground distance, below which the named place and its associated name(s) should no longer be displayed in a basic viewing service."@en .
+
+gn:GeographicalName.spelling
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE 1 Different spellings should only be used for names rendered in different scripts. .\r\n\r\nNOTE 2 While a particular GeographicalName should only have one spelling in a given script, providing different spellings in the same script should be done through the provision of different geographical names associated with the same named place."@en ;
+        rdfs:domain      gn:GeographicalName ;
+        rdfs:range       gn:SpellingOfName ;
+        skos:definition  "A proper way of writing the geographical name."@en .
+
+gn:PronunciationOfName.pronunciationIPA
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "SOURCE Adapted from [UNGEGN Manual 2006]."@en ;
+        rdfs:domain      gn:PronunciationOfName ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Proper, correct or standard (standard within the linguistic community concerned) pronunciation of a name, expressed in International Phonetic Alphabet (IPA)."@en .
+
+gn:GeographicalName.pronunciation
+        a                owl:ObjectProperty ;
+        rdfs:comment     "SOURCE Adapted from [UNGEGN Manual 2006]."@en ;
+        rdfs:domain      gn:GeographicalName ;
+        rdfs:range       gn:PronunciationOfName ;
+        skos:definition  "Proper, correct or standard (standard within the linguistic community concerned) pronunciation of the geographical name."@en .
+
+gn:NamedPlace  a          owl:Class ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/NamedPlace> ;
+        rdfs:subClassOf   gsp:Feature ;
+        skos:definition   "Any real world entity referred to by one or several proper nouns."@en .
+
+gn:NamedPlace.localType
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "SOURCE Adapted from [UNGEGN Manual 2007].\r\n\r\nNOTE Local types may be defined in additional European languages, either EU official languages or other languages such as the language(s) of the geographical names provided."@en ;
+        rdfs:domain      gn:NamedPlace ;
+        rdfs:range       rdf:langString ;
+        skos:definition  "Characterisation of the kind of entity designated by geographical name(s), as defined by the data provider, given in at least in one official language of the European Union."@en .
+
+gn:SpellingOfName.script
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "SOURCE Adapted from [UNGEGN Glossary 2007].\r\n\r\nEXAMPLES Cyrillic, Greek, Roman/Latin scripts.\r\n\r\nNOTE 1The four letter codes for Latin (Roman), Cyrillic and Greek script are \"Latn\", \"Cyrl\" and \"Grek\", respectively.\r\n\r\nNOTE 2 In rare cases other codes could be used (for other scripts than Latin, Greek and Cyrillic). However, this should mainly apply for historical names in historical scripts.\r\n\r\nNOTE 3 This attribute is of first importance in the multi-scriptual context of Europe."@en ;
+        rdfs:domain      gn:SpellingOfName ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Set of graphic symbols (for example an alphabet) employed in writing the name, expressed using the four letters codes defined in ISO 15924, where applicable."@en .

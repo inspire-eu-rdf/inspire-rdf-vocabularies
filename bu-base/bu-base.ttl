@@ -1,0 +1,386 @@
+# This is a draft RDF vocabulary for representing spatial data sets in INSPIRE as RDF. This vocabulary has been created using the "Guidelines for the RDF encoding of spatial data" (http://inspire-eu-rdf.github.io/inspire-rdf-guidelines).
+#
+# The use of RDF is optional and does not supersede or replace the requirements regarding encoding specified in Clause 9 of the INSPIRE Data Specifications. This optional encoding is intended to support the e-government and open data community in Europe, which is increasingly looking at RDF to represent data.
+#
+# This is a draft version. It has limitations and is expected to contain errors. Please report any issues or concerns in GitHub (https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/issues).
+#
+# ------------------------------
+#
+#
+# This ontology contains classes and properties that have been derived from the INSPIRE "BuildingsBase" application schema.
+#
+# The following properties have been encoded with global scope (see guidelines for further details):
+#  - BuildingGeometry2D.horizontalGeometryReference
+#  - BuildingGeometry2D.horizontalGeometryEstimatedAccuracy
+#  - BuildingGeometry2D.verticalGeometryEstimatedAccuracy
+#
+# During the derivation, the following mappings, alignments, and omissions have been applied:
+# - Mappings:
+#   - Code lists are mapped to skos:Concept.
+#   - The properties 'beginLifespanVersion' and 'endLifespanVersion' are mapped to the global properties defined by the base ontology.
+#   - Geometry types are mapped to classes from the Simple Feature ontology.
+#
+# - Alignments (through subsumption):
+#   - Spatial object types are aligned with gsp:Feature.
+#   - Properties with value type 'GeographicalName' are aligned to property locn:geographicName.
+#   - Properties with a geometry value type are aligned to locn:geometry and gsp:hasDefaultGeometry.
+#
+# - Omissions:
+#   - Property 'inspireId' is omitted. See the guidelines for further details.
+#
+# ------------------------------
+#
+#
+@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix sfowl: <http://www.opengis.net/ont/sf#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix gn:    <http://inspire.ec.europa.eu/ont/ad#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bu-base: <http://inspire.ec.europa.eu/ont/bu-base#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix locn:  <https://www.w3.org/ns/locn#> .
+@prefix base:  <http://inspire.ec.europa.eu/ont/base#> .
+
+bu-base:BuildingGeometry2D.verticalGeometryReference
+        a                      owl:ObjectProperty ;
+        rdfs:domain            bu-base:BuildingGeometry2D ;
+        rdfs:label             "Vertical geometry reference"@en ;
+        rdfs:range             skos:Concept ;
+        rdfs:seeAlso           <http://inspire.ec.europa.eu/codeList/ElevationReferenceValue> ;
+        iso19150-2:constraint  "verticalGeometryeEstimatedAccuracyUoM: /*Value of verticalGeometryEstimatedAccuracy has to be given in meters.*/" , "horizontalGeometryeEstimatedAccuracyUoM: /*Value of horizontalGeometryEstimatedAccuracy has to be given in meters.*/\r\n\r\n" , "geometryType: /*Type of geometry has to be GM_Point or GM_Surface*/" ;
+        skos:definition        "Element of the building that was captured by vertical coordinates."@en .
+
+bu-base:ExternalReference.informationSystemName
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "EXAMPLES: Danish Register of Dwellings, Spanish Cadastre."@en ;
+        rdfs:domain      bu-base:ExternalReference ;
+        rdfs:label       "Information system name"@en ;
+        rdfs:range       rdf:langString ;
+        skos:definition  "The name of the external information system."@en .
+
+bu-base:DateOfEvent  a         owl:Class ;
+        rdfs:label             "Date of event"@en ;
+        iso19150-2:constraint  "beginning is before anyPoint is before end: /* beginning is before anyPoint is before end.*/" , "atLeastOneEvent: /*At least, one of the attributes beginning, end or anyPoint shall be supplied.*/" ;
+        skos:definition        "This data type includes the different possible ways to define the date of an event."@en .
+
+bu-base:BuildingGeometry2D
+        a                      owl:Class ;
+        rdfs:label             "Building geometry 2D"@en ;
+        iso19150-2:constraint  "verticalGeometryEstimatedAccuracyUoMIsMetre: /* The Value of verticalGeometryEstimatedAccuracy has to be given in meters.*/\r\n" , "referenceGeometry: /*For exactly one item of BuildingGeometry, the value of the attribute referenceGeometry shall be 'true'.*/\r\n" , "horizontalGeometryEstimatedAccuracyUoMIsMetre: /* The value of horizontalGeometryEstimatedAccuracy shall be given in meters. */" , "geometryIsPointOrSurfaceOrMultiSurface: /*Geometry shall be of type GM_Point or GM_Surface or GM_MultiSurface.*/\r\n" ;
+        skos:definition        "This data types includes the geometry of the building and metadata information about which element of the building was captured and how."@en .
+
+bu-base:ExternalReference
+        a                owl:Class ;
+        rdfs:label       "External reference"@en ;
+        skos:definition  "Reference to an external information system containing any piece of information related to the spatial object."@en .
+
+bu-base:HeightAboveGround.heightReference
+        a                      owl:ObjectProperty ;
+        rdfs:comment           "EXAMPLE: The height of the building has been captured up to the top of building."@en ;
+        rdfs:domain            bu-base:HeightAboveGround ;
+        rdfs:label             "Height reference"@en ;
+        rdfs:range             skos:Concept ;
+        rdfs:seeAlso           <http://inspire.ec.europa.eu/codeList/ElevationReferenceValue> ;
+        iso19150-2:constraint  "highReferenceValue: /*highReferenceValue=\"entrancePoint\" or \"generalRoofEdge\" or \"lowestRoofEdge\" or \"highestRoofEdge\" or \"generalEave\" or \"lowestEave\" or \"highestEave\" or \"general Roof\" or \"topOfBuilding\" or \"highestPoint\"*/" ;
+        skos:definition        "Element used as the high reference."@en .
+
+bu-base:BuildingPart  a        owl:Class ;
+        rdfs:comment           "NOTE 1: A BuildingPart is homogeneous related to its physical, functional or temporal aspects. \r\n\r\nNOTE 2: Building and BuildingPart share the same set of properties.\r\nEXAMPLE: A building may be composed of two building parts having different heights above ground."@en ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/BuildingPart> ;
+        rdfs:label             "Building part"@en ;
+        rdfs:subClassOf        bu-base:AbstractBuilding , gsp:Feature ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "A BuildingPart is a sub-division of a Building that might be considered itself as a building."@en .
+
+bu-base:Elevation.elevationReference
+        a                owl:ObjectProperty ;
+        rdfs:domain      bu-base:Elevation ;
+        rdfs:label       "Elevation reference"@en ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codeList/ElevationReferenceValue> ;
+        skos:definition  "Element where the elevation was measured."@en .
+
+bu-base:AbstractConstruction.dateOfDemolition
+        a                owl:ObjectProperty ;
+        rdfs:domain      bu-base:AbstractConstruction ;
+        rdfs:label       "Date of demolition"@en ;
+        rdfs:range       bu-base:DateOfEvent ;
+        skos:definition  "Date of demolition."@en .
+
+bu-base:AbstractConstruction.conditionOfConstruction
+        a                owl:ObjectProperty ;
+        rdfs:comment     "EXAMPLES: functional, projected, ruin"@en ;
+        rdfs:domain      bu-base:AbstractConstruction ;
+        rdfs:label       "Condition of construction"@en ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codeList/ConditionOfConstructionValue> ;
+        skos:definition  "Status of the construction."@en .
+
+bu-base:verticalGeometryEstimatedAccuracy
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE: This mean value may come from quality measures on a homogeneous population of buildings or from an estimation based on the knowledge of the production processes and of their accuracy."@en ;
+        rdfs:label       "Vertical geometry estimated accuracy"@en ;
+        rdfs:range       base:Measure ;
+        skos:definition  "The estimated absolute positional accuracy of the Z coordinates of the  building geometry, in the INSPIRE official Coordinate Reference System. Absolute positional accuracy is defined as the mean value of the positional uncertainties for a set of positions where the positional uncertainties are defined as the distance between a measured position and what is considered as the corresponding true position."@en .
+
+bu-base:BuildingGeometry2D.geometry
+        a                   owl:ObjectProperty ;
+        rdfs:domain         bu-base:BuildingGeometry2D ;
+        rdfs:label          "Geometry"@en ;
+        rdfs:range          sfowl:Geometry ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasDefaultGeometry ;
+        skos:definition     "2D or 2.5D geometric representation"@en .
+
+<http://inspire.ec.europa.eu/ont/bu-base>
+        a                owl:Ontology ;
+        rdfs:label       "Building base"@en ;
+        owl:imports      <https://www.w3.org/ns/locn.ttl> , <http://www.opengis.net/ont/sf> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/ad/ad.ttl> , <http://www.w3.org/2004/02/skos/core> , <http://www.opengis.net/ont/geosparql> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <http://def.isotc211.org/iso19150-2/2012/base> ;
+        owl:versionIRI   "http://inspire.ec.europa.eu/ont/bu-base/4.0" ;
+        owl:versionInfo  "4.0" ;
+        skos:definition  "The base application schema for INSPIRE theme buildings."@en .
+
+bu-base:AbstractBuilding.numberOfDwellings
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "A dwelling is a residential unit which may consist of one or several rooms designed for the occupation of households.\r\nNOTE: In the data sets including building units, a dwelling is a residential building unit or, only when that building has no building units, a residential building<i>.</i>\r\nEXAMPLES: a single building dwelling could be a detached or semi-detached house.  A block of flats will contain multiple dwellings determined by the number of individual flats."@en ;
+        rdfs:domain      bu-base:AbstractBuilding ;
+        rdfs:label       "Number of dwellings"@en ;
+        rdfs:range       xsd:integer ;
+        skos:definition  "Number of dwellings."@en .
+
+bu-base:Building  a            owl:Class ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/Building> ;
+        rdfs:label             "Building"@en ;
+        rdfs:subClassOf        bu-base:AbstractBuilding , gsp:Feature ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "A Building is an enclosed <b>construction </b>above and/or underground, used or intended for the shelter of humans, animals or things or for the production of economic goods. A building refers to any structure permanently constructed or erected on its site."@en .
+
+bu-base:HeightAboveGround.value
+        a                      owl:DatatypeProperty ;
+        rdfs:domain            bu-base:HeightAboveGround ;
+        rdfs:label             "Value"@en ;
+        rdfs:range             base:Measure ;
+        iso19150-2:constraint  "valueUoM: /* Value shall be given in metres*/" , "value: /* value >= 0 */" ;
+        skos:definition        "Value of the height above ground."@en .
+
+bu-base:HeightAboveGround.lowReference
+        a                      owl:ObjectProperty ;
+        rdfs:comment           "EXAMPLE: the height of the building has been captured from its the lowest ground point."@en ;
+        rdfs:domain            bu-base:HeightAboveGround ;
+        rdfs:label             "Low reference"@en ;
+        rdfs:range             skos:Concept ;
+        rdfs:seeAlso           <http://inspire.ec.europa.eu/codeList/ElevationReferenceValue> ;
+        iso19150-2:constraint  "lowReference: /*lowReference=\"generalGround\" or \"lowestGroundPoint\" or \"highestGroundPoint\"*/" ;
+        skos:definition        "Element  as the low reference."@en .
+
+bu-base:BuildingGeometry2D.referenceGeometry
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE 1: In case of multiple representation by point and by surface, it is generally recommended to provide the surface as reference geometry.\r\nNOTE 2: The geometric representation whose referenceGeometry is true may also be used preferably for spatial queries by download services (WFS) or by Geographical Information System (GIS)."@en ;
+        rdfs:domain      bu-base:BuildingGeometry2D ;
+        rdfs:label       "Reference geometry"@en ;
+        rdfs:range       xsd:boolean ;
+        skos:definition  "The geometry to be taken into account by view services, for portrayal."@en .
+
+bu-base:HeightAboveGround
+        a                      owl:Class ;
+        rdfs:label             "Height above ground"@en ;
+        iso19150-2:constraint  "valueUoMIsMetre: /* Value shall be in meters. */" ;
+        skos:definition        "Vertical distance (measured or estimated) between a low reference and a high reference."@en .
+
+bu-base:Elevation  a     owl:Class ;
+        rdfs:label       "Elevation"@en ;
+        skos:definition  "This data types includes the elevation value itself  and information on how this elevation was measured."@en .
+
+bu-base:AbstractConstruction
+        a                      owl:Class ;
+        rdfs:comment           "The optional spatial object types that may be added to core profiles are described in the extended profiles. The ones inheriting from the attributes of AbstractConstruction are Installation and OtherConstruction."@en ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/AbstractConstruction> ;
+        rdfs:label             "Abstract construction"@en ;
+        rdfs:subClassOf        gsp:Feature ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "Abstract spatial object type grouping the semantic properties of  buildings, building parts and of some optional spatial object types that may be added in order to provide more information about the theme Buildings."@en .
+
+bu-base:AbstractConstruction.name
+        a                   owl:ObjectProperty ;
+        rdfs:comment        "EXAMPLES:  Big Ben, Eiffel Tower, Sacrada Familia"@en ;
+        rdfs:domain         bu-base:AbstractConstruction ;
+        rdfs:label          "Name"@en ;
+        rdfs:range          gn:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "Name of the construction."@en .
+
+bu-base:AbstractBuilding.numberOfFloorsAboveGround
+        a                owl:DatatypeProperty ;
+        rdfs:domain      bu-base:AbstractBuilding ;
+        rdfs:label       "Number of floors above ground"@en ;
+        rdfs:range       xsd:integer ;
+        skos:definition  "Number of floors above ground."@en .
+
+bu-base:AbstractConstruction.externalReference
+        a                owl:ObjectProperty ;
+        rdfs:comment     "EXAMPLE 1: Reference to another spatial data set containing another view on buildings; the externalReference may be used for instance to ensure consistency between 2D and 3D representations of the same buildings\r\n\r\nEXAMPLE 2: Reference to cadastral or dwelling register. The reference to this register may enable to find legal information related to the building, such as the owner(s) or valuation criteria (e.g. type of heating, toilet, kitchen)\r\n\r\nEXAMPLE 3: Reference to the system recording the building permits. The reference to the building permits may be used to find detailed information about the building physical and temporal aspects."@en ;
+        rdfs:domain      bu-base:AbstractConstruction ;
+        rdfs:label       "External reference"@en ;
+        rdfs:range       bu-base:ExternalReference ;
+        skos:definition  "Reference to an external information system containing any piece of information related to the spatial object."@en .
+
+bu-base:DateOfEvent.anyPoint
+        a                owl:DatatypeProperty ;
+        rdfs:domain      bu-base:DateOfEvent ;
+        rdfs:label       "Any point"@en ;
+        rdfs:range       xsd:dateTime ;
+        skos:definition  "A date and time of any point of the event, between its beginning and its end."@en .
+
+bu-base:CurrentUse.currentUse
+        a                owl:ObjectProperty ;
+        rdfs:comment     "EXAMPLE: trade"@en ;
+        rdfs:domain      bu-base:CurrentUse ;
+        rdfs:label       "Current use"@en ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codeList/CurrentUseValue> ;
+        skos:definition  "The current use."@en .
+
+bu-base:ExternalReference.reference
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE: This reference will act as a foreign key to implement the association between the spatial object in the INSPIRE data set and in the external information system.\r\nEXAMPLE: The cadastral reference of a given building in the national cadastral register."@en ;
+        rdfs:domain      bu-base:ExternalReference ;
+        rdfs:label       "Reference"@en ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Thematic identifier of the spatial object or of any piece of information related to the spatial object."@en .
+
+bu-base:AbstractConstruction.dateOfConstruction
+        a                owl:ObjectProperty ;
+        rdfs:domain      bu-base:AbstractConstruction ;
+        rdfs:label       "Date of construction"@en ;
+        rdfs:range       bu-base:DateOfEvent ;
+        skos:definition  "Date of construction."@en .
+
+bu-base:horizontalGeometryReference
+        a                owl:ObjectProperty ;
+        rdfs:label       "Horizontal geometry reference"@en ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codeList/HorizontalGeometryRefrenceValue> ;
+        skos:definition  "Element of the building that was captured by (X,Y) coordinates."@en .
+
+bu-base:CurrentUse.percentage
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE: The percentage of use is generally the percentage of floor area dedicated to this given use. If it is not the case, it is recommended to explain what the percentage refers to in metadata (template for additional information)\r\nEXAMPLE: 30 (if 30% of the building is occupied by trade activity)."@en ;
+        rdfs:domain      bu-base:CurrentUse ;
+        rdfs:label       "Percentage"@en ;
+        rdfs:range       xsd:integer ;
+        skos:definition  "The proportion of the real world object, given as a percentage, devoted to this current use."@en .
+
+bu-base:AbstractConstruction.elevation
+        a                owl:ObjectProperty ;
+        rdfs:comment     "Source: adapted from the definition given in the data specification of the theme Elevation."@en ;
+        rdfs:domain      bu-base:AbstractConstruction ;
+        rdfs:label       "Elevation"@en ;
+        rdfs:range       bu-base:Elevation ;
+        skos:definition  "Vertically-constrained dimensional property consisting of an absolute measure referenced to a well-defined surface which is commonly taken as origin (geoïd, water level, etc.)."@en .
+
+bu-base:DateOfEvent.end
+        a                owl:DatatypeProperty ;
+        rdfs:domain      bu-base:DateOfEvent ;
+        rdfs:label       "End"@en ;
+        rdfs:range       xsd:dateTime ;
+        skos:definition  "Date and time when the event ended."@en .
+
+bu-base:AbstractBuilding.numberOfBuildingUnits
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "Building units are spatial objects aimed at subdividing buildings and/or building parts into smaller parts that are treated as seperate entities in daily life. A building unit is homogeneous, regarding management aspects.\r\nEXAMPLES: It may be e.g. an apartment in a condominium, a terraced house, or a shop inside a shopping arcade.\r\nNOTE 1: According to national regulations, a building unit may be a flat, a cellar, a garage or set of a flat, a cellar and a garage.\r\nNOTE 2: According to national regulation, a building that is one entity for daily life (typically, a single family house) may be considered as a Building composed of one BuildingUnit or as a Building composed of zero BuildingUnit."@en ;
+        rdfs:domain      bu-base:AbstractBuilding ;
+        rdfs:label       "Number of building units"@en ;
+        rdfs:range       xsd:integer ;
+        skos:definition  "Number of building units in the building. A BuildingUnit is a subdivision of Building with its own lockable access from the outside or from a common area (i.e. not from another BuildingUnit), which is atomic, functionally independent, and may be separately sold, rented out, inherited, etc."@en .
+
+bu-base:AbstractBuilding
+        a                      owl:Class ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/AbstractBuilding> ;
+        rdfs:label             "Abstract building"@en ;
+        rdfs:subClassOf        bu-base:AbstractConstruction , gsp:Feature ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "Abstract spatial object type grouping the common semantic properties of the spatial object types Building and BuildingPart."@en .
+
+bu-base:CurrentUse  a          owl:Class ;
+        rdfs:label             "Current use"@en ;
+        iso19150-2:constraint  "percentageSum: The total of all percentages shall be less or equal to 100." ;
+        skos:definition        "This data type enables to detail the current use(s)."@en .
+
+bu-base:Elevation.elevationValue
+        a                      owl:ObjectProperty ;
+        rdfs:domain            bu-base:Elevation ;
+        rdfs:label             "elevation value"@en ;
+        rdfs:range             sfowl:Point ;
+        iso19150-2:constraint  "valueUoM: /'Value of Elevation has to be given in metre.*/" ;
+        skos:definition        "Value of the elevation."@en .
+
+bu-base:AbstractBuilding.buildingNature
+        a                owl:ObjectProperty ;
+        rdfs:comment     "This attribute focuses on the physical aspect of the building; however, this physical aspect is often expressed as a function (e.g. stadium, silo, windmill); this attribute aims to fulfil mainly mapping purposes and addresses only specific, noticeable buildings."@en ;
+        rdfs:domain      bu-base:AbstractBuilding ;
+        rdfs:label       "Building nature"@en ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codeList/BuildingNatureValue> ;
+        skos:definition  "Characteristic of the building that makes it generally of interest for mappings applications. The characteristic may be related to the physical aspect and/or to the function of the building."@en .
+
+bu-base:AbstractBuilding.currentUse
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE: . This attribute aims to fulfill management requirements, such as computation of population or spatial planning ; this classification aims to be exhaustive for the functional buildings hosting human activities."@en ;
+        rdfs:domain      bu-base:AbstractBuilding ;
+        rdfs:label       "Current use"@en ;
+        rdfs:range       bu-base:CurrentUse ;
+        skos:definition  "Activity hosted within the building. This attribute addresses mainly the buildings hosting human activities."@en .
+
+bu-base:HeightAboveGround.status
+        a                owl:ObjectProperty ;
+        rdfs:domain      bu-base:HeightAboveGround ;
+        rdfs:label       "Status"@en ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codeList/HeightStatusValue> ;
+        skos:definition  "The way the height has been captured."@en .
+
+bu-base:ExternalReference.informationSystem
+        a                owl:DatatypeProperty ;
+        rdfs:domain      bu-base:ExternalReference ;
+        rdfs:label       "Information system"@en ;
+        rdfs:range       xsd:anyURI ;
+        skos:definition  "Uniform Resource Identifier of the external information system."@en .
+
+bu-base:AbstractConstruction.dateOfRenovation
+        a                owl:ObjectProperty ;
+        rdfs:domain      bu-base:AbstractConstruction ;
+        rdfs:label       "Date of last major renovation"@en ;
+        rdfs:range       bu-base:DateOfEvent ;
+        skos:definition  "Date of last major renovation."@en .
+
+bu-base:Building.parts
+        a                owl:ObjectProperty ;
+        rdfs:comment     "A building may be a simple building (with no BuildingPart) or a composed building (with several BuildingParts)."@en ;
+        rdfs:domain      bu-base:Building ;
+        rdfs:range       bu-base:BuildingPart ;
+        skos:definition  "The building parts composing the Building."@en .
+
+bu-base:DateOfEvent.beginning
+        a                owl:DatatypeProperty ;
+        rdfs:domain      bu-base:DateOfEvent ;
+        rdfs:label       "Beginning"@en ;
+        rdfs:range       xsd:dateTime ;
+        skos:definition  "Date and time when the event begun."@en .
+
+bu-base:AbstractConstruction.heightAboveGround
+        a                      owl:ObjectProperty ;
+        rdfs:comment           "NOTE: height above ground may be defined as the difference between elevation at a low reference (ground level) and elevation as a high reference (e.g. roof level, top of construction)"@en ;
+        rdfs:domain            bu-base:AbstractConstruction ;
+        rdfs:label             "Height above ground"@en ;
+        rdfs:range             bu-base:HeightAboveGround ;
+        iso19150-2:constraint  "heightAboveGround: /*unit of heightAboveground must be metre*/" ;
+        skos:definition        "Height above ground."@en .
+
+bu-base:horizontalGeometryEstimatedAccuracy
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE: This mean value may come from quality measures on a homogeneous population of buildings or from an estimation based on the knowledge of the production processes and of their accuracy."@en ;
+        rdfs:label       "Horizontal geometry estimated accuracy"@en ;
+        rdfs:range       base:Measure ;
+        skos:definition  "The estimated absolute positional accuracy of the (X,Y) coordinates of the building geometry, in the INSPIRE official Coordinate Reference System. Absolute positional accuracy is defined as the mean value of the positional uncertainties for a set of positions where the positional uncertainties are defined as the distance between a measured position and what is considered as the corresponding true position."@en .

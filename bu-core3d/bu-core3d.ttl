@@ -1,0 +1,125 @@
+# This is a draft RDF vocabulary for representing spatial data sets in INSPIRE as RDF. This vocabulary has been created using the "Guidelines for the RDF encoding of spatial data" (http://inspire-eu-rdf.github.io/inspire-rdf-guidelines).
+#
+# The use of RDF is optional and does not supersede or replace the requirements regarding encoding specified in Clause 9 of the INSPIRE Data Specifications. This optional encoding is intended to support the e-government and open data community in Europe, which is increasingly looking at RDF to represent data.
+#
+# This is a draft version. It has limitations and is expected to contain errors. Please report any issues or concerns in GitHub (https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/issues).
+#
+# ------------------------------
+#
+#
+# This ontology contains classes and properties that have been derived from the INSPIRE "Buildings3D" application schema.
+#
+# The following properties have been encoded with global scope (see guidelines for further details):
+#  - Building.geometry3DLoD1
+#  - Building.geometry3DLoD2
+#  - Building.geometry3DLoD3
+#  - Building.geometry3DLoD4
+#
+# During the derivation, the following mappings, alignments, and omissions have been applied:
+# - Mappings:
+#   - GM_MultiCurve and GM_MultiSurface are mapped to the according classes from the Simple Feature ontology.
+#   - GM_Solid is mapped to the according class from the GML ontology.
+#   - Properties 'geometry2D' are mapped to the global property 'geometry2D' from the buildings 2D ontology.
+#   - Properties 'horizontalGeometryReference', 'verticalGeometryEstimatedAccuracy', and 'horizontalGeometryReference' are mapped to the according global properties from the buildings base ontology.
+#   - Properties 'BuildingPart.geometry3DLoDX' (with X=1,2,3,4) are mapped to the global properties 'geometry3DLoDX' (with X=1,2,3,4) from this ontology.
+#
+# - Alignments (through subsumption):
+#   - Spatial object types are aligned with gsp:Feature.
+#   - Properties with a geometry value type are aligned to locn:geometry and gsp:hasGeometry.
+#
+# - Omissions: none
+#
+# ------------------------------
+#
+#
+@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix sfowl: <http://www.opengis.net/ont/sf#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bu-base: <http://inspire.ec.europa.eu/ont/bu-base#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix gmlowl: <http://www.opengis.net/ont/gml#> .
+@prefix locn:  <https://www.w3.org/ns/locn#> .
+@prefix base:  <http://inspire.ec.europa.eu/ont/base#> .
+@prefix bu-core3d: <http://inspire.ec.europa.eu/ont/bu-core3d#> .
+
+bu-core3d:BuildingGeometry3DLoD1.verticalGeometryReference3DTop
+        a                owl:ObjectProperty ;
+        rdfs:comment     "EXAMPLE: generalRoof, lowestRoof Edge."@en ;
+        rdfs:domain      bu-core3d:BuildingGeometry3DLoD1 ;
+        rdfs:label       "Vertical geometry reference 3D top"@en ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codeList/ElevationReferenceValue> ;
+        skos:definition  "Height level  to which the upper height of the model (Z-value of the upper horizontal polygon) refers to."@en .
+
+bu-core3d:BuildingGeometry3DLoD.verticalGeometryReference3DBottom
+        a                owl:ObjectProperty ;
+        rdfs:comment     "EXAMPLE: generalGround, bottomOfConstruction."@en ;
+        rdfs:domain      bu-core3d:BuildingGeometry3DLoD ;
+        rdfs:label       "Vertical geometry reference 3D bottom"@en ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codeList/ElevationReferenceValue> ;
+        skos:definition  "Height level to which the lower height of the model (Z-value of the lower horizontal polygon) refers to."@en .
+
+bu-core3d:BuildingGeometry3DLoD1
+        a                      owl:Class ;
+        rdfs:label             "Building geometry 3D LoD 1"@en ;
+        rdfs:subClassOf        bu-core3d:BuildingGeometry3DLoD ;
+        iso19150-2:constraint  "oneGeometryToBeProvided: /*Either the geometryMultiSurface or the geometrySolid attribute shall be provided.*/" , "no point referencing in 3D: /*The horizontalGeometryReference attribute shall not take the value entrancePoint, pointInsideBuilding or pointInsideCadastralParcel.*/" ;
+        skos:definition        "Data type grouping the specific metadata attached to the 3D geometry, when provided by a LoD 1 representation."@en .
+
+bu-core3d:BuildingGeometry3DLoD.geometrySolid
+        a                   owl:ObjectProperty ;
+        rdfs:domain         bu-core3d:BuildingGeometry3DLoD ;
+        rdfs:label          "Geometry solid"@en ;
+        rdfs:range          gmlowl:Solid ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasGeometry ;
+        skos:definition     "Representation of the outer boundary by a solid."@en .
+
+<http://inspire.ec.europa.eu/ont/bu-core3d>
+        a                owl:Ontology ;
+        rdfs:label       "Building 3D"@en ;
+        owl:imports      <http://def.isotc211.org/iso19150-2/2012/base> , <http://www.opengis.net/ont/gml> , <https://www.w3.org/ns/locn.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/bu-base/bu-base.ttl> , <http://www.opengis.net/ont/sf> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <http://www.w3.org/2004/02/skos/core> , <http://www.opengis.net/ont/geosparql> ;
+        owl:versionIRI   "http://inspire.ec.europa.eu/ont/bu-core3d/4.0" ;
+        owl:versionInfo  "4.0" ;
+        skos:definition  "The 3D application schema for INSPIRE theme buildings."@en .
+
+bu-core3d:BuildingGeometry3DLoD2
+        a                      owl:Class ;
+        rdfs:label             "Building geometry 3D LoD 2"@en ;
+        rdfs:subClassOf        bu-core3d:BuildingGeometry3DLoD ;
+        iso19150-2:constraint  "oneGeometryToBeProvided: /*Either the geometryMultiSurface or the geometrySolid attribute shall be provided.*/" , "no point referencing in 3D: /*The horizontalGeometryReference attribute shall not take the value entrancePoint, pointInsideBuilding or pointInsideCadastralParcel.*/" ;
+        skos:definition        "Data type grouping the specific metadata attached to the 3D geometry, when provided by a LoD2 representation."@en .
+
+bu-core3d:BuildingGeometry3DLoD.geometryMultiSurface
+        a                   owl:ObjectProperty ;
+        rdfs:domain         bu-core3d:BuildingGeometry3DLoD ;
+        rdfs:label          "Geometry multi-surface"@en ;
+        rdfs:range          sfowl:MultiPolygon ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasGeometry ;
+        skos:definition     "Representation of the outer boundary by a Multi Surface, which may - in contrast to a solid representation - not be topologically clean. In particular, the ground surface may be missing."@en .
+
+bu-core3d:BuildingGeometry3DLoD
+        a                      owl:Class ;
+        rdfs:label             "Building geometry 3D LoD"@en ;
+        iso19150-2:constraint  "oneGeometryToBeProvided: /*Either the geometryMultiSurface or the geometrySolid attribute shall be provided.*/" ;
+        skos:definition        "Data type grouping the 3D geometry of a building or building part and the metadata information attached to this geometry."@en .
+
+bu-core3d:BuildingGeometry3DLoD.terrainIntersection
+        a                   owl:ObjectProperty ;
+        rdfs:domain         bu-core3d:BuildingGeometry3DLoD ;
+        rdfs:label          "Terrain intersection"@en ;
+        rdfs:range          sfowl:MultiLineString ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasGeometry ;
+        skos:definition     "Line or multi-line where the spatial object  (Building, BuildingPart, ...) touches the terrain representation."@en .
+
+bu-core3d:BuildingGeometry3DLoD.horizontalGeometryEstimatedAccuracy
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE: this mean value may come from quality measures on a homogeneous population of buildings or from an estimation based on the knowledge of the production processes and of their accuracy."@en ;
+        rdfs:domain      bu-core3d:BuildingGeometry3DLoD ;
+        rdfs:label       "Horizontal geometry estimated accuracy"@en ;
+        rdfs:range       base:Measure ;
+        skos:definition  "The estimated absolute positional accuracy of the (X,Y) coordinates of the geometry, in the INSPIRE official Coordinate Reference System. Absolute positional accuracy is defined as the mean value of the positional uncertainties for a set of positions where the positional uncertainties are defined as the distance between a measured position and what is considered as the corresponding true position."@en .

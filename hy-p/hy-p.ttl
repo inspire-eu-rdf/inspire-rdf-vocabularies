@@ -1,0 +1,485 @@
+# This is a draft RDF vocabulary for representing spatial data sets in INSPIRE as RDF. This vocabulary has been created using the "Guidelines for the RDF encoding of spatial data" (http://inspire-eu-rdf.github.io/inspire-rdf-guidelines).
+#
+# The use of RDF is optional and does not supersede or replace the requirements regarding encoding specified in Clause 9 of the INSPIRE Data Specifications. This optional encoding is intended to support the e-government and open data community in Europe, which is increasingly looking at RDF to represent data.
+#
+# This is a draft version. It has limitations and is expected to contain errors. Please report any issues or concerns in GitHub (https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/issues).
+#
+# ------------------------------
+#
+#
+# This ontology contains classes and properties that have been derived from the INSPIRE "Hydro - Physical Waters" application schema.
+#
+# During the derivation, the following mappings, alignments, and omissions have been applied:
+# - Mappings:
+#   - Code lists and enumerations are mapped to skos:Concept.
+#   - The properties 'beginLifespanVersion' and 'endLifespanVersion' are mapped to the global properties defined by the base ontology.
+#   - Geometry types are mapped to classes from the Simple Feature ontology.
+#
+# - Alignments (through subsumption):
+#   - Spatial object types are aligned with gsp:Feature.
+#   - Properties with a geometry value type are aligned to locn:geometry and gsp:hasDefaultGeometry.
+#
+# - Omissions:
+#   - Property 'inspireId' is omitted. See the guidelines for further details.
+#
+# ------------------------------
+#
+#
+@prefix hy:    <http://inspire.ec.europa.eu/ont/hy#> .
+@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix sfowl: <http://www.opengis.net/ont/sf#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
+@prefix hy-p:  <http://inspire.ec.europa.eu/ont/hy-p#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix locn:  <https://www.w3.org/ns/locn#> .
+@prefix base:  <http://inspire.ec.europa.eu/ont/base#> .
+
+hy-p:Falls  a             owl:Class ;
+        rdfs:comment      "SOURCE [Based on DFDD].\r\n\r\nEXAMPLE Waterfalls over a rock or a precipice."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/Falls> ;
+        rdfs:subClassOf   hy-p:FluvialPoint , gsp:Feature ;
+        skos:definition   "A vertically descending part of a watercourse where it falls from a height."@en .
+
+hy-p:HydroPointOfInterest
+        a                      owl:Class ;
+        rdfs:comment           "EXAMPLE Fluvial points (waterfall, cascade, rapids, breaker), spring/water hole (spring, source, geyser, thermal spring, natural fountain, well, also fumarole, artesian), sinkhole (sinkhole, drainage loss).\r\n\r\nNOTE A hydro point of interest may create a flow constriction in the network."@en ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/HydroPointOfInterest> ;
+        rdfs:subClassOf        hy:HydroObject , gsp:Feature ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "A natural place where water appears, disappears or changes its flow."@en .
+
+hy-p:DrainageBasin.area
+        a                owl:DatatypeProperty ;
+        rdfs:domain      hy-p:DrainageBasin ;
+        rdfs:range       base:Measure ;
+        skos:definition  "Size of the drainage basin area."@en .
+
+hy-p:ManMadeObject  a          owl:Class ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/ManMadeObject> ;
+        rdfs:subClassOf        hy:HydroObject , gsp:Feature ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "An artificial object which lies inside a body of water and has one of the following types of function:\r\n- Retains the water;\r\n- Regulates the quantity of water;\r\n- Alters the course of the water;\r\n- Allows watercourses to cross each other."@en .
+
+hy-p:DrainageBasin.outlet
+        a                owl:ObjectProperty ;
+        rdfs:domain      hy-p:DrainageBasin ;
+        rdfs:range       hy-p:SurfaceWater ;
+        skos:definition  "The surface water outlet(s) of a drainage basin."@en .
+
+hy-p:SurfaceWater.bank
+        a                owl:ObjectProperty ;
+        rdfs:domain      hy-p:SurfaceWater ;
+        rdfs:range       hy-p:Shore ;
+        skos:definition  "The bank(s) associated to a surface water."@en .
+
+hy-p:SurfaceWater.origin
+        a                owl:ObjectProperty ;
+        rdfs:comment     "SOURCE [Based on EuroRegionalMap].\r\n\r\nEXAMPLE Natural, man-made, etc.\r\n\r\nNOTE 1 Natural surface waters are natural watercourses (e.g. rivers, streams) and standing waters (e.g. pools, lakes) naturally preserved and that have been canalised and / or dammed either for navigation or for preventing flood disaster.\r\n\r\nNOTE 2 A man-made surface water is a surface water entirely created by man for drainage, storage or transportation purpose, this includes canals, ditches and reservoirs."@en ;
+        rdfs:domain      hy-p:SurfaceWater ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/enumeration/OriginValue> ;
+        skos:definition  "Origin of the surface water."@en .
+
+hy-p:ManMadeObject.levelOfDetail
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE The object is captured at a scale of this level of detail; rules apply for portrayal and visualisation."@en ;
+        rdfs:domain      hy-p:ManMadeObject ;
+        rdfs:range       rdf:langString ;
+        skos:definition  "Resolution, expressed as the inverse of an indicative scale or a ground distance."@en .
+
+hy-p:DrainageBasin.geometry
+        a                   owl:ObjectProperty ;
+        rdfs:domain         hy-p:DrainageBasin ;
+        rdfs:range          sfowl:Polygon ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasDefaultGeometry ;
+        skos:definition     "The geometry of the drainage basin, as a surface."@en .
+
+hy-p:HydroPointOfInterest.levelOfDetail
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE The object is captured at a scale of this level of detail; rules apply for portrayal and visualisation."@en ;
+        rdfs:domain      hy-p:HydroPointOfInterest ;
+        rdfs:range       rdf:langString ;
+        skos:definition  "Resolution, expressed as the inverse of an indicative scale or a ground distance."@en .
+
+hy-p:LandWaterBoundary.geometry
+        a                   owl:ObjectProperty ;
+        rdfs:domain         hy-p:LandWaterBoundary ;
+        rdfs:range          sfowl:LineString ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasDefaultGeometry ;
+        skos:definition     "The geometry of the land-water boundary, as a curve."@en .
+
+hy-p:HydroOrderCode  a   owl:Class ;
+        skos:definition  "A hydrologically meaningful 'order code' for ordering hierarchies of watercourses and drainage basins."@en .
+
+hy-p:Embankment  a        owl:Class ;
+        rdfs:comment      "SOURCE [DFDD].\r\n\r\nNOTE 1 Includes retaining walls, harbours, dikes.\r\n\r\nNOTE 2 Regarded as a candidate spatial object in Annex III theme 'Natural risk zones' due to its role in limiting flooding."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/Embankment> ;
+        rdfs:subClassOf   hy-p:ManMadeObject , gsp:Feature ;
+        skos:definition   "A man-made raised long mound of earth or other material."@en .
+
+hy-p:SurfaceWater.neighbour
+        a                owl:ObjectProperty ;
+        rdfs:domain      hy-p:SurfaceWater ;
+        rdfs:range       hy-p:SurfaceWater ;
+        skos:definition  "An association to another instance of the same real-world surface water in another data set."@en .
+
+hy-p:Wetland.localType
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "EXAMPLE Bog, swamp."@en ;
+        rdfs:domain      hy-p:Wetland ;
+        rdfs:range       rdf:langString ;
+        skos:definition  "Provides 'local' name for the type of wetland."@en .
+
+hy-p:RiverBasin  a             owl:Class ;
+        rdfs:comment           "SOURCE [2000/60/EC Art. 2(13)]."@en ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/RiverBasin> ;
+        rdfs:subClassOf        hy-p:DrainageBasin , gsp:Feature ;
+        iso19150-2:constraint  "largestBasinIsRiverBasin: /* A river basin may not be contained in any other basin */\r\ninv: self.containsBasin->forall(c | not c.oclIsTypeOf(RiverBasin))" ;
+        skos:definition        "The area of land from which all surface run-off flows through a sequence of streams, rivers and, possibly, lakes into the sea at a single river mouth, estuary or delta."@en .
+
+hy-p:Sluice  a            owl:Class ;
+        rdfs:comment      "SOURCE [DFDD]."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/Sluice> ;
+        rdfs:subClassOf   hy-p:ManMadeObject , gsp:Feature ;
+        skos:definition   "An open, inclined conduit fitted with a gate for regulating water flow."@en .
+
+hy-p:Watercourse.level
+        a                owl:ObjectProperty ;
+        rdfs:domain      hy-p:Watercourse ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/enumeration/VerticalPositionValue> ;
+        skos:definition  "Vertical location of watercourse relative to ground."@en .
+
+hy-p:DrainageBasin.basinOrder
+        a                owl:ObjectProperty ;
+        rdfs:domain      hy-p:DrainageBasin ;
+        rdfs:range       hy-p:HydroOrderCode ;
+        skos:definition  "Number (or code) expressing the degree of branching/dividing in a drainage basin system."@en .
+
+hy-p:WidthRange.lower
+        a                owl:DatatypeProperty ;
+        rdfs:domain      hy-p:WidthRange ;
+        rdfs:range       base:Measure ;
+        skos:definition  "Lower bound of width."@en .
+
+hy-p:SurfaceWater.localType
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "EXAMPLE Canal, channel, ditch, etc."@en ;
+        rdfs:domain      hy-p:SurfaceWater ;
+        rdfs:range       rdf:langString ;
+        skos:definition  "Provides 'local' name for the type of surface water."@en .
+
+hy-p:DamOrWeir  a         owl:Class ;
+        rdfs:comment      "SOURCE [EuroRegionalMap]."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/DamOrWeir> ;
+        rdfs:subClassOf   hy-p:ManMadeObject , gsp:Feature ;
+        skos:definition   "A permanent barrier across a watercourse used to impound water or to control its flow."@en .
+
+hy-p:StandingWater.elevation
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "SOURCE [Based on EuroRegionalMap]."@en ;
+        rdfs:domain      hy-p:StandingWater ;
+        rdfs:range       base:Measure ;
+        skos:definition  "Elevation above mean sea level."@en .
+
+hy-p:WidthRange.upper
+        a                owl:DatatypeProperty ;
+        rdfs:domain      hy-p:WidthRange ;
+        rdfs:range       base:Measure ;
+        skos:definition  "Upper bound of width."@en .
+
+hy-p:Watercourse  a            owl:Class ;
+        rdfs:comment           "SOURCE [EuroRegionalMap]."@en ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/Watercourse> ;
+        rdfs:subClassOf        hy-p:SurfaceWater , gsp:Feature ;
+        iso19150-2:constraint  "onlyManmadeHasConditionAttr: /* A condition attribute may be specified only for a man-made watercourse */\r\ninv: (self->count(condition)=1) implies (self.origin=OriginType::manMade)" , "geometryIsCurveOrSurface: Watercourse geometry may be a curve or surface" , "banksShallBeDifferentShoreObjects: /*The shores on either side of a watercourse shall be provided (using the bank property) as two separate Shore objects.*/" ;
+        skos:definition        "A natural or man-made flowing watercourse or stream."@en .
+
+hy-p:HydroOrderCode.order
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "SOURCE [Based on UNESCO/WMO International Glossary of Hydrology]."@en ;
+        rdfs:domain      hy-p:HydroOrderCode ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Number (or code) expressing the degree of branching or dividing in a stream or drainage basin system."@en .
+
+hy-p:Wetland.geometry
+        a                   owl:ObjectProperty ;
+        rdfs:domain         hy-p:Wetland ;
+        rdfs:range          sfowl:Polygon ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasDefaultGeometry ;
+        skos:definition     "The geometry of the wetland, as a surface."@en .
+
+hy-p:Falls.height  a     owl:DatatypeProperty ;
+        rdfs:comment     "SOURCE [DFDD]."@en ;
+        rdfs:domain      hy-p:Falls ;
+        rdfs:range       base:Measure ;
+        skos:definition  "Distance measured from the lowest point of the base at ground or water level (downhill side/downstream side) to the tallest point of the spatial object."@en .
+
+hy-p:DrainageBasin.origin
+        a                owl:ObjectProperty ;
+        rdfs:comment     "EXAMPLE Natural, man-made, etc.\r\n\r\nNOTE A polder is a drainage basin of man-made origin."@en ;
+        rdfs:domain      hy-p:DrainageBasin ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/enumeration/OriginValue> ;
+        skos:definition  "Origin of the drainage basin."@en .
+
+hy-p:LandWaterBoundary.waterLevelCategory
+        a                owl:ObjectProperty ;
+        rdfs:comment     "EXAMPLE High water, low water, etc."@en ;
+        rdfs:domain      hy-p:LandWaterBoundary ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/WaterLevelValue> ;
+        skos:definition  "Water-level defining the land-water boundary."@en .
+
+hy-p:SurfaceWater.geometry
+        a                   owl:ObjectProperty ;
+        rdfs:domain         hy-p:SurfaceWater ;
+        rdfs:range          sfowl:Geometry ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasDefaultGeometry ;
+        skos:definition     "The geometry of the surface water:\r\n- either a curve or surface for a watercourse;\r\n- either a point or surface for a standing water."@en .
+
+hy-p:SurfaceWater.tidal
+        a                owl:DatatypeProperty ;
+        rdfs:domain      hy-p:SurfaceWater ;
+        rdfs:range       xsd:boolean ;
+        skos:definition  "Identifies whether the surface water is affected by tidal water."@en .
+
+hy-p:Watercourse.width
+        a                owl:ObjectProperty ;
+        rdfs:domain      hy-p:Watercourse ;
+        rdfs:range       hy-p:WidthRange ;
+        skos:definition  "Width of watercourse (as a range) along its length."@en .
+
+hy-p:Crossing  a          owl:Class ;
+        rdfs:comment      "EXAMPLE Aqueduct, bridge, culvert, siphon."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/Crossing> ;
+        rdfs:subClassOf   hy-p:ManMadeObject , gsp:Feature ;
+        skos:definition   "A man-made object allowing the passage of water above or below an obstacle."@en .
+
+hy-p:StandingWater  a          owl:Class ;
+        rdfs:comment           "SOURCE [DFDD].\r\n\r\nNOTE It may occur in a natural terrain depression in which water collects, or may be impounded by a dam, or formed by its bed being hollowed out of the soil, or formed by embanking and/or damming up a natural hollow (for example: by a beaver dam). It may be connected to inflowing / outflowing watercourses or other standing waters."@en ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/StandingWater> ;
+        rdfs:subClassOf        hy-p:SurfaceWater , gsp:Feature ;
+        iso19150-2:constraint  "geometryIsSurfaceOrPoint: Standing water geometry may be a surface or point" ;
+        skos:definition        "A body of water that is entirely surrounded by land."@en .
+
+hy-p:SurfaceWater.persistence
+        a                owl:ObjectProperty ;
+        rdfs:comment     "SOURCE [Based on DFDD]."@en ;
+        rdfs:domain      hy-p:SurfaceWater ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/HydrologicalPersistenceValue> ;
+        skos:definition  "The degree of persistence of water."@en .
+
+hy-p:Shore.geometry  a      owl:ObjectProperty ;
+        rdfs:domain         hy-p:Shore ;
+        rdfs:range          sfowl:MultiPolygon ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasDefaultGeometry ;
+        skos:definition     "The geometry of the shore."@en .
+
+hy-p:ShorelineConstruction
+        a                 owl:Class ;
+        rdfs:comment      "SOURCE [DFDD].\r\n\r\nNOTE 1 It is usually fixed to the waterbody bottom (for example: a mole) but may occasionally be fixed in position (for example: attached to the shore at one end and held between pilings at the other) but floating. Shoreline constructions are normally used for berthing and/or protection.\r\n\r\nNOTE 2 Includes breakwater/groyne/wharf; but has more flexibility - also applies to inland waters."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/ShorelineConstruction> ;
+        rdfs:subClassOf   hy-p:ManMadeObject , gsp:Feature ;
+        skos:definition   "An artificial structure attached to land bordering a body of water and fixed in position."@en .
+
+hy-p:Rapids  a            owl:Class ;
+        rdfs:comment      "SOURCE [DFDD]."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/Rapids> ;
+        rdfs:subClassOf   hy-p:FluvialPoint , gsp:Feature ;
+        skos:definition   "Portions of a stream with accelerated current where it descends rapidly but without a break in the slope of the bed sufficient to form a waterfall."@en .
+
+hy-p:ManMadeObject.condition
+        a                owl:ObjectProperty ;
+        rdfs:comment     "SOURCE [DFDD]."@en ;
+        rdfs:domain      hy-p:ManMadeObject ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codeList/ConditionOfFacilityValue> ;
+        skos:definition  "The state of planning, construction, repair, and/or maintenance of the structures and/or equipment comprising a facility and/or located at a site, as a whole."@en .
+
+hy-p:Wetland.tidal  a    owl:DatatypeProperty ;
+        rdfs:domain      hy-p:Wetland ;
+        rdfs:range       xsd:boolean ;
+        skos:definition  "Identifies whether the wetland is affected by tidal water."@en .
+
+hy-p:StandingWater.surfaceArea
+        a                owl:DatatypeProperty ;
+        rdfs:domain      hy-p:StandingWater ;
+        rdfs:range       base:Measure ;
+        skos:definition  "Surface area of the body of water."@en .
+
+hy-p:ManMadeObject.geometry
+        a                   owl:ObjectProperty ;
+        rdfs:domain         hy-p:ManMadeObject ;
+        rdfs:range          sfowl:Geometry ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasDefaultGeometry ;
+        skos:definition     "The geometry of the man-made object, as a point, curve or surface."@en .
+
+hy-p:WidthRange  a       owl:Class ;
+        skos:definition  "The range of a watercourse's horizontal width along its length."@en .
+
+hy-p:Shore.composition
+        a                owl:ObjectProperty ;
+        rdfs:comment     "<font color=\"#1a1a1a\">SOURCE  [Based on DFDD].</font>\r\n\r\n<font color=\"#1a1a1a\">NOTE The basis for 'primary' may be, for example, compositional dominance or structural organization.</font>"@en ;
+        rdfs:domain      hy-p:Shore ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/ShoreTypeValue> ;
+        skos:definition  "<font color=\"#1a1a1a\">The primary type(s) of material composing a spatial object, exclusive of the surface.</font>"@en .
+
+hy-p:SurfaceWater  a           owl:Class ;
+        rdfs:comment           "SOURCE [Based on DFDD].\r\n\r\nEXAMPLE Lake/pond, reservoir, river/stream, etc.\r\n\r\nNOTE May include islands, represented as 'holes' in its geometry. Islands may be surrounded by a shore and / or land-ware boundary."@en ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/SurfaceWater> ;
+        rdfs:subClassOf        hy:HydroObject , gsp:Feature ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "Any known inland waterway body."@en .
+
+<http://inspire.ec.europa.eu/ont/hy-p>
+        a                owl:Ontology ;
+        owl:imports      <http://def.isotc211.org/iso19150-2/2012/base> , <http://www.opengis.net/ont/geosparql> , <http://www.w3.org/2004/02/skos/core> , <http://inspire.ec.europa.eu/ont/hy> , <http://www.opengis.net/ont/sf> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <https://www.w3.org/ns/locn.ttl> ;
+        owl:versionIRI   "http://inspire.ec.europa.eu/ont/hy-p/4.0" ;
+        owl:versionInfo  "4.0" ;
+        skos:definition  "The 'PhysicalWaters' application schema is concerned primarily with the 'mapping' Use Case"@en .
+
+hy-p:Wetland  a           owl:Class ;
+        rdfs:comment      "SOURCE [EuroRegionalMap].\r\n\r\nEXAMPLE Marsh/swamp, bog/moor.\r\n\r\nNOTE Regarded as a candidate spatial object in Annex II theme 'Land cover' due to explicit mention in 2007/2/EC Ann. II 2."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/Wetland> ;
+        rdfs:subClassOf   hy:HydroObject , gsp:Feature ;
+        skos:definition   "A poorly drained or periodically flooded area where the soil is saturated with water, and vegetation is supported."@en .
+
+hy-p:HydroOrderCode.orderScheme
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "EXAMPLE Strahler, Horton, Pfaffstetter etc."@en ;
+        rdfs:domain      hy-p:HydroOrderCode ;
+        rdfs:range       xsd:string ;
+        skos:definition  "A description of the concept for ordering."@en .
+
+hy-p:Crossing.type  a    owl:ObjectProperty ;
+        rdfs:domain      hy-p:Crossing ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/CrossingTypeValue> ;
+        skos:definition  "The type of physical crossing."@en .
+
+hy-p:DrainageBasin  a          owl:Class ;
+        rdfs:comment           "SOURCE [UNESCO/WMO International Glossary of Hydrology].\r\n\r\nNOTE 1 Regarding the different classifications of drainage basins, no distinction is made between drainage basins / sub-basins since this will vary with application. It is possible to build basins from other basins.\r\n\r\nNOTE 2 The outlet of a drainage basin may be a canal or a lake.\r\n\r\nNOTE 3 Synonyms for drainage basin include: catchment; catchment area; drainage area; river basin; watershed."@en ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/DrainageBasin> ;
+        rdfs:subClassOf        hy:HydroObject , gsp:Feature ;
+        iso19150-2:constraint  "largestBasinIsRiverBasin: /* A river basin may not be contained in any other basin */\r\ninv: self.containsBasin->forall(c | not c.oclIsTypeOf(RiverBasin))" ;
+        skos:definition        "Area having a common outlet for its surface runoff."@en .
+
+hy-p:LandWaterBoundary.origin
+        a                owl:ObjectProperty ;
+        rdfs:comment     "EXAMPLE Natural, man-made, etc.; a sea defence is a land-water boundary of man-made origin."@en ;
+        rdfs:domain      hy-p:LandWaterBoundary ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/enumeration/OriginValue> ;
+        skos:definition  "Origin of the land-water boundary."@en .
+
+hy-p:Watercourse.streamOrder
+        a                owl:ObjectProperty ;
+        rdfs:comment     "SOURCE [Based on UNESCO/WMO International Glossary of Hydrology]."@en ;
+        rdfs:domain      hy-p:Watercourse ;
+        rdfs:range       hy-p:HydroOrderCode ;
+        skos:definition  "Number (or code) expressing the degree of branching in a stream system."@en .
+
+hy-p:Watercourse.condition
+        a                owl:ObjectProperty ;
+        rdfs:comment     "SOURCE [Based on DFDD].\r\n\r\nNOTE Only relevant for a man-made watercourse."@en ;
+        rdfs:domain      hy-p:Watercourse ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codeList/ConditionOfFacilityValue> ;
+        skos:definition  "The state of planning, construction, repair, and/or maintenance of a watercourse."@en .
+
+hy-p:Lock  a              owl:Class ;
+        rdfs:comment      "SOURCE [DFDD]."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/Lock> ;
+        rdfs:subClassOf   hy-p:ManMadeObject , gsp:Feature ;
+        skos:definition   "An enclosure with a pair or series of gates used for raising or lowering vessels as they pass from one water level to another."@en .
+
+hy-p:FluvialPoint  a           owl:Class ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/FluvialPoint> ;
+        rdfs:subClassOf        hy-p:HydroPointOfInterest , gsp:Feature ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "A hydro point of interest that affects the flow of a watercourse."@en .
+
+hy-p:DrainageBasin.containsBasin
+        a                owl:ObjectProperty ;
+        rdfs:domain      hy-p:DrainageBasin ;
+        rdfs:range       hy-p:DrainageBasin ;
+        skos:definition  "A smaller sub-basin contained within a larger basin."@en .
+
+hy-p:StandingWater.meanDepth
+        a                owl:DatatypeProperty ;
+        rdfs:domain      hy-p:StandingWater ;
+        rdfs:range       base:Measure ;
+        skos:definition  "Average depth of the body of water."@en .
+
+hy-p:HydroOrderCode.scope
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE In the case of a national hydrographic identifier it may start with a two-letter country code as per ISO 3166-1-Alpha-2."@en ;
+        rdfs:domain      hy-p:HydroOrderCode ;
+        rdfs:range       xsd:string ;
+        skos:definition  "An indicator of the scope or origin for an order code (including whether it is national, supranational or European)."@en .
+
+hy-p:SurfaceWater.levelOfDetail
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE The object is captured at a scale of this level of detail; rules apply for portrayal and visualisation."@en ;
+        rdfs:domain      hy-p:SurfaceWater ;
+        rdfs:range       rdf:langString ;
+        skos:definition  "Resolution, expressed as the inverse of an indicative scale or a ground distance."@en .
+
+hy-p:HydroPointOfInterest.geometry
+        a                   owl:ObjectProperty ;
+        rdfs:domain         hy-p:HydroPointOfInterest ;
+        rdfs:range          sfowl:Geometry ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasDefaultGeometry ;
+        skos:definition     "The geometry of the hydro point of interest, as a point, curve or surface."@en .
+
+hy-p:Watercourse.length
+        a                owl:DatatypeProperty ;
+        rdfs:domain      hy-p:Watercourse ;
+        rdfs:range       base:Measure ;
+        skos:definition  "Length of the watercourse."@en .
+
+hy-p:SurfaceWater.drainsBasin
+        a                owl:ObjectProperty ;
+        rdfs:domain      hy-p:SurfaceWater ;
+        rdfs:range       hy-p:DrainageBasin ;
+        skos:definition  "The basin(s) drained by a surface water."@en .
+
+hy-p:Shore  a             owl:Class ;
+        rdfs:comment      "SOURCE [IHO S-32].\r\n\r\nNOTE Regarded as a candidate spatial object in Annex II theme 'Land cover' due to unconsolidated shore inclusion in coastal land-cover classificaction schemes."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/Shore> ;
+        rdfs:subClassOf   hy:HydroObject , gsp:Feature ;
+        skos:definition   "The narrow strip of land in immediate contact with any body of water including the area between high and low water lines."@en .
+
+hy-p:Shore.delineationKnown
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "SOURCE [Based on DFDD]."@en ;
+        rdfs:domain      hy-p:Shore ;
+        rdfs:range       xsd:boolean ;
+        skos:definition  "An indication that the delineation (for example: limits and information) of a spatial object is known."@en .
+
+hy-p:LandWaterBoundary
+        a                 owl:Class ;
+        rdfs:comment      "SOURCE [DFDD].\r\n\r\nNOTE The plane of reference for the land-water boundary should be a high water datum, such as 'Mean High Water Springs', 'High Water' or 'Mean Higher High Water'. Where there is little appreciable change in waterlevels / tide at the adjacent shore, then 'Mean Sea Level' or 'Local Datum' may be used."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/LandWaterBoundary> ;
+        rdfs:subClassOf   gsp:Feature ;
+        skos:definition   "The line where a land mass is in contact with a body of water."@en .
+
+hy-p:Watercourse.delineationKnown
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "SOURCE [DFDD].\r\n\r\nEXAMPLE The delineation may not be known in the following situations:\r\n- an underground watercourse\r\n- real underground network segment (pipeline or natural network section)\r\n- transition area between a broad river and a smaller tributary"@en ;
+        rdfs:domain      hy-p:Watercourse ;
+        rdfs:range       xsd:boolean ;
+        skos:definition  "An indication that the delineation (for example: limits and information) of a spatial object is known."@en .
+
+hy-p:Ford  a              owl:Class ;
+        rdfs:comment      "SOURCE [DFDD]."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/Ford> ;
+        rdfs:subClassOf   hy-p:ManMadeObject , gsp:Feature ;
+        skos:definition   "A shallow part of a watercourse used as a road crossing."@en .

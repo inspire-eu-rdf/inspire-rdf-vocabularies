@@ -1,0 +1,246 @@
+# This is a draft RDF vocabulary for representing spatial data sets in INSPIRE as RDF. This vocabulary has been created using the "Guidelines for the RDF encoding of spatial data" (http://inspire-eu-rdf.github.io/inspire-rdf-guidelines).
+#
+# The use of RDF is optional and does not supersede or replace the requirements regarding encoding specified in Clause 9 of the INSPIRE Data Specifications. This optional encoding is intended to support the e-government and open data community in Europe, which is increasingly looking at RDF to represent data.
+#
+# This is a draft version. It has limitations and is expected to contain errors. Please report any issues or concerns in GitHub (https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/issues).
+#
+# ------------------------------
+#
+#
+# This ontology contains classes and properties that have been derived from the INSPIRE "Common Transport Elements" application schema.
+#
+# During the derivation, the following mappings, alignments, and omissions have been applied:
+# - Mappings:
+#   - Code lists and enumerations are mapped to skos:Concept.
+#   - The properties 'validFrom' and 'validTo' are mapped to the global properties defined by the base ontology.
+#   - Geometry types are mapped to classes from the Simple Feature ontology.
+#
+# - Alignments (through subsumption):
+#   - Spatial object types are aligned with gsp:Feature.
+#   - Properties with value type 'GeographicalName' are aligned to property locn:geographicName.
+#   - Properties with a geometry value type are aligned to locn:geometry and gsp:hasDefaultGeometry.
+#
+# - Omissions:
+#   - Property 'inspireId' is omitted. See the guidelines for further details.
+#
+# ------------------------------
+#
+#
+@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix sfowl: <http://www.opengis.net/ont/sf#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix gn:    <http://inspire.ec.europa.eu/ont/ad#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix tn:    <http://inspire.ec.europa.eu/ont/tn#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix net:   <http://inspire.ec.europa.eu/ont/net#> .
+@prefix locn:  <https://www.w3.org/ns/locn#> .
+@prefix base:  <http://inspire.ec.europa.eu/ont/base#> .
+
+tn:TransportObject  a          owl:Class ;
+        rdfs:comment           "NOTE Derived 'views' of real-world transport objects are represented through specialisations in other application schemas; all representations of the same real-world object share a common geographic name."@en ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/TransportObject> ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "An identity base for transport network objects in the real world."@en .
+
+tn:TransportObject.geographicalName
+        a                   owl:ObjectProperty ;
+        rdfs:domain         tn:TransportObject ;
+        rdfs:range          gn:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "A geographical name that is used to identify the transport network object in the real world. It provides a 'key' for implicitly associating different representations of the object."@en .
+
+tn:MaintenanceAuthority.authority
+        a                owl:ObjectProperty ;
+        rdfs:domain      tn:MaintenanceAuthority ;
+        rdfs:range       owl:Class ;
+        skos:definition  "Identification of the maintenance authority."@en .
+
+tn:AccessRestriction  a   owl:Class ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/AccessRestriction> ;
+        rdfs:subClassOf   tn:TransportProperty , gsp:Feature ;
+        skos:definition   "A restriction on the access to a transport element."@en .
+
+tn:TransportNetwork.typeOfTransport
+        a                owl:ObjectProperty ;
+        rdfs:domain      tn:TransportNetwork ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/enumeration/TransportTypeValue> ;
+        skos:definition  "Type of transport network, based on the type of infrastructure the network uses."@en .
+
+tn:OwnerAuthority.authority
+        a                owl:ObjectProperty ;
+        rdfs:domain      tn:OwnerAuthority ;
+        rdfs:range       owl:Class ;
+        skos:definition  "Identification of the owning authority."@en .
+
+tn:RestrictionForVehicles.restrictionType
+        a                owl:ObjectProperty ;
+        rdfs:comment     "SOURCE [Euroroads]."@en ;
+        rdfs:domain      tn:RestrictionForVehicles ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/RestrictionTypeValue> ;
+        skos:definition  "The type of restriction ."@en .
+
+tn:RestrictionForVehicles.measure
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "SOURCE [Euroroads]."@en ;
+        rdfs:domain      tn:RestrictionForVehicles ;
+        rdfs:range       base:Measure ;
+        skos:definition  "The measure for the restriction ."@en .
+
+tn:MarkerPost.location
+        a                owl:DatatypeProperty ;
+        rdfs:domain      tn:MarkerPost ;
+        rdfs:range       base:Measure ;
+        skos:definition  "Distance from the beginning of the route, or some other reference point, to the point where a marker post is located."@en .
+
+<http://inspire.ec.europa.eu/ont/tn>
+        a                owl:Ontology ;
+        owl:imports      <https://www.w3.org/ns/locn.ttl> , <http://def.isotc211.org/iso19150-2/2012/base> , <http://www.w3.org/2004/02/skos/core> , <http://www.opengis.net/ont/geosparql> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/net/net.ttl> , <http://www.opengis.net/ont/sf> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/ad/ad.ttl> ;
+        owl:versionIRI   "http://inspire.ec.europa.eu/ont/tn/4.0" ;
+        owl:versionInfo  "4.0" ;
+        skos:definition  "This package defines the types that are common for all transport networks subthemes."@en .
+
+tn:AccessRestriction.restriction
+        a                owl:ObjectProperty ;
+        rdfs:domain      tn:AccessRestriction ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/AccessRestrictionValue> ;
+        skos:definition  "Nature of the access restriction."@en .
+
+tn:TransportPoint  a           owl:Class ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/TransportPoint> ;
+        rdfs:subClassOf        tn:TransportObject , net:NetworkElement , gsp:Feature ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "A point spatial object - which is not a node - that represents the position of an element of a transport network."@en .
+
+tn:TransportLinkSequence
+        a                      owl:Class ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/TransportLinkSequence> ;
+        rdfs:subClassOf        tn:TransportObject , net:LinkSequence , gsp:Feature ;
+        iso19150-2:constraint  "All components belong to same transport network: /* A transport link sequence must be composed of transport links that all belong to the same transport network. */" ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "A linear spatial object, composed of an ordered collection of transport links, which represents a continuous path in the transport network without any branches. The element has a defined beginning and end and every position on the transport link sequence is identifiable with one single parameter such as length. It describes an element of the transport network, characterized by one or more thematical identifiers and/or properties."@en .
+
+tn:TransportArea  a            owl:Class ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/TransportArea> ;
+        rdfs:subClassOf        tn:TransportObject , net:NetworkArea , gsp:Feature ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "Surface that represents the spatial extent of an element of a transport network."@en .
+
+tn:TrafficFlowDirection.direction
+        a                owl:ObjectProperty ;
+        rdfs:domain      tn:TrafficFlowDirection ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/LinkDirectionValue> ;
+        skos:definition  "Indicates the direction of the flow of traffic."@en .
+
+tn:VerticalPosition  a    owl:Class ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/VerticalPosition> ;
+        rdfs:subClassOf   tn:TransportProperty , gsp:Feature ;
+        skos:definition   "Vertical level relative to other transport network elements."@en .
+
+tn:VerticalPosition.verticalPosition
+        a                owl:ObjectProperty ;
+        rdfs:domain      tn:VerticalPosition ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/enumeration/VerticalPositionValue> ;
+        skos:definition  "Relative vertical position of the transport element."@en .
+
+tn:TransportProperty  a        owl:Class ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/TransportProperty> ;
+        rdfs:subClassOf        net:NetworkProperty , gsp:Feature ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "A reference to a property that falls upon the network. This property can apply to the whole of the network element it is associated with or - for linear spatial objects - be described using linear referencing."@en .
+
+tn:TransportPoint.geometry
+        a                   owl:ObjectProperty ;
+        rdfs:domain         tn:TransportPoint ;
+        rdfs:range          sfowl:Point ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasDefaultGeometry ;
+        skos:definition     "The location of the transport point."@en .
+
+tn:MaintenanceAuthority
+        a                 owl:Class ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/MaintenanceAuthority> ;
+        rdfs:subClassOf   tn:TransportProperty , gsp:Feature ;
+        skos:definition   "The authority responsible for maintenance of the transport element."@en .
+
+tn:TransportLinkSet  a         owl:Class ;
+        rdfs:comment           "NOTE\r\nThis spatial object type supports the aggregation of links to form objects with branches, loops, parallel sequences of links, gaps, etc.\r\n\r\nEXAMPLE\r\nA dual carriageway road, as a collection of the two link sequences that represent each carriageway."@en ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/TransportLinkSet> ;
+        rdfs:subClassOf        tn:TransportObject , net:LinkSet , gsp:Feature ;
+        iso19150-2:constraint  "All components belong to same transport network: /* A transport link set must be composed of transport links and or transport link sequences that all belong to the same transport network. */" ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "A collection of transport link sequences and or individual transport links that has a specific function or significance in a transport network."@en .
+
+tn:MarkerPost.route  a   owl:ObjectProperty ;
+        rdfs:domain      tn:MarkerPost ;
+        rdfs:range       tn:TransportLinkSet ;
+        skos:definition  "Route in a transport network along which the marker post is placed."@en .
+
+tn:ConditionOfFacility.currentStatus
+        a                owl:ObjectProperty ;
+        rdfs:domain      tn:ConditionOfFacility ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codeList/ConditionOfFacilityValue> ;
+        skos:definition  "Current status value of a transport network element with regards to its completion and use."@en .
+
+tn:TransportLink  a            owl:Class ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/TransportLink> ;
+        rdfs:subClassOf        tn:TransportObject , net:Link , gsp:Feature ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "A linear spatial object that describes the geometry and connectivity of a transport network between two points in the network."@en .
+
+tn:TransportNetwork  a    owl:Class ;
+        rdfs:comment      "NOTE Road, rail, water and air transport are always considered separate transport modes. Even within these four categories, multiple modes of transport can be defined, based on infrastructure, vehicle types, propulsion system, operation and/or other defining characteristics.\r\n\r\nEXAMPLE All road transport can be considered one mode of transport for some applications. For other applications, it might be necessary to distinguish between different public road transport networks. Within water transport, marine and inland water transport can be considered to be separate modes of transport for some applications, as they use different types of ships."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/TransportNetwork> ;
+        rdfs:subClassOf   net:Network , gsp:Feature ;
+        skos:definition   "Collection of network elements that belong to a single mode of transport."@en .
+
+tn:TrafficFlowDirection
+        a                      owl:Class ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/TrafficFlowDirection> ;
+        rdfs:subClassOf        tn:TransportProperty , gsp:Feature ;
+        iso19150-2:constraint  "Applies to Link and LinkSequence only: /* This property can only be associated with a spatial object of the type Link or LinkSequence. */" ;
+        skos:definition        "Indicates the direction of the flow of traffic in relation to the direction of the transport link vector."@en .
+
+tn:MarkerPost  a          owl:Class ;
+        rdfs:comment      "EXAMPLE Examples of routes along which marker posts can be found are roads, railway lines and navigable waterways."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/MarkerPost> ;
+        rdfs:subClassOf   tn:TransportPoint , gsp:Feature ;
+        skos:definition   "Reference marker placed along a route in a transport network, mostly at regular intervals, indicating the distance from the beginning of the route, or some other reference point, to the point where the marker is located."@en .
+
+tn:RestrictionForVehicles
+        a                 owl:Class ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/RestrictionForVehicles> ;
+        rdfs:subClassOf   tn:TransportProperty , gsp:Feature ;
+        skos:definition   "Restriction on vehicles on a transport element."@en .
+
+tn:ConditionOfFacility
+        a                 owl:Class ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/ConditionOfFacility> ;
+        rdfs:subClassOf   tn:TransportProperty , gsp:Feature ;
+        skos:definition   "State of a transport network element with regards to its completion and use."@en .
+
+tn:OwnerAuthority  a      owl:Class ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/OwnerAuthority> ;
+        rdfs:subClassOf   tn:TransportProperty , gsp:Feature ;
+        skos:definition   "The authority owning the transport element."@en .
+
+tn:TransportLinkSet.post
+        a                owl:ObjectProperty ;
+        rdfs:domain      tn:TransportLinkSet ;
+        rdfs:range       tn:MarkerPost ;
+        skos:definition  "Marker post along a route in a transport network."@en .
+
+tn:TransportNode  a            owl:Class ;
+        rdfs:comment           "Nodes are found at either end of the TransportLink."@en ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/TransportNode> ;
+        rdfs:subClassOf        tn:TransportObject , net:Node , gsp:Feature ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "A point spatial object which is used for connectivity."@en .

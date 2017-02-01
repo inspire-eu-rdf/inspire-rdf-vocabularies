@@ -1,0 +1,92 @@
+# This is a draft RDF vocabulary for representing spatial data sets in INSPIRE as RDF. This vocabulary has been created using the "Guidelines for the RDF encoding of spatial data" (http://inspire-eu-rdf.github.io/inspire-rdf-guidelines).
+#
+# The use of RDF is optional and does not supersede or replace the requirements regarding encoding specified in Clause 9 of the INSPIRE Data Specifications. This optional encoding is intended to support the e-government and open data community in Europe, which is increasingly looking at RDF to represent data.
+#
+# This is a draft version. It has limitations and is expected to contain errors. Please report any issues or concerns in GitHub (https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/issues).
+#
+# ------------------------------
+#
+#
+# This ontology contains classes and properties that have been derived from the INSPIRE "Hydro - Base" application schema.
+#
+# During the derivation, the following mappings, alignments, and omissions have been applied:
+# - Mappings: none
+#
+# - Alignments (through subsumption):
+#   - Properties with value type 'GeographicalName' are aligned to property locn:geographicName.
+#
+# - Omissions: none
+#
+# ------------------------------
+#
+#
+@prefix hy:    <http://inspire.ec.europa.eu/ont/hy#> .
+@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix gn:    <http://inspire.ec.europa.eu/ont/ad#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix locn:  <https://www.w3.org/ns/locn#> .
+
+<http://inspire.ec.europa.eu/ont/hy>
+        a                owl:Ontology ;
+        rdfs:comment     "EXAMPLE: A real-world object identified as the 'Rhine' may be realised through a Network view (as a set of links and nodes), a Physical Waters view (as a Watercourse), and a reporting view (as a WFDRiver)."@en ;
+        owl:imports      <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/ad/ad.ttl> , <https://www.w3.org/ns/locn.ttl> , <http://www.opengis.net/ont/geosparql> , <http://def.isotc211.org/iso19150-2/2012/base> ;
+        owl:versionIRI   "http://inspire.ec.europa.eu/ont/hy/4.0" ;
+        owl:versionInfo  "4.0" ;
+        skos:definition  "This package provides base classes used to identify real-world objects. These identities may be used to provide implicit semantic associations between different 'implementation views'."@en .
+
+hy:HydroIdentifier.localId
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE It will often be a national hydrographic identifier."@en ;
+        rdfs:domain      hy:HydroIdentifier ;
+        rdfs:range       xsd:string ;
+        skos:definition  "A local identifier, assigned by some authority."@en .
+
+hy:HydroObject.relatedHydroObject
+        a                owl:ObjectProperty ;
+        rdfs:domain      hy:HydroObject ;
+        rdfs:range       hy:HydroObject ;
+        skos:definition  "A related hydrographic object representing the same real-world entity."@en .
+
+hy:HydroObject.geographicalName
+        a                   owl:ObjectProperty ;
+        rdfs:comment        "EXAMPLE A standing water in a mapping view may share the same geographical name as a WFD lake in a reporting view, implying they are both representations of the same real world object."@en ;
+        rdfs:domain         hy:HydroObject ;
+        rdfs:range          gn:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "A geographical name that is used to identify a hydrographic object in the real world. It provides a 'key' for implicitly associating different representations of the object."@en .
+
+hy:HydroIdentifier.namespace
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE In the case of a national hydrographic identifier it should be a two-letter country code as per ISO 3166-1-Alpha-2."@en ;
+        rdfs:domain      hy:HydroIdentifier ;
+        rdfs:range       xsd:string ;
+        skos:definition  "An indicator of the scope for the local identifier."@en .
+
+hy:HydroIdentifier  a    owl:Class ;
+        rdfs:comment     "NOTE May be used to hold a national hydrological identification code."@en ;
+        skos:definition  "A hydrographic thematic identifier."@en .
+
+hy:HydroIdentifier.classificationScheme
+        a                owl:DatatypeProperty ;
+        rdfs:domain      hy:HydroIdentifier ;
+        rdfs:range       xsd:string ;
+        skos:definition  "A description of the identification scheme (National, European, etc.) being used."@en .
+
+hy:HydroObject.hydroId
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE 1 The identifier may be a national hydrological identification code.\r\n\r\nNOTE 2 More than one identifier may be required, for instance a watercourse may be assigned different identifying codes under national and European schemes.\r\n\r\nEXAMPLE A lock in a mapping view may share the same identifier as a hydro node in a network view, implying they are both representations of the same real world object."@en ;
+        rdfs:domain      hy:HydroObject ;
+        rdfs:range       hy:HydroIdentifier ;
+        skos:definition  "An identifier that is used to identify a hydrographic object in the real world. It provides a 'key' for implicitly associating different representations of the object."@en .
+
+hy:HydroObject  a              owl:Class ;
+        rdfs:comment           "NOTE Derived 'views' of real-world hydrographic objects are represented through specialisations in other application schemas; all representations of the same real-world object share a common geographic name or hydrographic identifier."@en ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/HydroObject> ;
+        rdfs:subClassOf        gsp:Feature ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "An identity base for hydrographic (including man-made) objects in the real world."@en .

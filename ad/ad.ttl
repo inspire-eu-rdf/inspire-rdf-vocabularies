@@ -1,0 +1,414 @@
+# This is a draft RDF vocabulary for representing spatial data sets in INSPIRE as RDF. This vocabulary has been created using the "Guidelines for the RDF encoding of spatial data" (http://inspire-eu-rdf.github.io/inspire-rdf-guidelines).
+#
+# The use of RDF is optional and does not supersede or replace the requirements regarding encoding specified in Clause 9 of the INSPIRE Data Specifications. This optional encoding is intended to support the e-government and open data community in Europe, which is increasingly looking at RDF to represent data.
+#
+# This is a draft version. It has limitations and is expected to contain errors. Please report any issues or concerns in GitHub (https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/issues).
+#
+# ------------------------------
+#
+#
+# This ontology contains classes and properties that have been derived from the INSPIRE "Addresses" application schema.
+#
+# During the derivation, the following mappings, alignments, and omissions have been applied:
+# - Mappings:
+#   - Code lists are mapped to skos:Concept.
+#   - The properties 'beginLifespanVersion', 'endLifespanVersion', 'validFrom', and 'validTo' are mapped to the global properties defined by the base ontology.
+#   - Geometry types are mapped to classes from the Simple Feature ontology.
+#
+# - Alignments (through subsumption):
+#   - Spatial object types are aligned with gsp:Feature.
+#   - Type 'AddressRepresentation' is aligned with locn:Address.
+#   - Properties with value type 'GeographicalName' are aligned to property locn:geographicName.
+#   - Properties with a geometry value type are aligned to locn:geometry and gsp:hasDefaultGeometry.
+#
+# - Omissions:
+#   - Property 'inspireId' is omitted. See the guidelines for further details.
+#
+# ------------------------------
+#
+#
+@prefix ad:    <http://inspire.ec.europa.eu/ont/ad#> .
+@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix cp:    <http://inspire.ec.europa.eu/ont/cp#> .
+@prefix au:    <http://inspire.ec.europa.eu/ont/au#> .
+@prefix sfowl: <http://www.opengis.net/ont/sf#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix tn:    <http://inspire.ec.europa.eu/ont/tn#> .
+@prefix locn:  <https://www.w3.org/ns/locn#> .
+@prefix base:  <http://inspire.ec.europa.eu/ont/base#> .
+
+ad:AddressRepresentation.postName
+        a                   owl:ObjectProperty ;
+        rdfs:domain         ad:AddressRepresentation ;
+        rdfs:range          ad:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "One or more names created and maintained for postal purposes to identify a subdivision of addresses and postal delivery points."@en .
+
+ad:LocatorName.type  a   owl:ObjectProperty ;
+        rdfs:comment     "NOTE The type enables a user or an application to understand if the name \"Radford Mill Farm\" is for example a name of a specific site or of a building."@en ;
+        rdfs:domain      ad:LocatorName ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/LocatorNameTypeValue> ;
+        skos:definition  "The type of locator value, which enables an application to interpret, parse or format it according to certain rules."@en .
+
+ad:ThoroughfareName.name
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE 1 The name can optionally include an often used alternative name, alternative spelling of the name, a historic name or spelling, which is still in use. It may also optionally include a subdivision of the name into parts.\r\n\r\nNOTE 2 Most often thoroughfares are roads, in this situation the thoroughfare name is the road name.  \r\n\r\nNOTE 3 The data type also allows a representation of the thoroughfare name in separate parts e.g. \"rue\" + \"de la\" + \"Paix\""@en ;
+        rdfs:domain      ad:ThoroughfareName ;
+        rdfs:range       ad:ThoroughfareNameValue ;
+        skos:definition  "Name of the thoroughfare."@en .
+
+ad:AddressAreaName.name
+        a                   owl:ObjectProperty ;
+        rdfs:comment        "NOTE The data type allows names in different languages and scripts as well as inclusion of alternative name, alternative spellings, historical name and exonyms."@en ;
+        rdfs:domain         ad:AddressAreaName ;
+        rdfs:range          ad:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "Proper noun applied to the address area."@en .
+
+ad:GeographicPosition.default
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE As a member state may provide several positions of an address, there is a need to identify the commonly used (main) position. Preferrably, the default position should be the one with best accuracy."@en ;
+        rdfs:domain      ad:GeographicPosition ;
+        rdfs:range       xsd:boolean ;
+        skos:definition  "Specifies whether or not this position should be considered as the default."@en .
+
+ad:AddressLocator.level
+        a                owl:ObjectProperty ;
+        rdfs:domain      ad:AddressLocator ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/LocatorLevelValue> ;
+        skos:definition  "The level to which the locator refers."@en .
+
+ad:PostalDescriptor.postName
+        a                   owl:ObjectProperty ;
+        rdfs:comment        "NOTE 1 Often the post name (or names) is a supplementary identification of the post office to which the associated post code belongs. For example it may be the name of the town in which the office is situated. In other situations the post name could be an independent descriptor without any post code or it could be a postal subdivision connected to a parent postal descriptor (post code and post name). \r\n\r\nNOTE 2 In some countries like e.g. Spain and The Netherlands, no post names exit therefore the postal descriptor is only represented by the post code. \r\n\r\nNOTE 3 Even though the post name is the same as the name of an administrative unit or an address area, the area covered are not necessarilythe same."@en ;
+        rdfs:domain         ad:PostalDescriptor ;
+        rdfs:range          ad:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "One or more names created and maintained for postal purposes to identify a subdivision of addresses and postal delivery points."@en .
+
+ad:Address.parentAddress
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE 1 The relationship between a set of subaddresses and the main address most often means that the sub addresses use the same locator and address components (for example , thoroughfare name, address area, post code) as the parent address. For each sub address additional address locators are then included for identification, like e.g. flat number, floor identifier, door number. \r\n\r\nNOTE 2 In some countries several levels of parent-, sub- and sub-sub-addresses exist. In other countries the concept of parent addresses does not exist; all addresses are thus of the same level. \r\n\r\nEXAMPLE 1 In a Spanish city the address \"Calle Gran Vía 8\" is a parent address where the locator \"8\" represents the building. In the building, the sub address \"Calle Gran Via 8, door 3\" represents a sub-address, while the more detailed sub-sub address \"Calle Gran Via 8, door 3, staircase A, floor 5, dwelling 1\" represents the address of a specific dwelling. \r\n\r\nEXAMPLE 2 In Denmark the legislation on addresses define two types of addresses: the parent \"access level\" and the sub \"unit level\". In the city of Copenhagen \"Wildersgade 60A\" is a parent access address that represents a specific entrance to a building. Inside the entrance, subaddresses using floor and door designators identifies the individual dwellings like e.g. \"Wildersgade 60A, 1st floor, left door\". \r\n\r\nEXAMPLE 3 In The Netherlands only one level of addresses exists."@en ;
+        rdfs:domain      ad:Address ;
+        rdfs:range       ad:Address ;
+        skos:definition  "The main (parent) address with which this (sub) address is tightly connected."@en .
+
+ad:Address.position  a   owl:ObjectProperty ;
+        rdfs:domain      ad:Address ;
+        rdfs:range       ad:GeographicPosition ;
+        skos:definition  "Position of a characteristic point which represents the location of the address according to a certain specification, including information on the origin of the position."@en .
+
+ad:AddressRepresentation.locatorDesignator
+        a                owl:DatatypeProperty ;
+        rdfs:domain      ad:AddressRepresentation ;
+        rdfs:range       xsd:string ;
+        skos:definition  "A number or a sequence of characters which allows a user or an application to interpret, parse and format the locator within the relevant scope. A locator may include more locator designators."@en .
+
+ad:AddressComponent.alternativeIdentifier
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE Compared with a proper identifier of the address component, the alternative identifier is not necessarily persistent in the lifetime of the component spatial object. Likewise it is usually not globally unique and in general does include information on the version of the spatial object. \r\n\r\nEXAMPLE 1 National or regional sector-specific identifiers (like e.g. a number- or letter code) for administrative units, address areas (localities, villages, sub-divisions) or thoroughfare names, which are used by a number of existing legacy systems. \r\n\r\nEXAMPLE 2 In Denmark the four character municipal \"road name code\" (0001-9899) is only unique within the present municipality, thus if two municipalities merge, it is necessary to assign new road name codes."@en ;
+        rdfs:domain      ad:AddressComponent ;
+        rdfs:range       xsd:string ;
+        skos:definition  "External, thematic identifier of the address component spatial object, which enables interoperability with existing legacy systems or applications."@en .
+
+ad:PartOfName.part  a    owl:DatatypeProperty ;
+        rdfs:domain      ad:PartOfName ;
+        rdfs:range       xsd:string ;
+        skos:definition  "The character string that expresses the separate part of the name using the same language and script as the full thoroughfare name."@en .
+
+ad:AddressRepresentation.locatorName
+        a                   owl:ObjectProperty ;
+        rdfs:domain         ad:AddressRepresentation ;
+        rdfs:range          ad:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "Proper noun(s) applied to the real world entity identified by the locator."@en .
+
+ad:AddressComponent.status
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE This status relates to the address component and is not a property of the object to which the address is assigned (the addressable object)."@en ;
+        rdfs:domain      ad:AddressComponent ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/StatusValue> ;
+        skos:definition  "Validity of the address component within the life-cycle (version) of the address component spatial object."@en .
+
+ad:Address.parcel  a     owl:ObjectProperty ;
+        rdfs:comment     "NOTE An address could potentially have an association to zero, one or several cadastral parcels. Also it is possible (but this is not expressed in this application schema) that several addresses are associated to a single cadastral parcel.\r\n\r\nEXAMPLE In the street \"Wildersgade\" in Copenhagen, Denmark, the address designated as \"Wildersgade 66, 1408 København K\" is associated to the cadastral parcel identifier \"81\" in the district of \"Christianshavn\"."@en ;
+        rdfs:domain      ad:Address ;
+        rdfs:range       cp:CadastralParcel ;
+        skos:definition  "Cadastral parcel that this address is assigned to or associated with."@en .
+
+ad:AddressLocator.withinScopeOf
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE 1 For the assignment of unambiguous locators (e.g. address numbers) different rules exists in different countries and regions. According to the most common rule, an address number should be unique within the scope of the thoroughfare name. In other areas the address number is unique inside an address area name (e.g. the name of the village) or postal designator (e.g. the post code). In some areas even a combination of rules are applied: e.g. addresses with two locators, each of them referencing to a separate address component. \r\n\r\nNOTE 2 Locators that has the level of unit (like e.g. floor identifier and door or unit identifiers) are most often assigned so that they are unambiguous within the more narrow scope of the property or building; for these locators the association should therefore not be populated. \r\n\r\nEXAMPLE 1 In a typical European address dataset, parts of the addresses have locators which are unambiguous within the scope of the road name (thoroughfare name) while others are unambiguous within the name ogf the village or district (address area name). \r\n\r\nEXAMPLE 2 In Lithuania and Estonia a concept of \"corner addresses\" exists. Corner addresses have two address numbers (designators) each of them referring to a thoroughfare name (primary and secondary street name). E.g. in Vilnius the address designated \"A. Stulginskio gatve 4 / A. Smetonos gatve 7\" is situated on the corner of the two streets. \r\n\r\nEXAMPLE 3 In the Czech Republic in some cities an address has two locator designators: A building number which referres to the address area (district, cz: \"cast obce\") and a address number that referres to the thoroughfare name. As an example in Praha for address designated \"Na Pankráci 1690/125, Nusle\" the designator \"1690\" is a building number unique within the address area (cz cast obce) \"Nusle\", while the \"125\" is an address number that has the thoroughfare name as its scope."@en ;
+        rdfs:domain      ad:AddressLocator ;
+        rdfs:range       ad:AddressComponent ;
+        skos:definition  "The address component that defines the scope within which the address locator is assigned according to rules ensuring unambiguousness."@en .
+
+ad:LocatorDesignator.type
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE The type enables a user or an application to understand if the value \"A\" is e.g. an identifier of a specific building, door, staircase or dwelling."@en ;
+        rdfs:domain      ad:LocatorDesignator ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/LocatorDesignatorTypeValue> ;
+        skos:definition  "The type of locator value, which enables an application to interpret, parse or format it according to certain rules."@en .
+
+ad:ThoroughfareNameValue.nameParts
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE 1 This is a definition which is consistent with that adopted by the UPU\r\n\r\nNOTE 2 A subdivision of a thoroughfare name into semantic parts could improve parsing (e.g. of abbreviated or misspelled names) and for sorting of address data for example for postal delivery purposes. It could also improve the creation of alphabetically sorted street gazetteers. \r\n\r\nNOTE 3 The data type requires that each part of the subdivided thoroughfare name is qualified with information on the semantics e.g. if it is a thoroughfare type (e.g., Rua, Place, Calle, Street), a prefix (e.g., da, de la, del), a qualifier (e.g., Unterer, Little) or if it is the core of the name, which would normally be used for sorting or indexing. \r\n\r\nNOTE 4 In some countries or regions and for some thoroughfare names it is not feasible or it does not add value to subdivide the thoroughfare name into parts.\r\n\r\nEXAMPLE In France the thoroughfare name \"Avenue de la Poste\" could be subdivided into these parts: \"Avenue\" + \"de la\" + \"Poste\"."@en ;
+        rdfs:domain      ad:ThoroughfareNameValue ;
+        rdfs:range       ad:PartOfName ;
+        skos:definition  "One or several parts into which the thoroughfare name can be subdivided."@en .
+
+ad:Address.alternativeIdentifier
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE 1 Compared with the proper identifier of the address, the alternative identifier is not necessarily persistent in the lifetime of the address spatial object. Likewise it is usually not globally unique and in general does not include information on the version of the address spatial object. \r\n\r\nNOTE 2 Often alternative address identifiers are composed by a set of codes that, e.g., identify the region and the municipality, the thoroughfare name and the address number. These alternative identifiers will not remain persistent e.g. in the case of the merging of two municipalities. \r\n\r\nEXAMPLE In Denmark many legacy systems (e.g. in the Statistics Denmark or the Central Business Register) uses as address identification the three digit municipality code plus the four character street name code plus the address number."@en ;
+        rdfs:domain      ad:Address ;
+        rdfs:range       xsd:string ;
+        skos:definition  "External, thematic identifier of the address spatial object, which enables interoperability with existing legacy systems or applications."@en .
+
+ad:AddressComponent.situatedWithin
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE 1 The association enables the application schema to express that the subtypes of address components in the dataset form a hierarchy e.g. like: thoroughfare name within municipality within region within country \r\n\r\nNOTE 2 The representation of the hierarchy facilitates queries e.g. for a specific thoroughfare name within a given municipality or postcode. It is also necessary where the application schema is used to create or update, for example , a gazetteer which is based on the hierarchical structure of the address components. \r\n\r\nNOTE 3 The multiplicity of the association allows it to express that a thoroughfare name is situated in a certain municipality and in a certain postcode. It is also possible to express, for example, that some thoroughfare names cross borders between municipalities and thus is situated within more than one municipality.\r\n\r\nEXAMPLE 1 In Spain many spatial objects of the thoroughfare name \"Calle Santiago\" exist. The association can express that one of the spatial objects is situated within in the municipality of Albacete. From the same example the municipality name \"Albacete\" is situated within the administrative name (region) of \"Castilla La Mancha\".\r\n\r\nEXAMPLE 2 In Denmark, several address area names entitled \"Strandby\" exists. In order to identify a specific spatial object it is necessary to know that the relevant spatial object is situated e.g. in the municipality of \"Frederikshavn\"."@en ;
+        rdfs:domain      ad:AddressComponent ;
+        rdfs:range       ad:AddressComponent ;
+        skos:definition  "Another address component within which the geographic feature represented by this address component is situated."@en .
+
+ad:AdminUnitName.level
+        a                owl:ObjectProperty ;
+        rdfs:domain      ad:AdminUnitName ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/enumeration/AdministrativeHierarchyLevel> ;
+        skos:definition  "The level of administration in the national administrative hierarchy."@en .
+
+ad:ThoroughfareNameValue
+        a                owl:Class ;
+        rdfs:comment     "NOTE 1 The data type allows names in different languages and scripts as well as inclusion of alternative name, alternative spellings, historical name and exonyms. \r\n\r\nNOTE 2 The data type allows optionally a representation of the thoroughfare name subdivided into separate, semantic parts e.g. \"Avenue\" + \"de la\" + \"Poste\"."@en ;
+        skos:definition  "Proper noun applied to thoroughfare optionally including a subdivision of the name into parts."@en .
+
+ad:AddressRepresentation.adminUnit
+        a                   owl:ObjectProperty ;
+        rdfs:domain         ad:AddressRepresentation ;
+        rdfs:range          ad:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "The name or names of a unit of administration where a Member State has and/or exercises jurisdictional rights, for local, regional and national governance."@en .
+
+ad:AddressComponent  a         owl:Class ;
+        rdfs:comment           "NOTE 1 Four different subclasses of address components are defined: \r\no    Administrative unit name, which may include name of country, name of municipality, name of district\r\no    Address area name like e.g. name of village or settlement \r\no    Thoroughfare name, most often road name  \r\no    Postal descriptor \r\nIn order to construct an address, these subclasses are often structured hierarchically.\r\n\r\nNOTE 2 It is the combination of the address locator and the address components, which makes a specific address spatial object readable and unambiguous for the human user. \r\n\r\nEXAMPLE The combination of the locator \"13\" and the address components \"Calle Mayor\" (thoroughfare name), \"Cortijo del Marqués\" (address area name), \"41037\" (postal descriptor), \"Écija\", \"Sevilla\" and \"España\" (administrative unit names) makes this specific address spatial object readable and unambiguous."@en ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/AddressComponent> ;
+        rdfs:subClassOf        gsp:Feature ;
+        iso19150-2:isAbstract  true ;
+        skos:definition        "Identifier or geographic name of a specific geographic area, location, or other spatial object which defines the scope of an address."@en .
+
+ad:ThoroughfareName.transportLink
+        a                owl:ObjectProperty ;
+        rdfs:comment     "EXAMPLE The thoroughfare name \"Na Pankráci\" in Praha, The Czech Republic, has been designated as a road name for a number of road links (street segments) in the city."@en ;
+        rdfs:domain      ad:ThoroughfareName ;
+        rdfs:range       tn:TransportLink ;
+        skos:definition  "One or several transport network links to which the spatial object of the thoroughfare name has been designated."@en .
+
+ad:AddressRepresentation.thoroughfare
+        a                   owl:ObjectProperty ;
+        rdfs:domain         ad:AddressRepresentation ;
+        rdfs:range          ad:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "The name or names of a passage or way through from one location to another like a road or a waterway."@en .
+
+ad:PartOfName  a         owl:Class ;
+        rdfs:comment     "NOTE Each part of the name must be qualified by using the type attribute."@en ;
+        skos:definition  "A part of the full name resulting from the subdivision of the thoroughfare name into separate, semantic parts, using the same language and script as the full thoroughfare name."@en .
+
+ad:Address.component  a  owl:ObjectProperty ;
+        rdfs:comment     "EXAMPLE For the address designated \"Calle Mayor 13, Cortijo del Marqués, 41037, Écija, Sevilla, España\" the six address components \"Calle Mayor\", \"Cortijo del Marqués\", \"41037\", \"Écija\", \"Sevilla\" and \"España\" are engaged as address components."@en ;
+        rdfs:domain      ad:Address ;
+        rdfs:range       ad:AddressComponent ;
+        skos:definition  "Represents that the address component is engaged as a part of the address."@en .
+
+ad:AdminUnitName.name
+        a                   owl:ObjectProperty ;
+        rdfs:comment        "NOTE The data type allows names in different languages and scripts as well as inclusion of alternative name, alternative spellings, historical name and exonyms."@en ;
+        rdfs:domain         ad:AdminUnitName ;
+        rdfs:range          ad:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "Official, geographical name of the administrative unit, given in different languages where required."@en .
+
+ad:LocatorName  a        owl:Class ;
+        rdfs:comment     "NOTE The locator name could be the name of the property or complex, of the building or part of the building, or it could be the name of a room inside a building."@en ;
+        skos:definition  "Proper noun applied to the real world entity identified by the locator."@en .
+
+ad:ThoroughfareName  a    owl:Class ;
+        rdfs:comment      "NOTE 1 A thoroughfare can, e.g., be a road or a waterway\r\n\r\nNOTE 2 Thoroughfare names includes names of squares and of cul de sacs, and they can also represent the network of smaller roads or paths e.g. in a small village or settlement."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/ThoroughfareName> ;
+        rdfs:subClassOf   ad:AddressComponent , gsp:Feature ;
+        skos:definition   "An address component which represents the name of a passage or way through from one location to another."@en .
+
+ad:AddressRepresentation.postCode
+        a                owl:DatatypeProperty ;
+        rdfs:domain      ad:AddressRepresentation ;
+        rdfs:range       xsd:string ;
+        skos:definition  "A code created and maintained for postal purposes to identify a subdivision of addresses and postal delivery points."@en .
+
+ad:AddressLocator  a           owl:Class ;
+        rdfs:comment           "NOTE 1 The most common locators are designators like an address number, building number or flat identifier as well as the name of the property, complex or building.\r\n\r\nNOTE 2 The locator identifier(s) are most often only unambiguous and meaningful within the scope of the adjacent thoroughfare name, address area name or post code. \r\n\r\nNOTE 3 The locator could be composed of one or more designators e.g., address number, address number suffix, building number or name, floor number, flat or room identifier. In addition to these common locator types, also narrative or descriptive locators are possible.\r\n\r\nNOTE 4 The locators of an address could be composed as a hierarchy, where one level of locators identifies the real property or building while another level of locators identifies the flats or dwellings inside the property. \r\n\r\nEXAMPLE 1 In a Spanish city a \"site-level\" locator could identify a building on the thoroughfare name \"Calle Gran Vía using the address number \"8\". If the building has four entrance doors, the door number \"3\" could be the \"access-level\" locator. The 3rd door could, via two staircases \"A\" and \"B\", give access to a number of floors, identified by a number \"1\" to \"5\" on which a number of dwellings are situated, also identified by numbers \"1\" to \"3\"; The \"unit level\" locator will thus composed of staircase-, floor- and dwelling identification e.g. \"staircase A, floor 5, dwelling 1\". In total, the three parent-child levels of locators uniquely identify the dwelling. \r\n\r\nEXAMPLE 2 In Copenhagen an \"access level\" locator could identify a specific entrance door in a building on the thoroughfare name \"Wildersgade\" using the address number \"60A\" (In Denmark the optional suffix is a part of the address number). The entrance door gives access to a number of floors, e.g, \"st\", \"1\", \"2\", \"3\", on which two dwellings are situated \"tv\" and \"th\". The \"unit level\" locator will thus be composed by a floor- and a door identifier: \"2. th.\" (2nd floor, door to the right). In total, the two parent-child levels of locators uniquely identify the dwelling. \r\n\r\nEXAMPLE 3 In The Netherlands only one level of locators exists. The individual apartment within a large complex, a dwelling, a part of other kinds of buildings (for example an office), a mooring place or a place for the permanent placing of trailers are addressable objects which must have an address. This address is the only level of the locator. This locator could be composed by three attributes the house number, plus optionally an additional house letter, plus optionally an additional housenumber suffix.\r\n\r\nEXAMPLE 4 Sometimes the building name is an alternative identifier to the address number e.g. the house located in \"Calle Santiago, 15, Elizondo-Baztán, Navarra, Spain\" is also identified by the building name \"Urtekoetxea\""@en ;
+        iso19150-2:constraint  "NameEmpty: If no name exists, a designator is required." , "DesignatorEmpty: If no designator exists, a name is required." ;
+        skos:definition        "Human readable designator or name that allows a user or application to reference and distinguish the address from neighbour addresses, within the scope of a thoroughfare name, address area name, administrative unit name or postal designator, in which the address is situated."@en .
+
+ad:GeographicPosition.specification
+        a                owl:ObjectProperty ;
+        rdfs:domain      ad:GeographicPosition ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/GeometrySpecificationValue> ;
+        skos:definition  "Information defining the specification used to create or derive this geographic position of the address."@en .
+
+ad:LocatorDesignator.designator
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE The value is often a descriptive code assigned according to certain well known rules e.g. like ascending odd and even address numbers along the thoroughfare, or like floor identifiers: 0, 1, 2, 3.  \r\n\r\nEXAMPLE Address number \"2065\", Address number suffix \"B\", Floor identifier \"7\" door identifier \"B707\" are all locator attribute values."@en ;
+        rdfs:domain      ad:LocatorDesignator ;
+        rdfs:range       xsd:string ;
+        skos:definition  "The identifying part of the locator designator composed by one or more digits or other characters."@en .
+
+ad:PostalDescriptor  a         owl:Class ;
+        rdfs:comment           "NOTE 1 The postal descriptor is specified by means of a post code and/or names of the associated post office, town or area.\r\n\r\nNOTE 2 In some countries post codes are seen as a proper geographic subdivision of the country, in other countries the post code is regarded only as an attribute that characterizes a (usually small) number of adjacent postal delivery points and addresses. \r\n\r\nNOTE 3 The postal descriptors are created and developed on the basis of postal requirements (e.g. efficient sorting, logistics, transport and distribution). Consequently, there is not often a tight relationship between the postal areas and administrative units in the same area.\r\n\r\nNOTE 4 The structure schema and formats of national postal descriptor systems are different. Sometimes (for example in the UK) the post code itself is the only information required for a valid address; in other situations both the post code and the associated name of post office or town is required. Sometimes there is a simple relationship between the code and the name; in other situations a set of postcodes are associated with a single post office or town.\r\n\r\nNOTE 5 In some countries like e.g. The Republic of Ireland, no post code system currently exists, therefore the postal descriptor is only represented by the name of the post town. \r\n\r\nEXAMPLE 1 In the UK the post code \"EC4M 7DR\" is sufficient, as a postal descriptor, while the related town name \"London\" is informative, but not necessary in the postal address. \r\n\r\nEXAMPLE 2 In Sweden all postcodes starting with \"80\" is related to the postal name \"Gävle\". Therefore in the postal descriptor \"802 74 Gävle\", the postcode \"802 74\" bears all postal necessary information, while the town name \"Gävle\" is extra information. \r\n\r\nEXAMPLE 3 In Denmark, outside the centre of Copenhagen, each postcode has a 1:1 relationship to one post name only: Postcode \"6372\" relates to the village \"Bylderup-Bov\". \r\n\r\nEXAMPLE 4 In Germany the lowest level of the Postal descriptor (the 5 digit Postleitzahl) often does not fall within an administrative unit (e.g. municipality). The Postleitzahl is handled completely independent from the hierarchal systematic of the addresses. In addition, some \"Postleitzahlen\" represent not a delivery area, but institutions with a big amount of post."@en ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/PostalDescriptor> ;
+        rdfs:subClassOf        ad:AddressComponent , gsp:Feature ;
+        iso19150-2:constraint  "PostNameEmpty: If no post name exists, a post code is required." , "PostCodeEmpty: If no post code exists, a post name is required." ;
+        skos:definition        "An address component which represents the identification of a subdivision of addresses and postal delivery points in a country, region or city for postal purposes."@en .
+
+ad:AddressRepresentation.addressArea
+        a                   owl:ObjectProperty ;
+        rdfs:domain         ad:AddressRepresentation ;
+        rdfs:range          ad:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "The name or names of a geographic area or locality that groups a number of addressable objects for addressing purposes, without being an administrative unit."@en .
+
+ad:AdminUnitName  a       owl:Class ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/AdminUnitName> ;
+        rdfs:subClassOf   ad:AddressComponent , gsp:Feature ;
+        skos:definition   "An address component which represents the name of a unit of administration where a Member State has and/or exercises jurisdictional rights, for local, regional and national governance."@en .
+
+ad:AddressLocator.name
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE 1 The locator name could be the name of the property or complex (e.g. an estate, hospital or a shopping mall), of the building or part of the building (e.g. a wing), or it could be the name of a room inside the building.\r\n\r\nNOTE 2 As locator name it is also possible to use a description that allows a user to identify the property in question. \r\n\r\nNOTE 3 The locator name could be an alternative addition to the locator designator (e.g. the address number) or it could be an independent identifier. \r\n\r\nEXAMPLE In the address \"Calle Santiago, 15, Elizondo-Baztán, Navarra, Spain\" the building name \"Urtekoetxea\" is an alternative to the building identifier \"3\"."@en ;
+        rdfs:domain      ad:AddressLocator ;
+        rdfs:range       ad:LocatorName ;
+        skos:definition  "A geographic name or descriptive text associated to a property identified by the locator."@en .
+
+ad:AddressAreaName  a     owl:Class ;
+        rdfs:comment      "NOTE 1 In some countries and regions an address area is a true subdivision of an administrative unit (most often a municipality), so that every address area is fully inside the municipality and so that every part of the municipality is within an address area. In other countries, the concept of address area names is less strict and based on local tradition or specific needs. \r\n\r\nNOTE 2 In some situations an address area name is not required to obtain unambiguousness; instead the purpose is to make the complete address more informative and descriptive, adding a well known place name (e.g. of a village or community) to the address. This is particularly useful if the municipality or post code covers a large area. \r\n\r\nEXAMPLE 1 In Sweden a \"Kommundel\" (en: Municipal sub division) is a type of address area names that ensures that street names are unique within the sub division. \r\n\r\nEXAMPLE 2 In Spain an \"Entidad de población\" (en: population entity) has the same function. It is the general address area which depending on its characteristics can be classified as \"Entidad Singular\" (en: singular entity) or \"Entidad Colectiva\" (en: collective entity). Moreover, according to the population distribution, these areas can contain one or several \"Núcleo de población\" (en: population core) and/or \"Población diseminada\" (en: scattered population).\r\n\r\nEXAMPLE 3 In Denmark \"Supplerende bynavn\" (en: Supplementary town name) is sometimes compulsory to ensure uniqueness of street names within the post code, sometimes it is just useful extra information, that makes the address more informative."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/AddressAreaName> ;
+        rdfs:subClassOf   ad:AddressComponent , gsp:Feature ;
+        skos:definition   "An address component which represents the name of a geographic area or locality that groups a number of addressable objects for addressing purposes, without being an administrative unit."@en .
+
+ad:PartOfName.type  a    owl:ObjectProperty ;
+        rdfs:domain      ad:PartOfName ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/PartTypeValue> ;
+        skos:definition  "A classification of the part of name according to its semantics (meaning) in the complete thoroughfare name."@en .
+
+<http://inspire.ec.europa.eu/ont/ad>
+        a                owl:Ontology ;
+        owl:imports      <https://www.w3.org/ns/locn.ttl> , <http://www.opengis.net/ont/geosparql> , <http://def.isotc211.org/iso19150-2/2012/base> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/tn/tn.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/cp/cp.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/au/au.ttl> , <http://www.w3.org/2004/02/skos/core> , <http://www.opengis.net/ont/sf> ;
+        owl:versionIRI   "http://inspire.ec.europa.eu/ont/ad/4.0" ;
+        owl:versionInfo  "4.0" .
+
+ad:GeographicPosition
+        a                owl:Class ;
+        skos:definition  "The position of a characteristic point which represents the location of the address according to a certain specification, including information on the origin of the position."@en .
+
+ad:ThoroughfareNameValue.name
+        a                   owl:ObjectProperty ;
+        rdfs:comment        "NOTE 1 The complete name of the thoroughfare must be applied in this attribute, including type, prefix or qualifier, like for example \"Avenue de la Poste\", \"Calle del Christo Canneregio\" or \"Untere Quai\". The name part attribute enables a representation of the name subdivided into separate semantic parts.\r\n\r\nNOTE 2 The data type allows names in different languages as well as inclusion of exonyms."@en ;
+        rdfs:domain         ad:ThoroughfareNameValue ;
+        rdfs:range          ad:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "Proper noun applied to the thoroughfare."@en .
+
+ad:AddressRepresentation
+        a                owl:Class ;
+        rdfs:comment     "NOTE 1 The data type includes the all necessary readable address components as well as the address locator(s), which allows the identification of the address spatial objects, e.g., country, region, municipality, address area, post code, street name and address number. It also includes an optional reference to the full address spatial object. \r\n\r\nNOTE 2 The datatype could be used in application schemas that wish to include address information e.g. in a dataset that registers buildings or properties."@en ;
+        rdfs:subClassOf  locn:Address ;
+        skos:definition  "Representation of an address spatial object for use in external application schemas that need to include the basic, address information in a readable way."@en .
+
+ad:AdminUnitName.adminUnit
+        a                owl:ObjectProperty ;
+        rdfs:comment     "EXAMPLE The administrative unit (municipality) \"Gävle\" in Sweden is the source of the address component administrative unit name, \"Gävle\"."@en ;
+        rdfs:domain      ad:AdminUnitName ;
+        rdfs:range       au:AdministrativeUnit ;
+        skos:definition  "The administrative unit that is the source of the content of the administrative unit name."@en .
+
+ad:AddressRepresentation.addressFeature
+        a                owl:ObjectProperty ;
+        rdfs:domain      ad:AddressRepresentation ;
+        rdfs:range       ad:Address ;
+        skos:definition  "Reference to the address spatial object."@en .
+
+ad:AddressAreaName.namedPlace
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE In order to populate this association, it is important that the area covered by the identified Named Place is exactly the same as the area covered by the address area name in question; if this is not the case the association would result in an inconsistency.\r\n\r\nEXAMPLE The geographical name \"Huskvarna\", which represents a part of the municipality of Jönköping in Sweden, is the source of the address area name, \"Huskvarna\"."@en ;
+        rdfs:domain      ad:AddressAreaName ;
+        rdfs:range       ad:NamedPlace ;
+        skos:definition  "The named place that this address area name represents."@en .
+
+ad:LocatorDesignator  a  owl:Class ;
+        rdfs:comment     "NOTE 1 Locator designators are often assigned according to a set of commonly known rules which enables a user or application to \"parse\" the information: Address numbers are most often assigned in ascending order with odd and even numbers on each side of the thoroughfare. In a building, the floor identifier represents the level according to the traditions within the area, e.g., 1, 2, 3. \r\n\r\nNOTE 2 Several types of locator designators exist, such as: Address number, address number suffix, building identifier, building name. A locator could be composed by an ordered set of these. \r\n\r\nEXAMPLE In Paris, France a locator could be composed by two locator designators: address number \"18\" and address number suffix: \"BIS\"."@en ;
+        skos:definition  "A number or a sequence of characters that uniquely identifies the locator within the relevant scope(s). The full identification of the locator could include one or more locator designators."@en .
+
+ad:GeographicPosition.geometry
+        a                   owl:ObjectProperty ;
+        rdfs:domain         ad:GeographicPosition ;
+        rdfs:range          sfowl:Point ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasDefaultGeometry ;
+        skos:definition     "The position of the point expressed in coordinates in the chosen spatial reference system."@en .
+
+ad:Address  a                  owl:Class ;
+        rdfs:comment           "NOTE 1 The spatial object, referenced by the address, is defined as the \"addressable object\". The addressable object is not within the application schema, but it is possible to represent the address' reference to a cadastral parcel or a building through associations. It should, however, be noted that in different countries and regions, different traditions and/or regulations determine which object types should be regarded as addressable objects. \r\n\r\nNOTE 2 In most situations the addressable objects are current, real world objects. However, addresses may also reference objects which are planned, under construction or even historical.\r\n\r\nNOTE 3 Apart from the identification of the addressable objects (like e.g. buildings), addresses are very often used by a large number of other applications to identify object types e.g. statistics of the citizens living in the building, for taxation of the business entities that occupy the building, and the utility installations. \r\n\r\nNOTE 4 For different purposes, the identification of an address can be represented in different ways (see example 3). \r\n\r\nEXAMPLE 1 A property can e.g., be a plot of land, building, part of building, way of access or other construction,\r\n\r\nEXAMPLE 2 In the Netherlands the primary addressable objects are buildings and dwellings which may include parts of buildings, mooring places or places for the permanent placement of trailers (mobile homes), in the UK it is the lowest level of unit for the delivery of services, in the Czech Republic it is buildings and entrance doors. \r\n\r\nEXAMPLE 3 Addresses can be represented differently. In a human readable form an address in Spain and an address in Denmark could be represented like this: \"Calle Mayor, 13, Cortijo del Marqués, 41037 Écija, Sevilla, España\" or \"Wildersgade 60A, st. th, 1408 Copenhagen K., Denmark\"."@en ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/Address> ;
+        rdfs:subClassOf        gsp:Feature ;
+        iso19150-2:constraint  "AddressPosition: /* An address shall have exactly one default geographic position (default attribute of GeographicPosition must be true) */" , "AddressCountry: /* An address shall have an admin unit address component spatial object whose level is 1 (Country) */" ;
+        skos:definition        "An identification of the fixed location of property by means of a structured composition of geographic names and identifiers."@en .
+
+ad:GeographicPosition.method
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE The geographic position could be created manually by the address authority itself, by an independent party (e.g. by field surveying or digitizing of paper maps) or it could be derived automatically from the addressable object or from other Inspire features."@en ;
+        rdfs:domain      ad:GeographicPosition ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/GeometryMethodValue> ;
+        skos:definition  "Description of how and by whom the geographic position of the address was created or derived."@en .
+
+ad:LocatorName.name  a      owl:ObjectProperty ;
+        rdfs:comment        "NOTE 1 The data type allows names in different languages and scripts as well as inclusion of alternative name, alternative spellings, historical name and exonyms.\r\n\r\nNOTE 2 The locator name could be the name of the property or complex, of the building or part of the building (e.g. a wing), or it could be the name of a room or similar inside the building.  \r\n\r\nNOTE 3 The locator name sometimes refer to the name of the family or business entity which at present or in the past has owned or occupied the property or building; although this is the case the locator name must not be confused with the name of the addressee(s).\r\n\r\nNOTE 4 As locator name it is also possible to use a descriptive text that allows a user to identify the property in question.\r\n\r\nEXAMPLE 1 The \"Radford Mill Farm\" in Timsbury, Bath, UK; The allotment house area \"Brumleby\" in Copenhagen, Denmark, the university campus \"Cité Universitaire\", in Paris, France. \r\n\r\nEXAMPLE 2 \"Millers House\" in Stromness, Orkney Isles, UK; \"Ulla's Pension\" in Niederfell, Rheinland-Pfalz, Germany.\r\n\r\nEXAMPLE 3 \"Multi-storey car park at Southampton Magistrates Courts\" in Southampton, UK."@en ;
+        rdfs:domain         ad:LocatorName ;
+        rdfs:range          ad:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "The identifying part of the locator name."@en .
+
+ad:PostalDescriptor.postCode
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE 1 The structure, schema and formats of post codes are different in different countries. Often the components of the post code are hierarchical, e.g. when the first character(s) identifies the region covered by the post code and the next characters define the subdivision. \r\n\r\nNOTE 2 In some countries, e.g., The Republic of Ireland, no post codes exists therefore the postal descriptor is only represented by the post name (e.g. town name).\r\n\r\nEXAMPLE In the UK postcodes starting with W covers the Western (W1) and Paddington (W2-14) districts of the London postal district. In Sweden all postcodes starting with \"80\" is related to the postal name \"Gävle\"."@en ;
+        rdfs:domain      ad:PostalDescriptor ;
+        rdfs:range       xsd:string ;
+        skos:definition  "A code created and maintained for postal purposes to identify a subdivision of addresses and postal delivery points."@en .
+
+ad:AddressLocator.designator
+        a                owl:ObjectProperty ;
+        rdfs:domain      ad:AddressLocator ;
+        rdfs:range       ad:LocatorDesignator ;
+        skos:definition  "A number or a sequence of characters that uniquely identifies the locator within the relevant scope(s)."@en .
+
+ad:Address.status  a     owl:ObjectProperty ;
+        rdfs:comment     "NOTE This status relates to the address and is not a property of the object to which the address is assigned (the addressable object)."@en ;
+        rdfs:domain      ad:Address ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codelist/StatusValue> ;
+        skos:definition  "Validity of the address within the life-cycle (version) of the address spatial object."@en .
+
+ad:Address.locator  a    owl:ObjectProperty ;
+        rdfs:domain      ad:Address ;
+        rdfs:range       ad:AddressLocator ;
+        skos:definition  "Human readable designator or name."@en .

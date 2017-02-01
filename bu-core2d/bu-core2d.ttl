@@ -1,0 +1,63 @@
+# This is a draft RDF vocabulary for representing spatial data sets in INSPIRE as RDF. This vocabulary has been created using the "Guidelines for the RDF encoding of spatial data" (http://inspire-eu-rdf.github.io/inspire-rdf-guidelines).
+#
+# The use of RDF is optional and does not supersede or replace the requirements regarding encoding specified in Clause 9 of the INSPIRE Data Specifications. This optional encoding is intended to support the e-government and open data community in Europe, which is increasingly looking at RDF to represent data.
+#
+# This is a draft version. It has limitations and is expected to contain errors. Please report any issues or concerns in GitHub (https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/issues).
+#
+# ------------------------------
+#
+#
+# This ontology contains classes and properties that have been derived from the INSPIRE "Buildings2D" application schema.
+#
+# The following properties have been encoded with global scope (see guidelines for further details):
+#  - Building.geometry2D
+#
+# During the derivation, the following mappings, alignments, and omissions have been applied:
+# - Mappings:
+#   - Property 'BuildingPart.geometry2D' is mapped to the global property 'geometry2D' from this ontology.
+#
+# - Alignments (through subsumption):
+#   - Spatial object types are aligned with gsp:Feature.
+#
+# - Omissions: none
+#
+# ------------------------------
+#
+#
+@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix bu-base: <http://inspire.ec.europa.eu/ont/bu-base#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix bu-core2d: <http://inspire.ec.europa.eu/ont/bu-core2d#> .
+
+<http://inspire.ec.europa.eu/ont/bu-core2d>
+        a                owl:Ontology ;
+        rdfs:label       "Building 2D"@en ;
+        owl:imports      <http://inspire.ec.europa.eu/ont/bu-base> , <http://www.opengis.net/ont/geosparql> , <http://def.isotc211.org/iso19150-2/2012/base> ;
+        owl:versionIRI   "http://inspire.ec.europa.eu/ont/bu-core2d/4.0" ;
+        owl:versionInfo  "4.0" ;
+        skos:definition  "The 2D application schema for INSPIRE theme buildings."@en .
+
+bu-core2d:Building  a          owl:Class ;
+        rdfs:label             "Building"@en ;
+        rdfs:subClassOf        bu-base:Building , gsp:Feature ;
+        iso19150-2:constraint  "singleReferenceGeometry: /*Exactly one geometry2D attribute must be a reference geometry, i.e. the referenceGeometry attribute must be 'true'.*/" , "Building parts shall be 2D: /*The parts of the building shall be represented using the BuildingPart type of the Buildings2D package.*/" ;
+        skos:definition        "A Building is an enclosed construction above and/or underground, used or intended for the shelter of humans, animals or things or for the production of economic goods. A building refers to any structure permanently constructed or erected on its site."@en .
+
+bu-core2d:BuildingPart
+        a                      owl:Class ;
+        rdfs:comment           "NOTE 1: A BuildingPart is homogeneous related to its physical, functional or temporal aspects. \r\n\r\nNOTE 2: Building and BuildingPart share the same set of properties.\r\nEXAMPLE: A building may be composed of two building parts having different heights above ground."@en ;
+        rdfs:label             "Building part"@en ;
+        rdfs:subClassOf        bu-base:BuildingPart , gsp:Feature ;
+        iso19150-2:constraint  "singleReferenceGeometry: /*Exactly one geometry2D attribute must be a reference geometry, i.e. the referenceGeometry attribute must be 'true'.*/\r\n" ;
+        skos:definition        "A BuildingPart is a sub-division of a Building that might be considered itself as a building."@en .
+
+bu-core2d:geometry2D  a  owl:ObjectProperty ;
+        rdfs:comment     "<font color=\"#0f0f0f\">NOTE: Multiple representations of the geometry are possible (e.g. by surface and by point).</font>"@en ;
+        rdfs:label       "Geometry 2D"@en ;
+        rdfs:range       bu-base:BuildingGeometry2D ;
+        skos:definition  "2D or 2.5D geometric representation of the building."@en .

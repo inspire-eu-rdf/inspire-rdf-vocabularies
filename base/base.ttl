@@ -1,0 +1,312 @@
+# This is a draft RDF vocabulary for representing spatial data sets in INSPIRE as RDF. This vocabulary has been created using the "Guidelines for the RDF encoding of spatial data" (http://inspire-eu-rdf.github.io/inspire-rdf-guidelines).
+#
+# The use of RDF is optional and does not supersede or replace the requirements regarding encoding specified in Clause 9 of the INSPIRE Data Specifications. This optional encoding is intended to support the e-government and open data community in Europe, which is increasingly looking at RDF to represent data.
+#
+# This is a draft version. It has limitations and is expected to contain errors. Please report any issues or concerns in GitHub (https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/issues).
+#
+# ------------------------------
+#
+#
+# This ontology contains classes and properties that have been derived from the INSPIRE "Base Types" and "Base Types2" application schemas.
+# Additional classes implement types from the INSPIRE foundation schemas for which no suitable ontology representation has been identified yet.
+#
+# The following properties with global scope (see guidelines for further details) have been added to this ontology, for re-use by importing ontologies:
+# - beginLifespanVersion
+# - endLifespanVersion
+# - validFrom
+# - validTo
+#
+# During the derivation, the following mappings, alignments, and omissions have been applied:
+# - Mappings:
+#   - Code lists and the enumeration 'VerticalPositionValue' are mapped to skos:Concept.
+#   - Type 'Identifier' is mapped to rdfs:Resource.
+#   - Type 'SpatialDataSet' is mapped to dcat:Dataset.
+#   - Type 'PT_FreeText' is mapped to rdf:langString.
+#   - Type 'TM_Position' is mapped to xsd:date. NOTE: The type can be mapped to a more complex representation when converting a different application schema.
+#
+# - Alignments (through subsumption):
+#   - Property 'Contact.address' is aligned to property locn:address.
+#
+# - Omissions:
+#   - The types 'Identifier' and 'SpatialDataSet' have not been converted. They are mapped as described before.
+#   - Property DocumentCitation.date has been omitted. A value for this property can be encoded using the DC-Terms properties 'created', 'issued', and 'modified'. See the guidelines for further details.
+#
+# ------------------------------
+#
+#
+@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix locn:  <https://www.w3.org/ns/locn#> .
+@prefix base:  <http://inspire.ec.europa.eu/ont/base#> .
+
+base:beginLifespanVersion
+        a                owl:DatatypeProperty ;
+        rdfs:range       xsd:dateTime ;
+        skos:definition  "Date and time at which this version of the spatial object was inserted or changed in the spatial data set."@en .
+
+base:endLifespanVersion
+        a                owl:DatatypeProperty ;
+        rdfs:range       xsd:dateTime ;
+        skos:definition  "Date and time at which this version of the spatial object was superseded or retired in the spatial data set."@en .
+
+base:validFrom
+        a                owl:DatatypeProperty ;
+        rdfs:range       xsd:dateTime ;
+        skos:definition  "Date and time at which this version of the spatial object was/will be valid."@en .
+
+base:validTo
+        a                owl:DatatypeProperty ;
+        rdfs:range       xsd:dateTime ;
+        skos:definition  "Date and time at which this version of the spatial object ceased or will cease to be valid."@en .
+
+base:Measure
+      	a 					rdfs:Datatype ;
+       skos:notation  "Measure"^^xsd:NCName ;
+      	skos:prefLabel "measure"@en ;
+      	skos:defnition "a text representation of a measure value. The decimal value is followed by a space and the unit of the measure." .
+
+base:Sign
+        a                         rdfs:Datatype ;
+        owl:oneOf                 ( "+" "-" ) ;
+        skos:notation             "Sign"^^xsd:NCName ;
+        skos:prefLabel            "sign"@en .
+
+base:DocumentCitation.name
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE\tFor legal documents, this should be the official name assigned to the legislative instrument.\r\n\r\nEXAMPLE The official legal name for the INSPIRE Directive is \"Directive 2007/2/EC of the European Parliament and of the Council of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)\""@en ;
+        rdfs:domain      base:DocumentCitation ;
+        rdfs:label       "name"@en ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Name of the document."@en .
+
+base:OfficialJournalInformation.officialJournalIdentification
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "EXAMPLE: Official Journal of European Union (OJEU), L108, Volume 50, 1-14"@en ;
+        rdfs:domain      base:OfficialJournalInformation ;
+        rdfs:label       "official journal identification"@en ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Reference to the location within the official journal within which the legislative instrument was published. This reference shall be comprised of three parts:\r\n<ul>\r\n\t<li>the title of the official journal</li>\r\n\t<li>the volume and/or series number</li>\r\n\t<li>Page number(s)</li>\r\n</ul>"@en .
+
+base:DocumentCitation.shortName
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE\tFor legal documents, this should be a short name or alternative title commonly used to identify the legislation.\r\n\r\nEXAMPLE 1: INSPIRE Directive is the short name for \"Directive 2007/2/EC of the European Parliament and of the Council of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)\"\r\n\r\nEXAMPLE 2: CAFE Directive is the short name for the Directive 2008/50/EC of the European Parliament and of the Council of 21 May 2008 on ambient air quality and cleaner air for Europe\" \r\n\r\nEXAMPLE  3: Water Framework Directive the short name for \"Directive 2000/60/EC of the European Parliament and of the Council establishing a framework for the Community action in the field of water policy\""@en ;
+        rdfs:domain      base:DocumentCitation ;
+        rdfs:label       "short name"@en ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Short name or alternative title of the document."@en .
+
+base:OfficialJournalInformation.iSBN
+        a                owl:DatatypeProperty ;
+        rdfs:domain      base:OfficialJournalInformation ;
+        rdfs:label       "ISBN"@en ;
+        rdfs:range       xsd:string ;
+        skos:definition  "International Standard Book Number (ISBN) is an nine-digit number that uniquely identifies the book in which the legislative instrument was published."@en .
+
+base:RelatedParty.positionName
+        a                owl:DatatypeProperty ;
+        rdfs:domain      base:RelatedParty ;
+        rdfs:label       "position name"@en ;
+        rdfs:range       rdf:langString ;
+        skos:definition  "Position of the party in relation to a resource, such as head of department."@en .
+
+base:RelatedParty.organisationName
+        a                owl:DatatypeProperty ;
+        rdfs:domain      base:RelatedParty ;
+        rdfs:label       "organisation name"@en ;
+        rdfs:range       rdf:langString ;
+        skos:definition  "Name of the related organisation."@en .
+
+base:RelatedParty  a           owl:Class ;
+        rdfs:comment           "NOTE 1 A party, typically an individual person, acting as a general point of contact for a resource can be specified without providing any particular role."@en ;
+        rdfs:label             "related party"@en ;
+        iso19150-2:constraint  "individual, organisation or position name shall be provided: At least the individual, organisation or position name shall be provided." ;
+        skos:definition        "An organisation or a person with a role related to a resource."@en .
+
+base:LegislationCitation.officialDocumentNumber
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE: An official document number may be assigned to uniquely identify the legislative instrument.\r\n\r\nEXAMPLE: CELEX Number used to uniquely identify European Union Legislation"@en ;
+        rdfs:domain      base:LegislationCitation ;
+        rdfs:label       "official document number"@en ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Official document number used to uniquely identify the legislative instrument."@en .
+
+base:DocumentCitation
+        a                owl:Class ;
+        rdfs:label       "document citation"@en ;
+        skos:definition  "Citation for the purposes of unambiguously referencing a document."@en .
+
+base:Contact.hoursOfService
+        a                owl:DatatypeProperty ;
+        rdfs:domain      base:Contact ;
+        rdfs:range       rdf:langString ;
+        skos:definition  "Periods of time when the organisation or individual can be contacted."@en .
+
+base:ThematicIdentifier
+        a                owl:Class ;
+        rdfs:comment     "Some spatial objects may be assigned multiple unique identifiers. \r\nThese may have been established to meet data exchange requirements of different reporting obligations at International, European or national levels and/or internal data maintenance requirements."@en ;
+        rdfs:label       "thematic identifier"@en ;
+        skos:definition  "Thematic identifier to uniquely identify the spatial object."@en .
+
+base:RelatedParty.individualName
+        a                owl:DatatypeProperty ;
+        rdfs:domain      base:RelatedParty ;
+        rdfs:label       "individual name"@en ;
+        rdfs:range       rdf:langString ;
+        skos:definition  "Name of the related person."@en .
+
+base:OfficialJournalInformation.iSSN
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE: Periodical publilcations are issued in successive parts, usually having numerical or chronological designations and required that each serial publication can be uniquely identified.\r\n\r\nEXAMPLE: OJ Series in which INSPIRE Directive is published has been assigned the ISSN: 1725-2555"@en ;
+        rdfs:domain      base:OfficialJournalInformation ;
+        rdfs:label       "ISSN"@en ;
+        rdfs:range       xsd:string ;
+        skos:definition  "The International Standard Serial Number (ISSN) is an eight-digit number that identifies the periodical publication in which the legislative instrument was published."@en .
+
+base:LegislationCitation.level
+        a                owl:ObjectProperty ;
+        rdfs:domain      base:LegislationCitation ;
+        rdfs:label       "name"@en ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codeList/LegislationLevelValue> ;
+        skos:definition  "The level at which the legislative instrument is adopted."@en .
+
+base:ThematicIdentifier.identifier
+        a                owl:DatatypeProperty ;
+        rdfs:domain      base:ThematicIdentifier ;
+        rdfs:label       "identifier"@en ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Unique identifier used to identify the spatial object within the specified identification scheme."@en .
+
+base:OfficialJournalInformation.linkToJournal
+        a                owl:DatatypeProperty ;
+        rdfs:domain      base:OfficialJournalInformation ;
+        rdfs:label       "link to online version"@en ;
+        rdfs:range       xsd:anyURI ;
+        skos:definition  "Link to an online version of the official journal"@en .
+
+base:DocumentCitation.specificReference
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "EXAMPLE For legal documents, this attribute can contain a reference to article(s) that specify a specific requirement or obligation."@en ;
+        rdfs:domain      base:DocumentCitation ;
+        rdfs:label       "specific reference"@en ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Reference to a specific part of the document."@en .
+
+<http://inspire.ec.europa.eu/ont/base>
+        a                owl:Ontology ;
+        rdfs:comment     "NOTE\tThe additional types specified with Annex II/III data specifications are placed in a separate schema to maintain backwards compatibility."@en ;
+        owl:imports      <https://www.w3.org/ns/locn.ttl> , <http://www.w3.org/2004/02/skos/core> , <http://def.isotc211.org/iso19150-2/2012/base> ;
+        skos:definition  "schema for additional basic types used by multiple themes"@en .
+
+base:LegislationCitation
+        a                      owl:Class ;
+        rdfs:label             "legislation citation"@en ;
+        rdfs:subClassOf        base:DocumentCitation ;
+        iso19150-2:constraint  "Provide_linkToLegislativeInstrument_or_journalCitation: If the link attribute is void, the journal citation shall be provided." ;
+        skos:definition        "Citation for the purposes of unambiguously referencing a legal act or a specific part of a legal act."@en .
+
+base:DocumentCitation.link
+        a                owl:DatatypeProperty ;
+        rdfs:domain      base:DocumentCitation ;
+        rdfs:label       "link to online version"@en ;
+        rdfs:range       xsd:anyURI ;
+        skos:definition  "Link to an online version of the document"@en .
+
+base:Contact.telephoneFacsimile
+        a                owl:DatatypeProperty ;
+        rdfs:domain      base:Contact ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Number of a facsimile machine of the organisation or individual."@en .
+
+base:Contact.contactInstructions
+        a                owl:DatatypeProperty ;
+        rdfs:domain      base:Contact ;
+        rdfs:range       rdf:langString ;
+        skos:definition  "Supplementary instructions on how or when to contact an individual or organisation."@en .
+
+base:LegislationCitation.journalCitation
+        a                owl:ObjectProperty ;
+        rdfs:domain      base:LegislationCitation ;
+        rdfs:label       "journal citation"@en ;
+        rdfs:range       base:OfficialJournalInformation ;
+        skos:definition  "Citation of the official journal in which the legislation is published."@en .
+
+base:Contact.address  a     owl:ObjectProperty ;
+        rdfs:domain         base:Contact ;
+        rdfs:range          locn:Address ;
+        rdfs:subPropertyOf  locn:address ;
+        skos:definition     "An address provided as free text."@en .
+
+base:Contact.electronicMailAddress
+        a                owl:DatatypeProperty ;
+        rdfs:domain      base:Contact ;
+        rdfs:range       xsd:string ;
+        skos:definition  "An address of the organisation's or individual's electronic mailbox."@en .
+
+base:RelatedParty.role
+        a                owl:ObjectProperty ;
+        rdfs:domain      base:RelatedParty ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codeList/PartyRoleValue> ;
+        skos:definition  "Role(s) of the party in relation to a resource, such as owner."@en .
+
+base:OfficialJournalInformation
+        a                owl:Class ;
+        rdfs:label       "official journal information"@en ;
+        skos:definition  "Full citation of the location of the legislative instrument within the official journal."@en .
+
+base:Contact.website  a  owl:DatatypeProperty ;
+        rdfs:domain      base:Contact ;
+        rdfs:range       xsd:anyURI ;
+        skos:definition  "Pages provided on the World Wide Web by the organisation or individual."@en .
+
+base:Contact.telephoneVoice
+        a                owl:DatatypeProperty ;
+        rdfs:domain      base:Contact ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Telephone number of the organisation or individual."@en .
+
+base:LegislationCitation.dateRepealed
+        a                owl:ObjectProperty ;
+        rdfs:domain      base:LegislationCitation ;
+        rdfs:label       "date repealed"@en ;
+        rdfs:range       xsd:date ;
+        skos:definition  "Date the legislative instrument was repealed."@en .
+
+base:ThematicIdentifier.identifierScheme
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "NOTE 1: Reporting requirements for different environmental legislation mandate that each spatial object is assigned an identifier conforming to specific lexical rules. \r\n\r\nNOTE 2: These rules are often inconsistent so a spatial object may be assigned multiple identifiers which are used for object referencing to link information to the spatial object."@en ;
+        rdfs:domain      base:ThematicIdentifier ;
+        rdfs:label       "identifier scheme"@en ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Identifier defining the scheme used to assign the identifier."@en .
+
+base:LegislationCitation.dateEnteredIntoForce
+        a                owl:ObjectProperty ;
+        rdfs:domain      base:LegislationCitation ;
+        rdfs:label       "date entered into force"@en ;
+        rdfs:range       xsd:date ;
+        skos:definition  "Date the legislative instrument entered into force."@en .
+
+base:RelatedParty.contact
+        a                owl:ObjectProperty ;
+        rdfs:domain      base:RelatedParty ;
+        rdfs:label       "contact"@en ;
+        rdfs:range       base:Contact ;
+        skos:definition  "Contact information for the related party."@en .
+
+base:LegislationCitation.identificationNumber
+        a                owl:DatatypeProperty ;
+        rdfs:comment     "EXAMPLE 1: 2007/2/EC is the identification number for the INSPIRE Directive\r\n\r\nEXAMPLE 2: 2008/50/EC is the identification number for the CAFE Directive\r\n\r\nEXAMPLE 3: 2000/60/EC is the identification number for the  Water Framework Directive"@en ;
+        rdfs:domain      base:LegislationCitation ;
+        rdfs:label       "identification number"@en ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Code used to identify the legislative instrument"@en .
+
+base:Contact  a          owl:Class ;
+        rdfs:label       "contact"@en ;
+        skos:definition  "Communication channels by which it is possible to gain access to someone or something."@en .

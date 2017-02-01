@@ -1,0 +1,251 @@
+# This is a draft RDF vocabulary for representing spatial data sets in INSPIRE as RDF. This vocabulary has been created using the "Guidelines for the RDF encoding of spatial data" (http://inspire-eu-rdf.github.io/inspire-rdf-guidelines).
+#
+# The use of RDF is optional and does not supersede or replace the requirements regarding encoding specified in Clause 9 of the INSPIRE Data Specifications. This optional encoding is intended to support the e-government and open data community in Europe, which is increasingly looking at RDF to represent data.
+#
+# This is a draft version. It has limitations and is expected to contain errors. Please report any issues or concerns in GitHub (https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/issues).
+#
+# ------------------------------
+#
+#
+# This ontology contains classes and properties that have been derived from the INSPIRE "AdministrativeUnits" application schema.
+#
+# The following properties have been encoded with global scope (see guidelines for further details):
+#  - AdministrativeBoundary.country
+#
+# During the derivation, the following mappings, alignments, and omissions have been applied:
+# - Mappings:
+#   - Code lists and enumerations are mapped to skos:Concept.
+#   - The properties 'beginLifespanVersion' and 'endLifespanVersion' are mapped to the global properties defined by the base ontology.
+#   - Geometry types are mapped to classes from the Simple Feature ontology.
+#   - Property 'AdministrativeUnit.country' is mapped to the global property 'country' from this ontology.
+#
+# - Alignments (through subsumption):
+#   - Spatial object types are aligned with gsp:Feature.
+#   - Properties with value type 'GeographicalName' are aligned to property locn:geographicName.
+#   - Properties with a geometry value type are aligned to locn:geometry and gsp:hasDefaultGeometry.
+#
+# - Omissions:
+#   - Property 'inspireId' is omitted. See the guidelines for further details.
+#
+# ------------------------------
+#
+#
+@prefix au:    <http://inspire.ec.europa.eu/ont/au#> .
+@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix sfowl: <http://www.opengis.net/ont/sf#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix gn:    <http://inspire.ec.europa.eu/ont/ad#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix locn:  <https://www.w3.org/ns/locn#> .
+@prefix base:  <http://inspire.ec.europa.eu/ont/base#> .
+
+au:AdministrativeUnit.residenceOfAuthority
+        a                owl:ObjectProperty ;
+        rdfs:domain      au:AdministrativeUnit ;
+        rdfs:label       "residence of authority"@en ;
+        rdfs:range       au:ResidenceOfAuthority ;
+        skos:definition  "Center for national or local administration."@en .
+
+au:AdministrativeUnit.coAdminister
+        a                owl:ObjectProperty ;
+        rdfs:domain      au:AdministrativeUnit ;
+        rdfs:label       "co administer"@en ;
+        rdfs:range       au:AdministrativeUnit ;
+        skos:definition  "Administrative unit established at same level of national administrative hierarchy which is co-administered by this administrative unit."@en .
+
+au:AdministrativeUnit
+        a                      owl:Class ;
+        rdfs:isDefinedBy       <http://inspire.ec.europa.eu/featureconcept/AdministrativeUnit> ;
+        rdfs:label             "administrative unit"@en ;
+        rdfs:subClassOf        gsp:Feature ;
+        iso19150-2:constraint  "CondominiumsAtCountryLevel: Association role condominium applies only for administrative units which nationalLevel='1st order' (country level)." , "AdministrativeUnitLowestLevel: No unit at lowest level can associate units at lower level." , "AdmininstrativeUnitHighestLevel: No unit at highest level can associate units at a higher level." ;
+        skos:definition        "Unit of administration where a Member State has and/or exercises jurisdictional rights, for local, regional and national governance."@en .
+
+<http://inspire.ec.europa.eu/ont/au>
+        a                owl:Ontology ;
+        owl:imports      <https://www.w3.org/ns/locn.ttl> , <http://www.opengis.net/ont/geosparql> , <http://def.isotc211.org/iso19150-2/2012/base> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/ad/ad.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <http://www.w3.org/2004/02/skos/core> , <http://www.opengis.net/ont/sf> ;
+        owl:versionIRI   "http://inspire.ec.europa.eu/ont/au/4.0" ;
+        owl:versionInfo  "4.0" .
+
+au:Condominium.admUnit
+        a                owl:ObjectProperty ;
+        rdfs:domain      au:Condominium ;
+        rdfs:label       "adm unit"@en ;
+        rdfs:range       au:AdministrativeUnit ;
+        skos:definition  "The administrative unit administering the condominium."@en .
+
+au:AdministrativeBoundary.nationalLevel
+        a                owl:ObjectProperty ;
+        rdfs:domain      au:AdministrativeBoundary ;
+        rdfs:label       "national level"@en ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/enumeration/AdministrativeHierarchyLevel> ;
+        skos:definition  "The hierarchy levels of all adjacent administrative units this boundary is part of."@en .
+
+au:AdministrativeUnit.name
+        a                   owl:ObjectProperty ;
+        rdfs:domain         au:AdministrativeUnit ;
+        rdfs:label          "name"@en ;
+        rdfs:range          gn:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "Official national geographical name of the administrative unit, given in several languages where required."@en .
+
+au:AdministrativeBoundary.legalStatus
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE The legal status is considered in terms of political agreement or disagreement of the administrative units separated by this boundary."@en ;
+        rdfs:domain      au:AdministrativeBoundary ;
+        rdfs:label       "legal status"@en ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/enumeration/LegalStatusValue> ;
+        skos:definition  "Legal status of this administrative boundary."@en .
+
+au:AdministrativeBoundary.geometry
+        a                   owl:ObjectProperty ;
+        rdfs:domain         au:AdministrativeBoundary ;
+        rdfs:label          "geometry"@en ;
+        rdfs:range          sfowl:LineString ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasDefaultGeometry ;
+        skos:definition     "Geometric representation of border line."@en .
+
+au:AdministrativeUnit.geometry
+        a                   owl:ObjectProperty ;
+        rdfs:domain         au:AdministrativeUnit ;
+        rdfs:label          "geometry"@en ;
+        rdfs:range          sfowl:MultiPolygon ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasDefaultGeometry ;
+        skos:definition     "Geometric representation of spatial area covered by this administrative unit."@en .
+
+au:AdministrativeUnit.upperLevelUnit
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE Administrative units at the highest level of national hierarchy (i.e. the country) do not have upper level units. \r\n\r\nCONSTRAINT Each administrative unit at the level other than '1st order' (i.e. nationalLevel <> '1st order') shall refer their upper level unit."@en ;
+        rdfs:domain      au:AdministrativeUnit ;
+        rdfs:label       "upper level unit"@en ;
+        rdfs:range       au:AdministrativeUnit ;
+        skos:definition  "A unit established at a higher level of national administrative hierarchy that this administrative unit administers."@en .
+
+au:AdministrativeUnit.administeredBy
+        a                owl:ObjectProperty ;
+        rdfs:domain      au:AdministrativeUnit ;
+        rdfs:label       "administered by"@en ;
+        rdfs:range       au:AdministrativeUnit ;
+        skos:definition  "Administrative unit established at same level of national administrative hierarchy that administers this administrative unit."@en .
+
+au:AdministrativeUnit.nationalCode
+        a                owl:DatatypeProperty ;
+        rdfs:domain      au:AdministrativeUnit ;
+        rdfs:label       "national code"@en ;
+        rdfs:range       xsd:string ;
+        skos:definition  "Thematic identifier corresponding to the national administrative codes defined in each country."@en .
+
+au:AdministrativeBoundary.technicalStatus
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE The technical status of the boundary is considered in terms of its topological matching or not-matching with the borders of all separated administrative units. Edge-matched means that the same set of coordinates is used."@en ;
+        rdfs:domain      au:AdministrativeBoundary ;
+        rdfs:label       "technical status"@en ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/enumeration/TechnicalStatusValue> ;
+        skos:definition  "The technical status of the administrative boundary."@en .
+
+au:Condominium.geometry
+        a                   owl:ObjectProperty ;
+        rdfs:domain         au:Condominium ;
+        rdfs:label          "geometry"@en ;
+        rdfs:range          sfowl:MultiPolygon ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasDefaultGeometry ;
+        skos:definition     "Geometric representation of spatial area covered by this condominium."@en .
+
+au:ResidenceOfAuthority.geometry
+        a                   owl:ObjectProperty ;
+        rdfs:domain         au:ResidenceOfAuthority ;
+        rdfs:range          sfowl:Point ;
+        rdfs:subPropertyOf  locn:geometry , gsp:hasDefaultGeometry ;
+        skos:definition     "Position of the residence of authority."@en .
+
+au:AdministrativeUnit.nationalLevel
+        a                owl:ObjectProperty ;
+        rdfs:domain      au:AdministrativeUnit ;
+        rdfs:label       "national level"@en ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/enumeration/AdministrativeHierarchyLevel> ;
+        skos:definition  "Level in the national administrative hierarchy, at which the administrative unit is established."@en .
+
+au:AdministrativeBoundary
+        a                 owl:Class ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/AdministrativeBoundary> ;
+        rdfs:label        "administrative boundary"@en ;
+        rdfs:subClassOf   gsp:Feature ;
+        skos:definition   "A line of demarcation between administrative units."@en .
+
+au:AdministrativeUnit.boundary
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE Administrative boundary corresponds to the curve established between the  nodes  at lowest level of territory division in Member State. Thus, it does not necessarily represents boundary in political terms, but just part of it."@en ;
+        rdfs:domain      au:AdministrativeUnit ;
+        rdfs:label       "boundary"@en ;
+        rdfs:range       au:AdministrativeBoundary ;
+        skos:definition  "The administrative boundaries between this administrative unit and all the units adjacent to it."@en .
+
+au:country  a            owl:ObjectProperty , rdf:Property ;
+        rdfs:label       "country"@en ;
+        rdfs:range       skos:Concept ;
+        rdfs:seeAlso     <http://inspire.ec.europa.eu/codeList/CountryCode> ;
+        skos:definition  "Two-character country code according to the Interinstitutional style guide published by the Publications Office of the European Union."@en .
+
+au:Condominium  a         owl:Class ;
+        rdfs:comment      "NOTE Condominium is not a part of any national administrative hierarchy of territory division in Member State."@en ;
+        rdfs:isDefinedBy  <http://inspire.ec.europa.eu/featureconcept/Condominium> ;
+        rdfs:label        "condominium"@en ;
+        rdfs:subClassOf   gsp:Feature ;
+        skos:definition   "An administrative area established independently to any national administrative division of territory  and administered by two or more countries."@en .
+
+au:Condominium.name  a      owl:ObjectProperty ;
+        rdfs:domain         au:Condominium ;
+        rdfs:label          "name"@en ;
+        rdfs:range          gn:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "Official geographical name of this condominium, given in several languages where required."@en .
+
+au:ResidenceOfAuthority.name
+        a                   owl:ObjectProperty ;
+        rdfs:domain         au:ResidenceOfAuthority ;
+        rdfs:range          gn:GeographicalName ;
+        rdfs:subPropertyOf  locn:geographicName ;
+        skos:definition     "Name of the residence of authority."@en .
+
+au:ResidenceOfAuthority
+        a                owl:Class ;
+        skos:definition  "Data type representing the name and position of a residence of authority."@en .
+
+au:AdministrativeUnit.condominium
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE Condominiums may only exist at state level and can be administered only by administrative units at the highest level of the national administrative hierarchy (i.e. countries)."@en ;
+        rdfs:domain      au:AdministrativeUnit ;
+        rdfs:label       "condominium"@en ;
+        rdfs:range       au:Condominium ;
+        skos:definition  "Condominium administered by this administrative unit."@en .
+
+au:AdministrativeUnit.lowerLevelUnit
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE For administrative units at the lowest level of the national hierarchy no lower level unit exists. \r\n\r\nCONSTRAINT Each administrative unit except for the lowest level units shall refer to its lower level units"@en ;
+        rdfs:domain      au:AdministrativeUnit ;
+        rdfs:label       "lower level unit"@en ;
+        rdfs:range       au:AdministrativeUnit ;
+        skos:definition  "Units established at a lower level of the national administrative hierarchy which are administered by the administrative unit."@en .
+
+au:AdministrativeUnit.nationalLevelName
+        a                owl:DatatypeProperty ;
+        rdfs:domain      au:AdministrativeUnit ;
+        rdfs:label       "national level name"@en ;
+        rdfs:range       rdf:langString ;
+        skos:definition  "Name of the level in the national administrative hierarchy, at which  the administrative unit is established."@en .
+
+au:AdministrativeBoundary.admUnit
+        a                owl:ObjectProperty ;
+        rdfs:comment     "NOTE In case of a national boundary (i.e. nationalLevel='1st order')  only one national administrative unit (i.e. country) is provided."@en ;
+        rdfs:domain      au:AdministrativeBoundary ;
+        rdfs:label       "adm unit"@en ;
+        rdfs:range       au:AdministrativeUnit ;
+        skos:definition  "The administrative units separated by this administrative boundary."@en .
