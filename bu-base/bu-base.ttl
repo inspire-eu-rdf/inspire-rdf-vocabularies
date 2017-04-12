@@ -36,7 +36,7 @@
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
-@prefix gn:    <http://inspire.ec.europa.eu/ont/ad#> .
+@prefix gn:    <http://inspire.ec.europa.eu/ont/gn#> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
 @prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
 @prefix bu-base: <http://inspire.ec.europa.eu/ont/bu-base#> .
@@ -137,7 +137,7 @@ bu-base:BuildingGeometry2D.geometry
 <http://inspire.ec.europa.eu/ont/bu-base>
         a                owl:Ontology ;
         rdfs:label       "Building base"@en ;
-        owl:imports      <https://www.w3.org/ns/locn.ttl> , <http://www.opengis.net/ont/sf> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/ad/ad.ttl> , <http://www.w3.org/2004/02/skos/core> , <http://www.opengis.net/ont/geosparql> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <http://def.isotc211.org/iso19150-2/2012/base> ;
+        owl:imports      <https://www.w3.org/ns/locn.ttl> , <http://www.opengis.net/ont/sf> , <http://www.w3.org/2004/02/skos/core> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/gn/gn.ttl> , <http://www.opengis.net/ont/geosparql> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <http://def.isotc211.org/iso19150-2/2012/base> ;
         owl:versionIRI   "http://inspire.ec.europa.eu/ont/bu-base/4.0" ;
         owl:versionInfo  "4.0" ;
         skos:definition  "The base application schema for INSPIRE theme buildings."@en .

@@ -31,6 +31,7 @@
 @prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
 @prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix gn:    <http://inspire.ec.europa.eu/ont/gn#> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
 @prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
@@ -45,7 +46,7 @@
 ad:AddressRepresentation.postName
         a                   owl:ObjectProperty ;
         rdfs:domain         ad:AddressRepresentation ;
-        rdfs:range          ad:GeographicalName ;
+        rdfs:range          gn:GeographicalName ;
         rdfs:subPropertyOf  locn:geographicName ;
         skos:definition     "One or more names created and maintained for postal purposes to identify a subdivision of addresses and postal delivery points."@en .
 
@@ -67,7 +68,7 @@ ad:AddressAreaName.name
         a                   owl:ObjectProperty ;
         rdfs:comment        "NOTE The data type allows names in different languages and scripts as well as inclusion of alternative name, alternative spellings, historical name and exonyms."@en ;
         rdfs:domain         ad:AddressAreaName ;
-        rdfs:range          ad:GeographicalName ;
+        rdfs:range          gn:GeographicalName ;
         rdfs:subPropertyOf  locn:geographicName ;
         skos:definition     "Proper noun applied to the address area."@en .
 
@@ -89,7 +90,7 @@ ad:PostalDescriptor.postName
         a                   owl:ObjectProperty ;
         rdfs:comment        "NOTE 1 Often the post name (or names) is a supplementary identification of the post office to which the associated post code belongs. For example it may be the name of the town in which the office is situated. In other situations the post name could be an independent descriptor without any post code or it could be a postal subdivision connected to a parent postal descriptor (post code and post name). \r\n\r\nNOTE 2 In some countries like e.g. Spain and The Netherlands, no post names exit therefore the postal descriptor is only represented by the post code. \r\n\r\nNOTE 3 Even though the post name is the same as the name of an administrative unit or an address area, the area covered are not necessarilythe same."@en ;
         rdfs:domain         ad:PostalDescriptor ;
-        rdfs:range          ad:GeographicalName ;
+        rdfs:range          gn:GeographicalName ;
         rdfs:subPropertyOf  locn:geographicName ;
         skos:definition     "One or more names created and maintained for postal purposes to identify a subdivision of addresses and postal delivery points."@en .
 
@@ -126,7 +127,7 @@ ad:PartOfName.part  a    owl:DatatypeProperty ;
 ad:AddressRepresentation.locatorName
         a                   owl:ObjectProperty ;
         rdfs:domain         ad:AddressRepresentation ;
-        rdfs:range          ad:GeographicalName ;
+        rdfs:range          gn:GeographicalName ;
         rdfs:subPropertyOf  locn:geographicName ;
         skos:definition     "Proper noun(s) applied to the real world entity identified by the locator."@en .
 
@@ -195,7 +196,7 @@ ad:ThoroughfareNameValue
 ad:AddressRepresentation.adminUnit
         a                   owl:ObjectProperty ;
         rdfs:domain         ad:AddressRepresentation ;
-        rdfs:range          ad:GeographicalName ;
+        rdfs:range          gn:GeographicalName ;
         rdfs:subPropertyOf  locn:geographicName ;
         skos:definition     "The name or names of a unit of administration where a Member State has and/or exercises jurisdictional rights, for local, regional and national governance."@en .
 
@@ -216,7 +217,7 @@ ad:ThoroughfareName.transportLink
 ad:AddressRepresentation.thoroughfare
         a                   owl:ObjectProperty ;
         rdfs:domain         ad:AddressRepresentation ;
-        rdfs:range          ad:GeographicalName ;
+        rdfs:range          gn:GeographicalName ;
         rdfs:subPropertyOf  locn:geographicName ;
         skos:definition     "The name or names of a passage or way through from one location to another like a road or a waterway."@en .
 
@@ -234,7 +235,7 @@ ad:AdminUnitName.name
         a                   owl:ObjectProperty ;
         rdfs:comment        "NOTE The data type allows names in different languages and scripts as well as inclusion of alternative name, alternative spellings, historical name and exonyms."@en ;
         rdfs:domain         ad:AdminUnitName ;
-        rdfs:range          ad:GeographicalName ;
+        rdfs:range          gn:GeographicalName ;
         rdfs:subPropertyOf  locn:geographicName ;
         skos:definition     "Official, geographical name of the administrative unit, given in different languages where required."@en .
 
@@ -283,7 +284,7 @@ ad:PostalDescriptor  a         owl:Class ;
 ad:AddressRepresentation.addressArea
         a                   owl:ObjectProperty ;
         rdfs:domain         ad:AddressRepresentation ;
-        rdfs:range          ad:GeographicalName ;
+        rdfs:range          gn:GeographicalName ;
         rdfs:subPropertyOf  locn:geographicName ;
         skos:definition     "The name or names of a geographic area or locality that groups a number of addressable objects for addressing purposes, without being an administrative unit."@en .
 
@@ -313,7 +314,7 @@ ad:PartOfName.type  a    owl:ObjectProperty ;
 
 <http://inspire.ec.europa.eu/ont/ad>
         a                owl:Ontology ;
-        owl:imports      <https://www.w3.org/ns/locn.ttl> , <http://www.opengis.net/ont/geosparql> , <http://def.isotc211.org/iso19150-2/2012/base> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/tn/tn.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/cp/cp.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/au/au.ttl> , <http://www.w3.org/2004/02/skos/core> , <http://www.opengis.net/ont/sf> ;
+        owl:imports      <https://www.w3.org/ns/locn.ttl> , <http://www.opengis.net/ont/geosparql> , <http://def.isotc211.org/iso19150-2/2012/base> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/tn/tn.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/cp/cp.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/au/au.ttl> , <http://www.w3.org/2004/02/skos/core> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/gn/gn.ttl> , <http://www.opengis.net/ont/sf> ;
         owl:versionIRI   "http://inspire.ec.europa.eu/ont/ad/4.0" ;
         owl:versionInfo  "4.0" .
 
@@ -325,7 +326,7 @@ ad:ThoroughfareNameValue.name
         a                   owl:ObjectProperty ;
         rdfs:comment        "NOTE 1 The complete name of the thoroughfare must be applied in this attribute, including type, prefix or qualifier, like for example \"Avenue de la Poste\", \"Calle del Christo Canneregio\" or \"Untere Quai\". The name part attribute enables a representation of the name subdivided into separate semantic parts.\r\n\r\nNOTE 2 The data type allows names in different languages as well as inclusion of exonyms."@en ;
         rdfs:domain         ad:ThoroughfareNameValue ;
-        rdfs:range          ad:GeographicalName ;
+        rdfs:range          gn:GeographicalName ;
         rdfs:subPropertyOf  locn:geographicName ;
         skos:definition     "Proper noun applied to the thoroughfare."@en .
 
@@ -352,7 +353,7 @@ ad:AddressAreaName.namedPlace
         a                owl:ObjectProperty ;
         rdfs:comment     "NOTE In order to populate this association, it is important that the area covered by the identified Named Place is exactly the same as the area covered by the address area name in question; if this is not the case the association would result in an inconsistency.\r\n\r\nEXAMPLE The geographical name \"Huskvarna\", which represents a part of the municipality of Jönköping in Sweden, is the source of the address area name, \"Huskvarna\"."@en ;
         rdfs:domain      ad:AddressAreaName ;
-        rdfs:range       ad:NamedPlace ;
+        rdfs:range       gn:NamedPlace ;
         skos:definition  "The named place that this address area name represents."@en .
 
 ad:LocatorDesignator  a  owl:Class ;
@@ -384,7 +385,7 @@ ad:GeographicPosition.method
 ad:LocatorName.name  a      owl:ObjectProperty ;
         rdfs:comment        "NOTE 1 The data type allows names in different languages and scripts as well as inclusion of alternative name, alternative spellings, historical name and exonyms.\r\n\r\nNOTE 2 The locator name could be the name of the property or complex, of the building or part of the building (e.g. a wing), or it could be the name of a room or similar inside the building.  \r\n\r\nNOTE 3 The locator name sometimes refer to the name of the family or business entity which at present or in the past has owned or occupied the property or building; although this is the case the locator name must not be confused with the name of the addressee(s).\r\n\r\nNOTE 4 As locator name it is also possible to use a descriptive text that allows a user to identify the property in question.\r\n\r\nEXAMPLE 1 The \"Radford Mill Farm\" in Timsbury, Bath, UK; The allotment house area \"Brumleby\" in Copenhagen, Denmark, the university campus \"Cité Universitaire\", in Paris, France. \r\n\r\nEXAMPLE 2 \"Millers House\" in Stromness, Orkney Isles, UK; \"Ulla's Pension\" in Niederfell, Rheinland-Pfalz, Germany.\r\n\r\nEXAMPLE 3 \"Multi-storey car park at Southampton Magistrates Courts\" in Southampton, UK."@en ;
         rdfs:domain         ad:LocatorName ;
-        rdfs:range          ad:GeographicalName ;
+        rdfs:range          gn:GeographicalName ;
         rdfs:subPropertyOf  locn:geographicName ;
         skos:definition     "The identifying part of the locator name."@en .
 

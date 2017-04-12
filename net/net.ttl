@@ -35,7 +35,7 @@
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
-@prefix gn:    <http://inspire.ec.europa.eu/ont/ad#> .
+@prefix gn:    <http://inspire.ec.europa.eu/ont/gn#> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
 @prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
@@ -290,7 +290,7 @@ net:Link.startNode  a    owl:ObjectProperty ;
 
 <http://inspire.ec.europa.eu/ont/net>
         a                owl:Ontology ;
-        owl:imports      <https://www.w3.org/ns/locn.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <http://www.opengis.net/ont/sf> , <http://www.opengis.net/ont/geosparql> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/ad/ad.ttl> , <http://www.w3.org/2004/02/skos/core> , <http://def.isotc211.org/iso19150-2/2012/base> ;
+        owl:imports      <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/gn/gn.ttl> , <https://www.w3.org/ns/locn.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <http://www.opengis.net/ont/sf> , <http://www.opengis.net/ont/geosparql> , <http://www.w3.org/2004/02/skos/core> , <http://def.isotc211.org/iso19150-2/2012/base> ;
         owl:versionIRI   "http://inspire.ec.europa.eu/ont/net/4.0" ;
         owl:versionInfo  "4.0" .
 
