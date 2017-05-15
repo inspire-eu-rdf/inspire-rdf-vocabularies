@@ -67,7 +67,7 @@ base:Measure
       	a 					rdfs:Datatype ;
        skos:notation  "Measure"^^xsd:NCName ;
       	skos:prefLabel "measure"@en ;
-      	skos:defnition "a text representation of a measure value. The decimal value is followed by a space and the unit of the measure." .
+      	skos:definition "a text representation of a measure value. The decimal value is followed by a space and the unit of the measure." .
 
 base:Sign
         a                         rdfs:Datatype ;
