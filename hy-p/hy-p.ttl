@@ -17,7 +17,7 @@
 #
 # - Alignments (through subsumption):
 #   - Spatial object types are aligned with gsp:Feature.
-#   - Properties with a geometry value type are aligned to locn:geometry and gsp:hasDefaultGeometry.
+#   - Properties of spatial object types with a geometry value type are aligned to locn:geometry and gsp:hasDefaultGeometry.
 #
 # - Omissions:
 #   - Property 'inspireId' is omitted. See the guidelines for further details.
@@ -26,7 +26,7 @@
 #
 #
 @prefix hy:    <http://inspire.ec.europa.eu/ont/hy#> .
-@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix iso19150-2: <http://def.isotc211.org/iso19150/-2/2012/base#> .
 @prefix sfowl: <http://www.opengis.net/ont/sf#> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
@@ -340,7 +340,7 @@ hy-p:SurfaceWater  a           owl:Class ;
 
 <http://inspire.ec.europa.eu/ont/hy-p>
         a                owl:Ontology ;
-        owl:imports      <http://def.isotc211.org/iso19150-2/2012/base> , <http://www.opengis.net/ont/geosparql> , <http://www.w3.org/2004/02/skos/core> , <http://inspire.ec.europa.eu/ont/hy> , <http://www.opengis.net/ont/sf> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <https://www.w3.org/ns/locn.ttl> ;
+        owl:imports      <http://www.opengis.net/ont/geosparql> , <http://www.w3.org/2004/02/skos/core> , <http://inspire.ec.europa.eu/ont/hy> , <http://www.opengis.net/ont/sf> , <http://def.isotc211.org/iso19150/-2/2012/base> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <https://www.w3.org/ns/locn.ttl> ;
         owl:versionIRI   "http://inspire.ec.europa.eu/ont/hy-p/4.0" ;
         owl:versionInfo  "4.0" ;
         skos:definition  "The 'PhysicalWaters' application schema is concerned primarily with the 'mapping' Use Case"@en .

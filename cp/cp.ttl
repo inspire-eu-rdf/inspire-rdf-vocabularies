@@ -22,7 +22,7 @@
 #
 # - Alignments (through subsumption):
 #   - Spatial object types are aligned with gsp:Feature.
-#   - Properties with value type 'GeographicalName' are aligned to property locn:geographicName.
+#   - Properties of spatial object types with value type 'GeographicalName' are aligned to property locn:geographicName.
 #   - Properties 'CadastralParcel.geometry', 'CadastralBoundary.geometry', and 'CadastralZoning.geometry' are aligned to locn:geometry and gsp:hasDefaultGeometry.
 #   - Property 'CadastralParcel.referencePoint'is aligned to locn:geometry and gsp:hasGeometry.
 #
@@ -33,11 +33,11 @@
 #
 #
 @prefix au:    <http://inspire.ec.europa.eu/ont/au#> .
-@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix iso19150-2: <http://def.isotc211.org/iso19150/-2/2012/base#> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
-@prefix gn:    <http://inspire.ec.europa.eu/ont/ad#> .
+@prefix gn:    <http://inspire.ec.europa.eu/ont/gn#> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
 @prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
@@ -173,7 +173,7 @@ cp:CadastralParcel.areaValue
 
 <http://inspire.ec.europa.eu/ont/cp>
         a                owl:Ontology ;
-        owl:imports      <http://def.isotc211.org/iso19150-2/2012/base> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/ad/ad.ttl> , <https://www.w3.org/ns/locn.ttl> , <http://www.w3.org/2004/02/skos/core> , <http://www.opengis.net/ont/geosparql> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/au/au.ttl> ;
+        owl:imports      <https://www.w3.org/ns/locn.ttl> , <http://def.isotc211.org/iso19150/-2/2012/base> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/gn/gn.ttl> , <http://www.w3.org/2004/02/skos/core> , <http://www.opengis.net/ont/geosparql> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/au/au.ttl> ;
         owl:versionIRI   "http://inspire.ec.europa.eu/ont/cp/4.0" ;
         owl:versionInfo  "4.0" ;
         skos:definition  "The application schema CadastralParcels contains the feature types CadastralParcel, CadastralBoundary and CadastralIndexSet."@en .

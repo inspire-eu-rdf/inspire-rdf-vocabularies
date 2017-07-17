@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ShapeChangeConfiguration
+ xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1"
+ xmlns:sc="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1"
+ xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1 http://shapechange.net/resources/schema/ShapeChangeConfiguration.xsd">
+ <input id="INPUT">
+  <parameter name="addTaggedValues" value="vocabulary,inspireConcept"/>
+  <parameter name="inputModelType" value="EA7"/>
+  <parameter name="inputFile" value="model/INSPIRE.eap"/>
+  <parameter name="appSchemaNamespaceRegex" value="^http://inspire.ec.europa.eu/schemas/net/.*"/>
+  <parameter name="publicOnly" value="true"/>
+  <parameter name="checkingConstraints" value="enabled"/>
+  <parameter name="loadConstraintsForSelectedSchemasOnly" value="true"/>
+  <parameter name="oclConstraintTypeRegex" value="OCL"/>
+  <parameter name="sortedSchemaOutput" value="true"/>
+  <parameter name="excludedPackages" value="Foundation Schemas, Themes"/>
+  <parameter name="extractSeparator" value="--"/>
+  <xi:include href="http://shapechange.net/resources/config/StandardAliases.xml"/>
+  <xi:include href="http://shapechange.net/resources/config/DescriptorSourcesInspire.xml"/>
+ </input>
+ <log>
+  <parameter name="reportLevel" value="INFO"/>
+  <parameter name="logFile" value="results/net/log_owliso19150_inspire.xml"/>
+ </log>
+ <transformers>
+  <Transformer class="de.interactive_instruments.ShapeChange.Transformation.Flattening.Flattener"
+   id="TRF0" input="INPUT" mode="enabled">
+   <parameters>
+    <ProcessParameter name="removeType" value=""/>
+   </parameters>
+   <rules>
+    <ProcessRuleSet name="flattener">
+     <rule name="rule-trf-all-removeType"/>
+     <rule name="rule-trf-all-postprocess-skip-constraint-validation"/>
+    </ProcessRuleSet>
+   </rules>
+  </Transformer>
+  <Transformer id="TRF1" input="TRF0"
+   class="de.interactive_instruments.ShapeChange.Transformation.Flattening.AssociationClassMapper">
+   <rules>
+    <ProcessRuleSet name="flattener">
+     <rule name="rule-trf-all-postprocess-skip-constraint-validation"/>
+    </ProcessRuleSet>
+   </rules>
+  </Transformer>
+  <Transformer class="de.interactive_instruments.ShapeChange.Transformation.Flattening.Flattener"
+   input="TRF1" id="TRF2" mode="enabled">
+   <parameters>
+    <ProcessParameter name="includeUnionIdentifierTaggedValue" value="true"/>
+    <ProcessParameter name="mergeDescriptors" value="true"/>
+    <ProcessParameter name="separatorForPropertyFromUnion" value="_"/>
+    <ProcessParameter name="flattenObjectTypes" value="false"/>
+    <ProcessParameter name="flattenDataTypesExcludeRegex" value=".*"/>
+    <ProcessParameter name="setMinCardinalityToZeroWhenMergingUnion" value="false"/>
+   </parameters>
+   <rules>
+    <ProcessRuleSet name="flattener">
+     <rule name="rule-trf-prop-flatten-types"/>
+     <rule name="rule-trf-all-postprocess-skip-constraint-validation"/>
+    </ProcessRuleSet>
+   </rules>
+  </Transformer>
+ </transformers>
+ <targets>
+  <TargetOwl class="de.interactive_instruments.ShapeChange.Target.Ontology.OWLISO19150"
+   mode="enabled" inputs="TRF2">
+   <targetParameter name="outputDirectory" value="results/net"/>
+   <targetParameter name="defaultEncodingRule" value="INSPIRE_RDF"/>
+   <targetParameter name="URIbase" value="http://inspire.ec.europa.eu/ont"/>
+   <targetParameter name="language" value="en"/>
+   <targetParameter name="defaultTypeImplementation" value="owl:Class"/>
+
+   <xi:include href="config/DescriptorTargets-owl-inspire.xml"/>
+   <xi:include href="config/StandardRules-owl-inspire.xml"/>
+
+   <xi:include href="http://shapechange.net/resources/config/StandardNamespaces-owl.xml"/>
+   <xi:include href="config/StandardNamespaces-owl-inspire.xml"/>
+
+   <xi:include href="config/StandardMapEntries_iso19103-owl-inspire.xml"/>
+   <xi:include href="http://shapechange.net/resources/config/StandardMapEntries_iso19107-owl-sf.xml"/>
+   <xi:include href="config/StandardMapEntries_inspire-base.xml"/>
+   <xi:include href="config/StandardMapEntries_inspire-gn.xml"/>
+
+   <rdfMapEntries>
+    <!-- Codelist mappings -->
+    <RdfTypeMapEntry type="ConnectionTypeValue" target="skos:Concept"/>
+    <RdfTypeMapEntry type="LinkDirectionValue" target="skos:Concept"/>
+   </rdfMapEntries>
+
+   <xi:include href="config/StandardConversionEntries_inspire-base.xml"/>
+   <rdfConversionParameters>
+    <!-- Alignments -->
+    <PropertyConversionParameter property="Network::geographicalName"
+     subPropertyOf="locn:geographicName"/>
+
+    <PropertyConversionParameter property="Link::centrelineGeometry"
+     subPropertyOf="locn:geometry gsp:hasDefaultGeometry"/>
+    <PropertyConversionParameter property="Node::geometry"
+     subPropertyOf="locn:geometry gsp:hasDefaultGeometry"/>
+    <PropertyConversionParameter property="NetworkArea::geometry"
+     subPropertyOf="locn:geometry gsp:hasDefaultGeometry"/>
+
+    <!-- Global properties -->
+    <PropertyConversionParameter property="SimplePointReference::offset" schema="Network"
+     global="true"/>
+    <PropertyConversionParameter property="offset" schema="Network"
+     target="SimplePointReference::offset" targetSchema="Network"/>
+   </rdfConversionParameters>
+
+  </TargetOwl>
+ </targets>
+</ShapeChangeConfiguration>

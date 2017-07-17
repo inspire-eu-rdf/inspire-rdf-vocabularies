@@ -1,0 +1,19 @@
+# This ontology contains classes and properties that have been derived from the INSPIRE "AdministrativeUnits" application schema.
+#
+# The following properties have been encoded with global scope (see guidelines for further details):
+#  - AdministrativeBoundary.country
+#
+# During the derivation, the following mappings, alignments, and omissions have been applied:
+# - Mappings:
+#   - Code list and enumeration values are mapped to skos:Concept.
+#   - The properties 'beginLifespanVersion' and 'endLifespanVersion' are mapped to the global properties defined by the base ontology.
+#   - Geometry types are mapped to classes from the Simple Feature ontology.
+#   - Property 'AdministrativeUnit.country' is mapped to the global property 'country' from this ontology.
+#
+# - Alignments (through subsumption):
+#   - Spatial object types are aligned with gsp:Feature.
+#   - Properties of spatial object types with value type 'GeographicalName' are aligned to property locn:geographicName.
+#   - Properties with a geometry value type are aligned to locn:geometry and gsp:hasDefaultGeometry.
+#
+# - Omissions:
+#   - Property 'inspireId' is omitted. See the guidelines for further details.

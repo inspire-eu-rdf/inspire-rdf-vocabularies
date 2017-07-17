@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdfMapEntries xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <RdfTypeMapEntry type="BasicPropertyUnit" target="cp:BasicPropertyUnit"/>
+  <RdfTypeMapEntry type="CadastralBoundary" target="cp:CadastralBoundary"/>
+  <RdfTypeMapEntry type="CadastralParcel" target="cp:CadastralParcel"/>
+  <RdfTypeMapEntry type="CadastralZoning" target="cp:CadastralZoning"/>
+  <RdfTypeMapEntry type="CadastralZoningLevelValue" target="skos:Concept"/>
+  
+  <!-- ... more to be added as required -->
+</rdfMapEntries>

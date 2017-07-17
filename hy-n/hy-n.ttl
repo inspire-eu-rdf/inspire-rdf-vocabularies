@@ -23,7 +23,7 @@
 #
 @prefix hy:    <http://inspire.ec.europa.eu/ont/hy#> .
 @prefix hy-n:  <http://inspire.ec.europa.eu/ont/hy-n#> .
-@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix iso19150-2: <http://def.isotc211.org/iso19150/-2/2012/base#> .
 @prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
@@ -49,7 +49,7 @@ hy-n:HydroNode.hydroNodeCategory
 
 <http://inspire.ec.europa.eu/ont/hy-n>
         a                owl:Ontology ;
-        owl:imports      <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <http://www.opengis.net/ont/geosparql> , <http://def.isotc211.org/iso19150-2/2012/base> , <http://www.w3.org/2004/02/skos/core> , <http://inspire.ec.europa.eu/ont/hy> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/net/net.ttl> ;
+        owl:imports      <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <http://www.opengis.net/ont/geosparql> , <http://www.w3.org/2004/02/skos/core> , <http://def.isotc211.org/iso19150/-2/2012/base> , <http://inspire.ec.europa.eu/ont/hy> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/net/net.ttl> ;
         owl:versionIRI   "http://inspire.ec.europa.eu/ont/hy-n/4.0" ;
         owl:versionInfo  "4.0" ;
         skos:definition  "The Network application schema contains spatial objects associated with a connected hydrographic network representation of waterways, lakes etc. This is required primarily for the 'spatial analysis and modelling' Use Case."@en .

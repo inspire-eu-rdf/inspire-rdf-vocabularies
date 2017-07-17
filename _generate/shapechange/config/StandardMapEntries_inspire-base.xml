@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdfMapEntries xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1"
+ xmlns:xi="http://www.w3.org/2001/XInclude">
+ <RdfTypeMapEntry type="ApplicationSchemaValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="CFStandardNamesValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="ConditionOfFacilityValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="Contact" target="base:Contact"/>
+ <RdfTypeMapEntry type="CountryCode" target="skos:Concept"/>
+ <RdfTypeMapEntry type="DocumentCitation" target="base:DocumentCitation"/>
+ <RdfTypeMapEntry type="GenderValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="Identifier" target="rdfs:Class"/>
+ <RdfTypeMapEntry type="LegislationCitation" target="base:LegislationCitation"/>
+ <RdfTypeMapEntry type="LegislationLevelValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="OfficialJournalInformation" target="base:OfficialJournalInformation"/>
+ <RdfTypeMapEntry type="PartyRoleValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="RelatedParty" target="base:RelatedParty"/>
+ <RdfTypeMapEntry type="RelatedPartyRoleValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="SpatialDataSet" target="dcat:Dataset"/>
+ <RdfTypeMapEntry type="ThematicIdentifier" target="base:ThematicIdentifier"/>
+ <RdfTypeMapEntry type="ThemeValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="VerticalPositionValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="VoidReasonValue" target="skos:Concept"/>
+ <!-- Common property mappings and omissions -->
+ <RdfPropertyMapEntry property="beginLifespanVersion" target="base:beginLifespanVersion"/>
+ <RdfPropertyMapEntry property="endLifespanVersion" target="base:endLifespanVersion"/>
+ <RdfPropertyMapEntry property="inspireId"/>
+ <RdfPropertyMapEntry property="validFrom" target="base:validFrom"/>
+ <RdfPropertyMapEntry property="validTo" target="base:validTo"/>
+</rdfMapEntries>

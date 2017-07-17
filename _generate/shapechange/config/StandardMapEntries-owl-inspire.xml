@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdfMapEntries xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1"
+  xmlns:xi="http://www.w3.org/2001/XInclude">  
+  <xi:include href="StandardMapEntries_inspire-base.xml"/>
+  <xi:include href="StandardMapEntries_inspire-gn.xml"/>
+  <xi:include href="StandardMapEntries_inspire-au.xml"/>
+  <xi:include href="StandardMapEntries_inspire-cp.xml"/>
+  <!-- ... more to be added as required -->
+</rdfMapEntries>

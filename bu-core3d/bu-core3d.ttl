@@ -32,7 +32,7 @@
 # ------------------------------
 #
 #
-@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix iso19150-2: <http://def.isotc211.org/iso19150/-2/2012/base#> .
 @prefix sfowl: <http://www.opengis.net/ont/sf#> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
@@ -82,7 +82,7 @@ bu-core3d:BuildingGeometry3DLoD.geometrySolid
 <http://inspire.ec.europa.eu/ont/bu-core3d>
         a                owl:Ontology ;
         rdfs:label       "Building 3D"@en ;
-        owl:imports      <http://def.isotc211.org/iso19150-2/2012/base> , <http://www.opengis.net/ont/gml> , <https://www.w3.org/ns/locn.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/bu-base/bu-base.ttl> , <http://www.opengis.net/ont/sf> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <http://www.w3.org/2004/02/skos/core> , <http://www.opengis.net/ont/geosparql> ;
+        owl:imports      <http://def.isotc211.org/iso19150/-2/2012/base> , <http://www.opengis.net/ont/gml> , <https://www.w3.org/ns/locn.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/bu-base/bu-base.ttl> , <http://www.opengis.net/ont/sf> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <http://www.w3.org/2004/02/skos/core> , <http://www.opengis.net/ont/geosparql> ;
         owl:versionIRI   "http://inspire.ec.europa.eu/ont/bu-core3d/4.0" ;
         owl:versionInfo  "4.0" ;
         skos:definition  "The 3D application schema for INSPIRE theme buildings."@en .

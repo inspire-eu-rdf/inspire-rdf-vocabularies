@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdfMapEntries xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1">
+  <RdfTypeMapEntry type="MD_Metadata" target="dcat:Dataset"/>
+ <RdfTypeMapEntry type="MD_Resolution" target="rdf:langString" targetType="datatype"/>
+  <RdfTypeMapEntry type="CI_Citation" target="owl:Class"/>
+  <RdfTypeMapEntry type="CI_Date" target="owl:Class"/>
+  <RdfTypeMapEntry type="URL" target="xsd:anyURI" targetType="datatype"/>
+  <!-- ... more to be added as required -->
+</rdfMapEntries>

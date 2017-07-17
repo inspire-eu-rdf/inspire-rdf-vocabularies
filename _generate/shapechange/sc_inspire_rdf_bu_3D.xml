@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ShapeChangeConfiguration
+ xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1"
+ xmlns:sc="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1"
+ xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1 http://shapechange.net/resources/schema/ShapeChangeConfiguration.xsd">
+ <input id="INPUT">
+  <parameter name="addTaggedValues" value="vocabulary,inspireConcept"/>
+  <parameter name="inputModelType" value="EA7"/>
+  <parameter name="inputFile" value="model/INSPIRE.eap"/>
+  <parameter name="appSchemaNamespaceRegex" value="^http://inspire.ec.europa.eu/schemas/bu-core3d.*"/>
+  <parameter name="publicOnly" value="true"/>
+  <parameter name="checkingConstraints" value="enabled"/>
+  <parameter name="loadConstraintsForSelectedSchemasOnly" value="true"/>
+  <parameter name="oclConstraintTypeRegex" value="OCL"/>
+  <parameter name="sortedSchemaOutput" value="true"/>
+  <parameter name="excludedPackages"
+   value="Foundation Schemas, Generic Conceptual Model, Annex I, Annex II"/>
+  <parameter name="extractSeparator" value="--"/>
+  <xi:include href="http://shapechange.net/resources/config/StandardAliases.xml"/>
+  <xi:include href="http://shapechange.net/resources/config/DescriptorSourcesInspire.xml"/>
+ </input>
+ <log>
+  <parameter name="reportLevel" value="INFO"/>
+  <parameter name="logFile" value="results/bu/log_owliso19150_inspire_bu_3D.xml"/>
+ </log>
+ <transformers>
+  <Transformer class="de.interactive_instruments.ShapeChange.Transformation.Flattening.Flattener"
+   id="TRF0" input="INPUT" mode="enabled">
+   <parameters>
+    <ProcessParameter name="removeType" value=""/>
+   </parameters>
+   <rules>
+    <ProcessRuleSet name="flattener">
+     <rule name="rule-trf-all-removeType"/>
+     <rule name="rule-trf-all-postprocess-skip-constraint-validation"/>
+    </ProcessRuleSet>
+   </rules>
+  </Transformer>
+  <Transformer id="TRF1" input="TRF0"
+   class="de.interactive_instruments.ShapeChange.Transformation.Flattening.AssociationClassMapper">
+   <rules>
+    <ProcessRuleSet name="flattener">
+     <rule name="rule-trf-all-postprocess-skip-constraint-validation"/>
+    </ProcessRuleSet>
+   </rules>
+  </Transformer>
+  <Transformer class="de.interactive_instruments.ShapeChange.Transformation.Flattening.Flattener"
+   input="TRF1" id="TRF2" mode="enabled">
+   <parameters>
+    <ProcessParameter name="includeUnionIdentifierTaggedValue" value="true"/>
+    <ProcessParameter name="mergeDescriptors" value="true"/>
+    <ProcessParameter name="separatorForPropertyFromUnion" value="_"/>
+    <ProcessParameter name="flattenObjectTypes" value="false"/>
+    <ProcessParameter name="flattenDataTypesExcludeRegex" value=".*"/>
+    <ProcessParameter name="setMinCardinalityToZeroWhenMergingUnion" value="false"/>
+   </parameters>
+   <rules>
+    <ProcessRuleSet name="flattener">
+     <rule name="rule-trf-prop-flatten-types"/>
+     <rule name="rule-trf-all-postprocess-skip-constraint-validation"/>
+    </ProcessRuleSet>
+   </rules>
+  </Transformer>
+ </transformers>
+ <targets>
+  <TargetOwl class="de.interactive_instruments.ShapeChange.Target.Ontology.OWLISO19150"
+   mode="enabled" inputs="TRF2">
+
+   <targetParameter name="outputDirectory" value="results/bu"/>
+   <targetParameter name="defaultEncodingRule" value="INSPIRE_RDF"/>
+   <targetParameter name="URIbase" value="http://inspire.ec.europa.eu/ont"/>
+   <targetParameter name="language" value="en"/>
+   <targetParameter name="defaultTypeImplementation" value="owl:Class"/>
+
+   <xi:include href="config/DescriptorTargets-owl-inspire.xml"/>
+   <xi:include href="config/StandardRules-owl-inspire.xml"/>
+
+   <xi:include href="http://shapechange.net/resources/config/StandardNamespaces-owl.xml"/>
+   <xi:include href="config/StandardNamespaces-owl-inspire.xml"/>
+
+   <xi:include href="config/StandardMapEntries_iso19103-owl-inspire.xml"/>
+   <xi:include href="config/StandardMapEntries_inspire-base.xml"/>
+   <xi:include href="config/StandardMapEntries_inspire-gn.xml"/>
+   <xi:include href="config/StandardMapEntries_inspire-bu-base.xml"/>
+
+   <!-- specific mappings for ISO 19107 (Solid to gmlowl, others to sfowl) -->
+   <rdfMapEntries>
+    <RdfTypeMapEntry type="GM_MultiCurve" target="sfowl:MultiLineString"/>
+    <RdfTypeMapEntry type="GM_MultiSurface" target="sfowl:MultiPolygon"/>
+    <RdfTypeMapEntry type="GM_Solid" target="gmlowl:Solid"/>
+   </rdfMapEntries>
+
+   <rdfMapEntries>
+    <RdfPropertyMapEntry property="geometry2D" target="bu-core2d:geometry2D"/>
+    <RdfPropertyMapEntry property="horizontalGeometryReference"
+     target="bu-base:horizontalGeometryReference"/>
+    <RdfPropertyMapEntry property="verticalGeometryEstimatedAccuracy"
+     target="bu-base:verticalGeometryEstimatedAccuracy"/>
+    <RdfPropertyMapEntry property="horizontalGeometryReference"
+     target="bu-base:horizontalGeometryReference"/>
+   </rdfMapEntries>
+
+   <xi:include href="config/StandardConversionEntries_inspire-base.xml"/>
+   <rdfConversionParameters>
+
+    <!-- Alignments -->
+    <PropertyConversionParameter property="BuildingGeometry3DLoD::geometryMultiSurface"
+     subPropertyOf="locn:geometry gsp:hasGeometry"/>
+    <PropertyConversionParameter property="BuildingGeometry3DLoD::geometrySolid"
+     subPropertyOf="locn:geometry gsp:hasGeometry"/>
+    <PropertyConversionParameter property="BuildingGeometry3DLoD::terrainIntersection"
+     subPropertyOf="locn:geometry gsp:hasGeometry"/>
+
+    <!-- Global properties -->
+    <PropertyConversionParameter property="Building::geometry3DLoD1" schema="Buildings3D"
+     global="true"/>
+    <PropertyConversionParameter property="Building::geometry3DLoD2" schema="Buildings3D"
+     global="true"/>
+    <PropertyConversionParameter property="Building::geometry3DLoD3" schema="Buildings3D"
+     global="true"/>
+    <PropertyConversionParameter property="Building::geometry3DLoD4" schema="Buildings3D"
+     global="true"/>
+    <PropertyConversionParameter property="BuildingPart::geometry3DLoD1" schema="Buildings3D"
+     target="Building::geometry3DLoD1" targetSchema="Buildings3D"/>
+    <PropertyConversionParameter property="BuildingPart::geometry3DLoD2" schema="Buildings3D"
+     target="Building::geometry3DLoD2" targetSchema="Buildings3D"/>
+    <PropertyConversionParameter property="BuildingPart::geometry3DLoD3" schema="Buildings3D"
+     target="Building::geometry3DLoD3" targetSchema="Buildings3D"/>
+    <PropertyConversionParameter property="BuildingPart::geometry3DLoD4" schema="Buildings3D"
+     target="Building::geometry3DLoD4" targetSchema="Buildings3D"/>
+   </rdfConversionParameters>
+  </TargetOwl>
+ </targets>
+</ShapeChangeConfiguration>

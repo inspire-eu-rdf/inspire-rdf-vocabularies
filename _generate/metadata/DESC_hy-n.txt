@@ -1,0 +1,10 @@
+# This ontology contains classes and properties that have been derived from the INSPIRE "Hydro - Network" application schema.
+#
+# During the derivation, the following mappings, alignments, and omissions have been applied:
+# - Mappings:
+#   - Code list values are mapped to skos:Concept.
+#
+# - Alignments (through subsumption):
+#   - Spatial object types are aligned with gsp:Feature.
+#
+# - Omissions: none

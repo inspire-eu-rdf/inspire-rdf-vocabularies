@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdfMapEntries xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1" xmlns:xi="http://www.w3.org/2001/XInclude"> 
+ <!-- Network -->  
+ <RdfTypeMapEntry type="ConnectionTypeValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="CrossReference" target="net:CrossReference"/> 
+ <RdfTypeMapEntry type="DirectedLink" target="net:DirectedLink"/>
+ <RdfTypeMapEntry type="GeneralisedLink" target="net:GeneralisedLink"/>
+ <RdfTypeMapEntry type="GradeSeparatedCrossing" target="net:GradeSeparatedCrossing"/>
+ <RdfTypeMapEntry type="Link" target="net:Link"/>
+ <RdfTypeMapEntry type="LinkDirectionValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="LinkReference" target="net:LinkReference"/>
+ <RdfTypeMapEntry type="LinkSequence" target="net:LinkSequence"/>
+ <RdfTypeMapEntry type="LinkSet" target="net:LinkSet"/>
+ <RdfTypeMapEntry type="Network" target="net:Network"/>
+ <RdfTypeMapEntry type="NetworkArea" target="net:NetworkArea"/>
+ <RdfTypeMapEntry type="NetworkConnection" target="net:NetworkConnection"/>
+ <RdfTypeMapEntry type="NetworkElement" target="net:NetworkElement"/>
+ <RdfTypeMapEntry type="NetworkProperty" target="net:NetworkProperty"/>
+ <RdfTypeMapEntry type="NetworkReference" target="net:NetworkReference"/>
+ <RdfTypeMapEntry type="Node" target="net:Node"/>
+ <RdfTypeMapEntry type="SimpleLinearReference" target="net:SimpleLinearReference"/>
+ <RdfTypeMapEntry type="SimplePointReference" target="net:SimplePointReference"/>
+ 
+  <!-- ... more to be added as required -->
+</rdfMapEntries>

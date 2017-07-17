@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdfMapEntries xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1"
+ xmlns:xi="http://www.w3.org/2001/XInclude">
+ <RdfTypeMapEntry type="AccessRestriction" target="tn:AccessRestriction"/>
+ <RdfTypeMapEntry type="AccessRestrictionValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="ConditionOfFacility" target="tn:ConditionOfFacility"/>
+ <RdfTypeMapEntry type="MaintenanceAuthority" target="tn:MaintenanceAuthority"/>
+ <RdfTypeMapEntry type="MarkerPost" target="tn:MarkerPost"/>
+ <RdfTypeMapEntry type="OwnerAuthority" target="tn:OwnerAuthority"/>
+ <RdfTypeMapEntry type="RestrictionForVehicles" target="tn:RestrictionForVehicles"/>
+ <RdfTypeMapEntry type="RestrictionTypeValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="TrafficFlowDirection" target="tn:TrafficFlowDirection"/>
+ <RdfTypeMapEntry type="TransportArea" target="tn:TransportArea"/>
+ <RdfTypeMapEntry type="TransportLink" target="tn:TransportLink"/>
+ <RdfTypeMapEntry type="TransportLinkSequence" target="tn:TransportLinkSequence"/>
+ <RdfTypeMapEntry type="TransportLinkSet" target="tn:TransportLinkSet"/>
+ <RdfTypeMapEntry type="TransportNetwork" target="tn:TransportNetwork"/>
+ <RdfTypeMapEntry type="TransportNode" target="tn:TransportNode"/>
+ <RdfTypeMapEntry type="TransportObject" target="tn:TransportObject"/>
+ <RdfTypeMapEntry type="TransportPoint" target="tn:TransportPoint"/>
+ <RdfTypeMapEntry type="TransportProperty" target="tn:TransportProperty"/>
+ <RdfTypeMapEntry type="TransportTypeValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="VerticalPosition" target="tn:VerticalPosition"/>
+</rdfMapEntries>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdfMapEntries xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1" xmlns:xi="http://www.w3.org/2001/XInclude"> 
+ <RdfTypeMapEntry type="Crossing" target="hy-p:Crossing"/>
+ <RdfTypeMapEntry type="CrossingTypeValue" target="skos:Concept"/> 
+ <RdfTypeMapEntry type="DamOrWeir" target="hy-p:DamOrWeir"/>
+ <RdfTypeMapEntry type="DrainageBasin" target="hy-p:DrainageBasin"/>
+ <RdfTypeMapEntry type="Embankment" target="hy-p:Embankment"/>
+ <RdfTypeMapEntry type="Falls" target="hy-p:Falls"/>
+ <RdfTypeMapEntry type="FluvialPoint" target="hy-p:FluvialPoint"/>
+ <RdfTypeMapEntry type="Ford" target="hy-p:Ford"/>
+ <RdfTypeMapEntry type="HydroIdentifier" target="hy:HydroIdentifier"/>
+ <RdfTypeMapEntry type="HydroObject" target="hy:HydroObject"/>
+ <RdfTypeMapEntry type="HydroOrderCode" target="hy-p:HydroOrderCode"/>
+ <RdfTypeMapEntry type="HydroPointOfInterest" target="hy-p:HydroPointOfInterest"/>
+ <RdfTypeMapEntry type="HydrologicalPersistenceValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="LandWaterBoundary" target="hy-p:LandWaterBoundary"/>
+ <RdfTypeMapEntry type="Lock" target="hy-p:Lock"/>
+ <RdfTypeMapEntry type="ManMadeObject" target="hy-p:ManMadeObject"/>
+ <RdfTypeMapEntry type="OriginValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="Rapids" target="hy-p:Rapids"/>
+ <RdfTypeMapEntry type="RiverBasin" target="hy-p:RiverBasin"/>
+ <RdfTypeMapEntry type="Shore" target="hy-p:Shore"/>
+ <RdfTypeMapEntry type="ShoreTypeValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="ShorelineConstruction" target="hy-p:ShorelineConstruction"/>
+ <RdfTypeMapEntry type="Sluice" target="hy-p:Sluice"/>
+ <RdfTypeMapEntry type="StandingWater" target="hy-p:StandingWater"/>
+ <RdfTypeMapEntry type="SurfaceWater" target="hy-p:SurfaceWater"/> 
+ <RdfTypeMapEntry type="WaterLevelValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="Watercourse" target="hy-p:Watercourse"/>
+ <RdfTypeMapEntry type="Wetland" target="hy-p:Wetland"/>
+ <RdfTypeMapEntry type="WidthRange" target="hy-p:WidthRange"/>
+</rdfMapEntries>

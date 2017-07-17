@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdfMapEntries xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1">
+	<!-- ISO/TS 19103 -->
+	<!-- types covered in table 12 of ISO 19150-2: -->
+  <RdfTypeMapEntry type="CharacterString" target="xsd:string" targetType="datatype"/>
+  <RdfTypeMapEntry type="Date" target="xsd:date" targetType="datatype" />
+  <RdfTypeMapEntry type="DateTime" target="xsd:dateTime" targetType="datatype" />
+  <RdfTypeMapEntry type="Integer" target="xsd:integer" targetType="datatype" />
+  <RdfTypeMapEntry type="Decimal" target="xsd:double" targetType="datatype" />
+  <RdfTypeMapEntry type="Real" target="xsd:double" targetType="datatype"/>
+  <RdfTypeMapEntry type="Boolean" target="xsd:boolean" targetType="datatype" />
+  <RdfTypeMapEntry type="GenericName" target="xsd:Name" targetType="datatype" />
+  <RdfTypeMapEntry type="LocalName" target="xsd:NCName" targetType="datatype" />
+  <RdfTypeMapEntry type="ScopedName" target="rdfs:Resource" />
+  <RdfTypeMapEntry type="TypeName" target="xsd:NCName" targetType="datatype" />
+  <RdfTypeMapEntry type="MemberName" target="xsd:Name" targetType="datatype" />
+  
+  <RdfTypeMapEntry type="Character" target="xsd:string" targetType="datatype"/>
+  <RdfTypeMapEntry type="Number" target="xsd:double" targetType="datatype" />
+  <RdfTypeMapEntry type="ClockTime" target="xsd:time" targetType="datatype" />
+  <RdfTypeMapEntry type="Bit" target="xsd:boolean" targetType="datatype" />
+ 
+  <RdfTypeMapEntry type="URI" target="xsd:anyURI" targetType="datatype" />
+  <RdfTypeMapEntry type="Time" target="xsd:time" targetType="datatype" />
+  
+	<!-- basic types NOT covered in table 12 of ISO 19150-2: -->
+  <RdfTypeMapEntry type="Any" target="rdfs:Class"/>
+  <RdfTypeMapEntry type="Angle" target="base:Measure" targetType="datatype"/>
+ <RdfTypeMapEntry type="Area" target="base:Measure" targetType="datatype"/>
+ <RdfTypeMapEntry type="Distance" target="base:Measure" targetType="datatype"/>
+ <RdfTypeMapEntry type="Length" target="base:Measure" targetType="datatype"/>
+ <RdfTypeMapEntry type="Measure" target="base:Measure" targetType="datatype"/>
+ <RdfTypeMapEntry type="Probability" target="base:Measure" targetType="datatype"/>
+ <RdfTypeMapEntry type="UnitOfMeasure" target="rdfs:Class"/>
+ <RdfTypeMapEntry type="Sign" target="base:Sign" targetType="datatype"/>
+ <RdfTypeMapEntry type="Velocity" target="base:Measure" targetType="datatype"/>
+ <RdfTypeMapEntry type="Volume" target="base:Measure" targetType="datatype"/>
+   
+  <!-- ... more to be added as required -->
+</rdfMapEntries>

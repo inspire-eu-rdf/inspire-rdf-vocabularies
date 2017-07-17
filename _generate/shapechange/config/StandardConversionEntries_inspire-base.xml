@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdfConversionParameters xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <StereotypeConversionParameter wellknown="FeatureType" subClassOf="gsp:Feature"/>        
+ </rdfConversionParameters>

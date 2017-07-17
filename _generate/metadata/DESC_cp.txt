@@ -1,0 +1,21 @@
+# This ontology contains classes and properties that have been derived from the INSPIRE "CadastralParcels" application schema.
+#
+# The following properties have been encoded with global scope (see guidelines for further details):
+#  - CadastralParcel.referencePoint
+#
+# During the derivation, the following mappings, alignments, and omissions have been applied:
+# - Mappings:
+#   - Code list values are mapped to skos:Concept.
+#   - The properties 'beginLifespanVersion', 'endLifespanVersion', 'validFrom', and 'validTo' are mapped to the global properties defined by the base ontology.
+#   - Geometry types are mapped to classes from the Simple Feature ontology.
+#   - Property 'label' is mapped to rdfs:label.
+#   - Property 'CadastralZoning.referencePoint' is mapped to the global property 'referencePoint' from this ontology.
+#
+# - Alignments (through subsumption):
+#   - Spatial object types are aligned with gsp:Feature.
+#   - Properties of spatial object types with value type 'GeographicalName' are aligned to property locn:geographicName.
+#   - Properties 'CadastralParcel.geometry', 'CadastralBoundary.geometry', and 'CadastralZoning.geometry' are aligned to locn:geometry and gsp:hasDefaultGeometry.
+#   - Property 'CadastralParcel.referencePoint'is aligned to locn:geometry and gsp:hasGeometry.
+#
+# - Omissions:
+#   - Property 'inspireId' is omitted. See the guidelines for further details.

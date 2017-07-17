@@ -27,7 +27,7 @@
 # ------------------------------
 #
 #
-@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix iso19150-2: <http://def.isotc211.org/iso19150/-2/2012/base#> .
 @prefix sfowl: <http://www.opengis.net/ont/sf#> .
 @prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -149,7 +149,7 @@ gn:NamedPlace.geometry
 
 <http://inspire.ec.europa.eu/ont/gn>
         a                owl:Ontology ;
-        owl:imports      <http://www.opengis.net/ont/sf> , <https://www.w3.org/ns/locn.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <http://www.opengis.net/ont/geosparql> , <http://www.w3.org/2004/02/skos/core> , <http://def.isotc211.org/iso19150-2/2012/base> ;
+        owl:imports      <http://www.opengis.net/ont/sf> , <https://www.w3.org/ns/locn.ttl> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <http://www.opengis.net/ont/geosparql> , <http://www.w3.org/2004/02/skos/core> , <http://def.isotc211.org/iso19150/-2/2012/base> ;
         owl:versionIRI   "http://inspire.ec.europa.eu/ont/gn/4.0" ;
         owl:versionInfo  "4.0" .
 

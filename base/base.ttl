@@ -22,7 +22,7 @@
 #   - Type 'Identifier' is mapped to rdfs:Resource.
 #   - Type 'SpatialDataSet' is mapped to dcat:Dataset.
 #   - Type 'PT_FreeText' is mapped to rdf:langString.
-#   - Type 'TM_Position' is mapped to xsd:date. NOTE: The type can be mapped to a more complex representation when converting a different application schema.
+#   - Type 'TM_Position' is mapped to time:TemporalPosition.
 #
 # - Alignments (through subsumption):
 #   - Property 'Contact.address' is aligned to property locn:address.
@@ -34,7 +34,8 @@
 # ------------------------------
 #
 #
-@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix ad:    <http://inspire.ec.europa.eu/ont/ad#> .
+@prefix iso19150-2: <http://def.isotc211.org/iso19150/-2/2012/base#> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
@@ -67,7 +68,7 @@ base:Measure
       	a 					rdfs:Datatype ;
        skos:notation  "Measure"^^xsd:NCName ;
       	skos:prefLabel "measure"@en ;
-      	skos:defnition "a text representation of a measure value. The decimal value is followed by a space and the unit of the measure." .
+      	skos:definition "a text representation of a measure value. The decimal value is followed by a space and the unit of the measure." .
 
 base:Sign
         a                         rdfs:Datatype ;
@@ -199,7 +200,7 @@ base:DocumentCitation.specificReference
 <http://inspire.ec.europa.eu/ont/base>
         a                owl:Ontology ;
         rdfs:comment     "NOTE\tThe additional types specified with Annex II/III data specifications are placed in a separate schema to maintain backwards compatibility."@en ;
-        owl:imports      <https://www.w3.org/ns/locn.ttl> , <http://www.w3.org/2004/02/skos/core> , <http://def.isotc211.org/iso19150-2/2012/base> ;
+        owl:imports      <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/ad/ad.ttl> , <https://www.w3.org/ns/locn.ttl> , <http://www.w3.org/2004/02/skos/core> , <http://def.isotc211.org/iso19150/-2/2012/base> ;
         skos:definition  "schema for additional basic types used by multiple themes"@en .
 
 base:LegislationCitation
@@ -237,7 +238,7 @@ base:LegislationCitation.journalCitation
 
 base:Contact.address  a     owl:ObjectProperty ;
         rdfs:domain         base:Contact ;
-        rdfs:range          locn:Address ;
+        rdfs:range          ad:Address ;
         rdfs:subPropertyOf  locn:address ;
         skos:definition     "An address provided as free text."@en .
 

@@ -1,0 +1,21 @@
+# This ontology contains classes and properties that have been derived from the INSPIRE "Buildings3D" application schema.
+#
+# The following properties have been encoded with global scope (see guidelines for further details):
+#  - Building.geometry3DLoD1
+#  - Building.geometry3DLoD2
+#  - Building.geometry3DLoD3
+#  - Building.geometry3DLoD4
+#
+# During the derivation, the following mappings, alignments, and omissions have been applied:
+# - Mappings:
+#   - GM_MultiCurve and GM_MultiSurface are mapped to the according classes from the Simple Feature ontology.
+#   - GM_Solid is mapped to the according class from the GML ontology.
+#   - Properties 'geometry2D' are mapped to the global property 'geometry2D' from the buildings 2D ontology.
+#   - Properties 'horizontalGeometryReference', 'verticalGeometryEstimatedAccuracy', and 'horizontalGeometryReference' are mapped to the according global properties from the buildings base ontology.
+#   - Properties 'BuildingPart.geometry3DLoDX' (with X=1,2,3,4) are mapped to the global properties 'geometry3DLoDX' (with X=1,2,3,4) from this ontology.
+#
+# - Alignments (through subsumption):
+#   - Spatial object types are aligned with gsp:Feature.
+#   - Properties with a geometry value type are aligned to locn:geometry and gsp:hasGeometry.
+#
+# - Omissions: none

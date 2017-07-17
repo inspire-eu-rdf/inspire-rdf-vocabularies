@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdfMapEntries xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1"
+ xmlns:xi="http://www.w3.org/2001/XInclude">
+ <RdfTypeMapEntry type="Address" target="ad:Address"/>
+ <RdfTypeMapEntry type="AddressAreaName" target="ad:AddressAreaName"/>
+ <RdfTypeMapEntry type="AddressComponent" target="ad:AddressComponent"/>
+ <RdfTypeMapEntry type="AddressLocator" target="ad:AddressLocator"/>
+ <RdfTypeMapEntry type="AddressRepresentation" target="ad:Address"/>
+ <RdfTypeMapEntry type="AdminUnitName" target="ad:AdminUnitName"/>
+ <RdfTypeMapEntry type="GeographicPosition" target="ad:GeographicPosition"/>
+ <RdfTypeMapEntry type="GeometryMethodValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="GeometrySpecificationValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="LocatorDesignator" target="ad:LocatorDesignator"/>
+ <RdfTypeMapEntry type="LocatorDesignatorTypeValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="LocatorLevelValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="LocatorName" target="ad:LocatorName"/>
+ <RdfTypeMapEntry type="LocatorNameTypeValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="PartOfName" target="ad:PartOfName"/>
+ <RdfTypeMapEntry type="PartTypeValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="PostalDescriptor" target="ad:PostalDescriptor"/>
+ <RdfTypeMapEntry type="StatusValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="ThoroughfareName" target="ad:ThoroughfareName"/>
+ <RdfTypeMapEntry type="ThoroughfareNameValue" target="ad:ThoroughfareNameValue"/>
+</rdfMapEntries>

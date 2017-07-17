@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdfMapEntries xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1" xmlns:xi="http://www.w3.org/2001/XInclude">
+ <RdfTypeMapEntry type="AbstractBuilding" target="bu-base:AbstractBuilding"/>
+ <RdfTypeMapEntry type="AbstractConstruction" target="bu-base:AbstractConstruction"/>
+ <RdfTypeMapEntry type="Building" target="bu-base:Building"/>
+ <RdfTypeMapEntry type="BuildingGeometry2D" target="bu-base:BuildingGeometry2D"/>
+ <RdfTypeMapEntry type="BuildingNatureValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="BuildingPart" target="bu-base:BuildingPart"/>
+ <RdfTypeMapEntry type="ConditionOfConstructionValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="CurrentUse" target="bu-base:CurrentUse"/>
+ <RdfTypeMapEntry type="CurrentUseValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="DateOfEvent" target="bu-base:DateOfEvent"/>
+ <RdfTypeMapEntry type="Elevation" target="bu-base:Elevation"/>
+ <RdfTypeMapEntry type="ElevationReferenceValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="ExternalReference" target="bu-base:ExternalReference"/>
+ <RdfTypeMapEntry type="HeightAboveGround" target="bu-base:HeightAboveGround"/>
+ <RdfTypeMapEntry type="HeightStatusValue" target="skos:Concept"/>
+ <RdfTypeMapEntry type="HorizontalGeometryReferenceValue" target="skos:Concept"/> 
+</rdfMapEntries>

@@ -13,7 +13,7 @@
 # - Mappings: none
 #
 # - Alignments (through subsumption):
-#   - Properties with value type 'GeographicalName' are aligned to property locn:geographicName.
+#   - Properties of spatial object types with value type 'GeographicalName' are aligned to property locn:geographicName.
 #
 # - Omissions: none
 #
@@ -21,7 +21,7 @@
 #
 #
 @prefix hy:    <http://inspire.ec.europa.eu/ont/hy#> .
-@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix iso19150-2: <http://def.isotc211.org/iso19150/-2/2012/base#> .
 @prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
@@ -34,7 +34,7 @@
 <http://inspire.ec.europa.eu/ont/hy>
         a                owl:Ontology ;
         rdfs:comment     "EXAMPLE: A real-world object identified as the 'Rhine' may be realised through a Network view (as a set of links and nodes), a Physical Waters view (as a Watercourse), and a reporting view (as a WFDRiver)."@en ;
-        owl:imports      <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/gn/gn.ttl> , <https://www.w3.org/ns/locn.ttl> , <http://www.opengis.net/ont/geosparql> , <http://def.isotc211.org/iso19150-2/2012/base> ;
+        owl:imports      <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/gn/gn.ttl> , <https://www.w3.org/ns/locn.ttl> , <http://www.opengis.net/ont/geosparql> , <http://def.isotc211.org/iso19150/-2/2012/base> ;
         owl:versionIRI   "http://inspire.ec.europa.eu/ont/hy/4.0" ;
         owl:versionInfo  "4.0" ;
         skos:definition  "This package provides base classes used to identify real-world objects. These identities may be used to provide implicit semantic associations between different 'implementation views'."@en .

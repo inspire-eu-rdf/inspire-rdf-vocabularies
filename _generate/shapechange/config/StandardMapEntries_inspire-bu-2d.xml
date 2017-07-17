@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdfMapEntries xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1" xmlns:xi="http://www.w3.org/2001/XInclude"> 
+ <RdfTypeMapEntry type="Building" target="bu-core2d:Building"/>
+ <RdfTypeMapEntry type="BuildingPart" target="bu-core2d:BuildingPart"/> 
+</rdfMapEntries>

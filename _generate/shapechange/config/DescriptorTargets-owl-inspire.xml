@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<descriptorTargets xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1">
+	<DescriptorTarget target="rdfs:label" template="[[alias]]" />
+	<DescriptorTarget target="rdfs:isDefinedBy" template="[[TV:inspireConcept]]" format="IRI" />
+	<DescriptorTarget target="skos:definition" template="[[definition]]" noValueText="N/A" />
+	<DescriptorTarget target="rdfs:comment" template="[[description]]" noValueText="N/A" />
+</descriptorTargets>

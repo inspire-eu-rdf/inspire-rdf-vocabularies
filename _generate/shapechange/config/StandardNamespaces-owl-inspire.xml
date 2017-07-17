@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<namespaces xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1">
+ <Namespace nsabr="au" ns="http://inspire.ec.europa.eu/ont/au#"
+  location="https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/au/au.ttl"/>
+ <Namespace nsabr="base" ns="http://inspire.ec.europa.eu/ont/base#"
+  location="https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl"/>
+ <Namespace nsabr="bu-base" ns="http://inspire.ec.europa.eu/ont/bu-base#"
+  location="https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/bu-base/bu-base.ttl"/>
+ <Namespace nsabr="bu-core2d" ns="http://inspire.ec.europa.eu/ont/bu-core2d#"
+  location="https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/bu-core2d/bu-core2d.ttl"/>
+ <Namespace nsabr="bu-core3d" ns="http://inspire.ec.europa.eu/ont/bu-core3d#"
+  location="https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/bu-core3d/bu-core3d.ttl"/>
+ <Namespace nsabr="cp" ns="http://inspire.ec.europa.eu/ont/cp#"
+  location="https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/cp/cp.ttl"/>
+ <Namespace nsabr="gn" ns="http://inspire.ec.europa.eu/ont/gn#"
+  location="https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/gn/gn.ttl"/>
+ <Namespace nsabr="ad" ns="http://inspire.ec.europa.eu/ont/ad#"
+  location="https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/ad/ad.ttl"/>
+ <Namespace nsabr="hy" ns="http://inspire.ec.europa.eu/ont/hy#"
+  location="https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/hy/hy.ttl"/>
+ <Namespace nsabr="hy-n" ns="http://inspire.ec.europa.eu/ont/hy-n#"
+  location="https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/hy-n/hy-n.ttl"/>
+ <Namespace nsabr="hy-p" ns="http://inspire.ec.europa.eu/ont/hy-p#"
+  location="https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/hy-p/hy-p.ttl"/>
+ <Namespace nsabr="net" ns="http://inspire.ec.europa.eu/ont/net#"
+  location="https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/net/net.ttl"/>
+ <Namespace nsabr="tn" ns="http://inspire.ec.europa.eu/ont/tn#"
+  location="https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/tn/tn.ttl"/>
+</namespaces>

@@ -1,0 +1,9 @@
+# This ontology contains classes and properties that have been derived from the INSPIRE "Hydro - Base" application schema.
+#
+# During the derivation, the following mappings, alignments, and omissions have been applied:
+# - Mappings: none
+#
+# - Alignments (through subsumption):
+#   - Properties of spatial object types with value type 'GeographicalName' are aligned to property locn:geographicName.
+#
+# - Omissions: none

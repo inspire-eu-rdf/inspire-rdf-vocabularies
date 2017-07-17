@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdfMapEntries xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1">
+  <RdfTypeMapEntry type="PT_FreeText" target="rdf:langString" targetType="datatype"/>
+  <RdfTypeMapEntry type="LocalisedCharacterString" target="rdf:langString" targetType="datatype"/>
+  <RdfTypeMapEntry type="URI" target="xsd:anyURI" targetType="datatype"/>
+ 
+  <!-- ... more to be added as required -->
+</rdfMapEntries>

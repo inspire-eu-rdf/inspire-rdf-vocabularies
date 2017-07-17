@@ -1,0 +1,23 @@
+# This ontology contains classes and properties that have been derived from the INSPIRE "Base Types" and "Base Types2" application schemas.
+# Additional classes implement types from the INSPIRE foundation schemas for which no suitable ontology representation has been identified yet.
+#
+# The following properties with global scope (see guidelines for further details) have been added to this ontology, for re-use by importing ontologies:
+# - beginLifespanVersion
+# - endLifespanVersion
+# - validFrom
+# - validTo
+#
+# During the derivation, the following mappings, alignments, and omissions have been applied:
+# - Mappings:
+#   - Code list and enumeration values are mapped to skos:Concept.
+#   - Type 'Identifier' is mapped to rdfs:Resource.
+#   - Type 'SpatialDataSet' is mapped to dcat:Dataset.
+#   - Type 'PT_FreeText' is mapped to rdf:langString.
+#   - Type 'TM_Position' is mapped to time:TemporalPosition.
+#
+# - Alignments (through subsumption):
+#   - Property 'Contact.address' is aligned to property locn:address.
+#
+# - Omissions:
+#   - The types 'Identifier' and 'SpatialDataSet' have not been converted. They are mapped as described before.
+#   - Property DocumentCitation.date has been omitted. A value for this property can be encoded using the DC-Terms properties 'created', 'issued', and 'modified'. See the guidelines for further details.

@@ -24,7 +24,7 @@
 # ------------------------------
 #
 #
-@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix iso19150-2: <http://def.isotc211.org/iso19150/-2/2012/base#> .
 @prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
@@ -37,7 +37,7 @@
 <http://inspire.ec.europa.eu/ont/bu-core2d>
         a                owl:Ontology ;
         rdfs:label       "Building 2D"@en ;
-        owl:imports      <http://inspire.ec.europa.eu/ont/bu-base> , <http://www.opengis.net/ont/geosparql> , <http://def.isotc211.org/iso19150-2/2012/base> ;
+        owl:imports      <http://inspire.ec.europa.eu/ont/bu-base> , <http://www.opengis.net/ont/geosparql> , <http://def.isotc211.org/iso19150/-2/2012/base> ;
         owl:versionIRI   "http://inspire.ec.europa.eu/ont/bu-core2d/4.0" ;
         owl:versionInfo  "4.0" ;
         skos:definition  "The 2D application schema for INSPIRE theme buildings."@en .

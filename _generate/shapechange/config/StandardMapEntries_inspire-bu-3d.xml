@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdfMapEntries xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1" xmlns:xi="http://www.w3.org/2001/XInclude">
+ <RdfTypeMapEntry type="Building" target="bu-core3d:Building"/>
+ <RdfTypeMapEntry type="BuildingGeometry3DLoD" target="bu-core3d:BuildingGeometry3DLoD"/>
+ <RdfTypeMapEntry type="BuildingGeometry3DLoD1" target="bu-core3d:BuildingGeometry3DLoD1"/>
+ <RdfTypeMapEntry type="BuildingGeometry3DLoD2" target="bu-core3d:BuildingGeometry3DLoD2"/>
+ <RdfTypeMapEntry type="BuildingPart" target="bu-core3d:BuildingPart"/>
+</rdfMapEntries>

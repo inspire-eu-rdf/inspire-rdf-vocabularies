@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules
+	xmlns="http://www.interactive-instruments.de/ShapeChange/Configuration/1.1">
+	<EncodingRule name="INSPIRE_RDF" extends="*">	
+		<rule name="rule-owl-pkg-singleOntologyPerSchema" />
+		<rule name="rule-owl-pkg-ontologyName-code" />
+		<rule name="rule-owl-pkg-versionInfo" />
+		<rule name="rule-owl-pkg-versionIRI" />
+		<rule name="rule-owl-pkg-importISO191502Base"/>
+		<rule name="rule-owl-cls-iso191502IsAbstract" />
+		<rule name="rule-owl-cls-generalization" />
+		<rule name="rule-owl-cls-encode-featuretypes" />
+		<rule name="rule-owl-cls-encode-objecttypes" />
+		<rule name="rule-owl-cls-encode-mixintypes" />
+		<rule name="rule-owl-cls-encode-datatypes" />
+		<rule name="rule-owl-cls-encode-basictypes" />
+		<rule name="rule-owl-prop-general" />
+		<rule name="rule-owl-prop-range-global" />
+		<rule name="rule-owl-prop-globalScopeByConversionParameter" />
+		<rule name="rule-owl-prop-mapping-compare-specifications" />
+		<rule name="rule-owl-all-constraints-humanReadableTextOnly" />
+		<rule name="rule-owl-cls-union" />
+		<rule name="rule-owl-cls-unionSets" />
+	 <rule name="rule-owl-cls-enumerationAsCodelist" />
+		<rule name="rule-owl-cls-codelist-external" />
+	 <rule name="rule-owl-prop-external-reference" />
+	</EncodingRule>
+</rules>

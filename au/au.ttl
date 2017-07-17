@@ -21,7 +21,7 @@
 #
 # - Alignments (through subsumption):
 #   - Spatial object types are aligned with gsp:Feature.
-#   - Properties with value type 'GeographicalName' are aligned to property locn:geographicName.
+#   - Properties of spatial object types with value type 'GeographicalName' are aligned to property locn:geographicName.
 #   - Properties with a geometry value type are aligned to locn:geometry and gsp:hasDefaultGeometry.
 #
 # - Omissions:
@@ -31,7 +31,7 @@
 #
 #
 @prefix au:    <http://inspire.ec.europa.eu/ont/au#> .
-@prefix iso19150-2: <http://def.isotc211.org/iso19150-2/2012/base#> .
+@prefix iso19150-2: <http://def.isotc211.org/iso19150/-2/2012/base#> .
 @prefix sfowl: <http://www.opengis.net/ont/sf#> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix gsp:   <http://www.opengis.net/ont/geosparql#> .
@@ -67,7 +67,7 @@ au:AdministrativeUnit
 
 <http://inspire.ec.europa.eu/ont/au>
         a                owl:Ontology ;
-        owl:imports      <https://www.w3.org/ns/locn.ttl> , <http://www.opengis.net/ont/geosparql> , <http://def.isotc211.org/iso19150-2/2012/base> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <http://www.w3.org/2004/02/skos/core> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/gn/gn.ttl> , <http://www.opengis.net/ont/sf> ;
+        owl:imports      <https://www.w3.org/ns/locn.ttl> , <http://www.opengis.net/ont/geosparql> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/base/base.ttl> , <http://www.w3.org/2004/02/skos/core> , <https://github.com/inspire-eu-rdf/inspire-rdf-vocabularies/blob/master/gn/gn.ttl> , <http://def.isotc211.org/iso19150/-2/2012/base> , <http://www.opengis.net/ont/sf> ;
         owl:versionIRI   "http://inspire.ec.europa.eu/ont/au/4.0" ;
         owl:versionInfo  "4.0" .
 
@@ -209,11 +209,10 @@ au:Condominium.name  a      owl:ObjectProperty ;
         skos:definition     "Official geographical name of this condominium, given in several languages where required."@en .
 
 au:ResidenceOfAuthority.name
-        a                   owl:ObjectProperty ;
-        rdfs:domain         au:ResidenceOfAuthority ;
-        rdfs:range          gn:GeographicalName ;
-        rdfs:subPropertyOf  locn:geographicName ;
-        skos:definition     "Name of the residence of authority."@en .
+        a                owl:ObjectProperty ;
+        rdfs:domain      au:ResidenceOfAuthority ;
+        rdfs:range       gn:GeographicalName ;
+        skos:definition  "Name of the residence of authority."@en .
 
 au:ResidenceOfAuthority
         a                owl:Class ;
