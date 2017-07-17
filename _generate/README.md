@@ -5,7 +5,7 @@ This page describes the workflow of generating the INSPIRE RDF vocabularies.
 ## Setup
 
 * Install Enterpise Architect (from [Sparx Systems](http://www.sparxsystems.com/)).
-** NOTE: A trial version is available.
+  * NOTE: A trial version is available.
 * Create an Enterprise Architect Project (.eap) file containing the INSPIRE data models, name it 'INSPIRE.eap' and copy it into the directory \_generate/shapechange/model. Further information on the INSPIRE data models, as well as links to download a ZIP with the eap file, can be found on http://inspire.ec.europa.eu/portfolio/data-models (look for 'EA/XMI').
 * Download ShapeChange from http://shapechange.net/get-started/. Unpack the ZIP archive to the \_generate/shapechange folder, and follow the instructions on that get-started page. Ensure that the test to access Enterprise Architect models runs successfully.
   * NOTE: The current version of the vocabularies have been created with ShapeChange version 2.4.0, which has not been released yet when this HOWTO has been written.
